@@ -1,1 +1,8 @@
 Figures/*
+*.bbl
+*.aux
+*.blg
+*.pdf
+*.log
+*.swp
+*.toc

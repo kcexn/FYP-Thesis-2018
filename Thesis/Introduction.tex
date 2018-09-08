@@ -1,0 +1,69 @@
+\chapter{Introduction}
+
+\section{Motivating Scenario}
+The next generation of wireless communication %
+dubbed 5G makes promises of a hyper connected %
+world with billions of devices coming online % TODO: cite this
+connected by the radio network. With this kind %
+of communication network in mind, it is easy %
+to imagine a scenario in which a cell needs %
+to serve many almost static users a steady stream %
+of data over a long period of time.% 
+
+\begin{figure}[h!]
+	\includegraphics[width=\linewidth]{./Figures/%
+	Application_Scenario.png}
+	\caption{Application Scenario}
+	\label{fig:AppScene}
+\end{figure}
+
+Figure \ref{fig:AppScene}. visualises the motivating %
+scenario in mind of one base station serving many %
+terminals over a bidirectional link. I'll be constraining %
+% TODO: Add up-link study to the conclusion about future study
+the study done within this report to simply the down-link % 
+between the base station and a terminal. This link will %
+have a few properties of interest to us. The first is that %
+the terminal will be fairly static with very little movement, %
+the second, is that the environment is prone to change. We can %
+imagine this scenario as being a user, sitting down in a busy %
+courtyard watching streaming video on their mobile phone. The %
+user equipment is unlikely to move much however the environment %
+connecting the user to the base station is prone to change as %
+people and vehicles move about. I will model this environment %
+as one that will introduce slow time-variations to the wireless %
+% Find some examples or citations of this?
+channel connecting the station to the user. No more time will be %
+spent analysing the validity of this channel model as %
+the key focus of this report will be to analyse the %
+effectiveness of adaptive filters under these channel %
+conditions.
+
+With this scenario in mind this report will be broken %
+into the following sections. The rest of this chapter %
+will aim to introduce the topics of the wireless %
+communication principles used throughout the rest %
+of the report, adaptive filtering, orthogonal %
+frequency division multiplexing, and wireless %
+channel modeling will receive a high level treatment %
+here. Chapter 2 will give OFDM a more in-depth %
+mathematical discussion. % This will probably be very short
+% but I can probably flesh it out if I give it some 
+% comparison and look at OOB emissions and the such.
+Chapter 3 will give adaptive filtering a similar %
+in-depth mathematical treatment. Chapter 4 will study %
+channel models and channel modeling techniques. %
+Chapter 5 will develop my system model both under %
+under simulation and on the software defined radio. %
+Chapter 6 will look at the results under simulation %
+both on the radio and in MATLAB. Chapter 7 will draw %
+some conclusions and make some remarks about future %
+directions that can be explored.
+
+\section{Orthogonal Frequency Division Multiplexing %
+(OFDM)}
+
+\section{Adaptive Filtering}
+
+\section{Channel Modeling}
+
