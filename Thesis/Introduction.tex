@@ -63,7 +63,54 @@ directions that can be explored.
 \section{Orthogonal Frequency Division Multiplexing %
 (OFDM)}
 
+The simplest way to modulate signals over the wireless %
+channel is to use some form of single carrier modulation. %
+Single carrier modulation simply takes input data, separates %
+it into in-phase and quadrature components if necessary, pulse %
+shapes the signal, up converts to the carrier frequency and %
+transmits over the wireless channel.
+%TODO: add figure to depict single carrier methodology
+
+This method of modulation has some drawbacks. %TODO: find some 
+% references that list some drawbacks of single carrier modulation.
+The main drawbacks of interest to us will be the complexity of %
+channel equalisation. The wireless propagation medium can be %
+modeled as a finite impulse response filter %TODO: cite this
+and so as the filter length increases estimating, %
+the channel becomes an increasingly more complex task. %
+A modulation technique that helps to overcome this challenge %
+is orthogonal frequency division multiplexing or OFDM. %
+OFDM works differently to traditional single carrier %
+modulation in the sense that it separates the modulation %
+bandwidth into $N$ subcarriers each with a subband bandwidth of %
+$\frac{B_total}{N}$.
+
+%TODO: add figure depicting the serial to parallel OFDM
+
+A cyclic prefix can be added to the beginning of each OFDM %
+symbol which gives it the nice mathematical properties %
+which make equalisation simple regardless of the length %
+of the channel filter. In addition, the parallel nature %
+of the signal means that signal processing can happen %
+on each subband independently and can reduce the bandwidth %
+requirements for signal processing electronics.
+
+The details of OFDM will be developed in Chapter 2. 
+%TODO: fix chapter numbers
+Where the mathematical construction of OFDM will be
+explored as well as the nature of the cyclic prefix.
+
 \section{Adaptive Filtering}
 
+%TODO: Do some reading to find a good way to motivate Adaptive
+% filters. Want to compare it to static filters at the 
+% very least. Maybe even want to introduce some filter
+% theory full stop.
+
 \section{Channel Modeling}
+
+%TODO: Do some reading to find a good way to motivate channel
+% models. Want to introduce the wireless system model. And 
+% connect the channel model to the idea of a filter. Connecting
+% it to adaptive filtering and OFDM.
 
