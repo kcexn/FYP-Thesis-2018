@@ -1,2 +1,94 @@
-\chapter{Orthogonal Frequency Division Multiplexing}
-\
+\chapter{Orthogonal Frequency Division Multiplexing (OFDM)}
+
+Chapter 1 introduced the idea of OFDM and why it's %
+advantageous to use. This chapter will aim to develop %
+OFDM mathematically and provide some theoretical insight %
+into how and why it works.
+\begin{figure}[h!]
+	\begin{subfigure}{\linewidth}
+		\includegraphics[width=\linewidth]{./Figures/Chapter2/%
+		OFDM_Transmit.png}
+		\caption{OFDM Transmitter block diagram}	
+		\label{subfig:OFDM_Transmitter}
+	\end{subfigure}
+	\begin{subfigure}{\linewidth}
+		\includegraphics[width=\linewidth]{./Figures/Chapter2/%
+		OFDM_Transmit.png}
+		\caption{OFDM Receiver block diagram}
+		\label{subfig:OFDM_Receiver}
+	\end{subfigure}
+	\caption{OFDM transmission and reception diagrams}
+	\label{fig:OFDM}
+\end{figure}
+
+Figure \ref{fig:OFDM}\subref{subfig:OFDM_Transmitter}. %
+depicts the block diagram of the OFDM transmitter.
+
+\section{Discrete Fourier Transform and Fast Fourier Transform}
+
+It's long been known that signals can be overlapped in the %
+frequency domain with orthogonal frequency spacing %
+allowing for efficient utilisation of the %
+frequency spectrum\cite{Chang66}.
+
+A key driver to the efficiency and widespread adoption %
+of OFDM is the discrete fourier transform (DFT) defined %
+as\cite{Rao2010}:
+
+\begin{align}
+	X^F(k) = \sum_{n=0}^{N-1}x(n)e^{(\frac{-i 2\pi}{N})kn}, %
+	k=0,1,\cdots,N-1,\quad N \text{ DFT coefficients}
+\end{align}
+
+And the inverse transform is defined as:
+
+\begin{align}
+	x(n) = \frac{1}{N}\sum_{k=0}^{N-1}X^{F}(k)%
+	e^{(\frac{i 2\pi}{N})kn}, n = 0,1,\cdots,N-1, \quad%
+	N \text{ data samples}
+	\label{eq:IDFT}
+\end{align}
+
+The discrete fourier transform has the orthogonality %
+properties necessary for orthogonal spectral allocation. %
+To show this I'll follow the development in \cite{Opp99}. %
+multiply both sides of eq \ref{eq:IDFT}. by %
+$e^{-j(\frac{2\pi}{N})rn}$ and summing from $n=0$ %
+to $n=N-1$ gives:
+
+\begin{align}
+	\sum_{n=0}^{N-1}x(n)e^{(\frac{-i 2\pi}{N})rn} = %
+	\sum_{k=0}^{N-1}X^{F}(k)\left[\frac{1}{N} \sum_{n=0}^{N-1} %
+	e^{(\frac{i 2\pi}{N})(k-r)n}\right]
+\end{align}
+
+evaluating the exponential:
+
+\begin{align}
+	\frac{1}{N}\sum_{n=0}^{N-1}e^{(\frac{i 2\pi}{N})(k-r)n}%
+	= \begin{cases}
+		1,\quad k-r = mN, \quad m\text{ an integer},\\
+		0,\quad \text{otherwise.}
+	\end{cases}
+\end{align}
+
+which expresses the orthogonality of the complex exponentials %
+$e^{(\frac{i 2\pi}{N})kn}$ and $e^{(\frac{-i 2\pi}{N})rn}$ for %
+integer values of $k$ and $r$. This can be interpreted as the %
+complex exponentials forming an orthonormal basis proving that %
+the DFT and IDFT have the orthogonality properties needed for %
+OFDM.
+
+By itself the DFT has computational complexity of $\mathcal{O}(%
+N^2)$ as there are $N$ multiplication for each coefficient and %
+$N$ coefficients in the DFT. Fast versions of the DFT which %
+reduce the computational complexity of the DFT to $\mathcal{O}(%
+Nlog(N))$ have been fundamental to the adoption of OFDM.%
+
+The fast fourier transform (FFT) used in the remainder of %
+this report % TODO: thesis? 
+is the default FFT provided by MATLAB built on FFTW\cite{FFTW}. %
+\section{Cyclic Prefix}
+
+%TODO: develop the mathematical reasoning for the cyclic
+% prefix

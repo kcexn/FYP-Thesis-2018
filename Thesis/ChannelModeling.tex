@@ -1,0 +1,76 @@
+\chapter{Wireless Channel Modeling}
+
+The digital communication channel as described in %
+% TODO: find the textbook I think by Sklar that 
+% describes the system model. 
+[Sklar] %TODO: replace this.
+
+Fading is a major component of wireless channel %
+impairments. Fading comes under two main categories %
+large scale and small scale fading.
+
+% TODO: give the text book description of large scale fading
+
+\section{Fading Channels}
+
+\subsection{Large Scale Fading}
+Large scale %
+fading is characterised by effects such as shadowing %
+where large obstructions within the environment such as %
+buildings significantly attenuate the wireless signal %
+before reaching the receiver. This type of fading is %
+traditionally modeled using a log-normal distribution %
+as has been experimentally shown by 
+% Cite Hata and his crew.
+
+This kind of fading is known to be at least partially %
+compensated by power control\cite{Jer00}. In addition, %
+referring back to my motivating scenario in section %
+\ref{sec:MotivatingScenario}, the relatively stationary %
+environment that I'm operating within means that any time-varying %
+effects that might be introduced by large-scale fading %
+will be very small relative to the small scale fading. 
+
+\subsection{Small Scale Fading}
+% TODO: give the textbook description of small scale fading
+
+Small scale fading is caused by a transmitted signal %
+arriving at the receiver with slightly different delays %
+and angles after having been scattered or reflected by %
+the environment in some way. The signals all self %
+interfere at the receiver causing constructive or %
+destructive interference. 
+
+% TODO: make a diagram depicting the self interference
+
+Small scale fading is typically modeled as having an %
+envelope that follows a Rayleigh distribution or a %
+Rician distribution, normally referred to as Rayleigh %
+fading and Rician fading respectively. % TODO: maybe reference
+% simulation of communication systems
+
+% TODO: make a diagram of the Rayleigh distribution
+% TODO: make a diagram of the Rician distribution
+% TODO: Enter the expressions for a Rayleigh distribution
+% TODO: Enter the expressions for a Rician distribution
+% TODO: find and plot a measured Rayleigh distribution
+
+Good modeling and simulation of this small scale fading %
+is crucial to the accurate simulation of wireless channels. %
+There are two main methods of simulating small scale fading, %
+the sums of sinusoids method first developed by Jakes in %
+\cite{Jakes74} and a filtered white gaussian noise method. %
+The filtered white gaussian noise methodology is the chosen %
+method of simulation for this report.
+
+\subsection{Wireless Channel as a Filter}
+
+% TODO: Develop Finite impulse response filter model 
+% of the wireless channel
+
+% TODO: develop the model for the time-varying characteristics
+% of wireless channels
+
+% TODO: Develop the mathematics of the finite gaussian channel model
+
+

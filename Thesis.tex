@@ -1,5 +1,5 @@
 \documentclass[11pt, a4paper, draft]{report}
-\title{Thesis}
+\title{Report}
 \author{Kevin Exton}
 \date{\today}
 \newcommand{\tabitem}{~~\llap{\textbullet}~~}
@@ -10,6 +10,8 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{graphicx}
+\usepackage{cleveref}
+\usepackage{url}
 \begin{document}
 \maketitle
 \renewcommand{\abstractname}{Executive Summary}
@@ -19,7 +21,12 @@
 \tableofcontents
 \include{./Thesis/Introduction}
 \include{./Thesis/OFDM}
+\include{./Thesis/ChannelModeling}
+\include{./Thesis/AdaptiveFiltering}
+\include{./Thesis/System}
+\include{./Thesis/Results}
+\include{./Thesis/Conclusions}
 \newpage
 \bibliography{./References/references}
-\bibliographystyle{ieeetr}
+\bibliographystyle{IEEETrans}
 \end{document}
