@@ -1,28 +1,26 @@
 \chapter{Orthogonal Frequency Division Multiplexing (OFDM)}
-
 Chapter 1 introduced the idea of OFDM and why it's %
 advantageous to use. This chapter will aim to develop %
 OFDM mathematically and provide some theoretical insight %
 into how and why it works.
-\begin{figure}[h!]
-	\begin{subfigure}{\linewidth}
-		\includegraphics[width=\linewidth]{./Figures/Chapter2/%
-		OFDM_Transmit.png}
-		\caption{OFDM Transmitter block diagram}	
-		\label{subfig:OFDM_Transmitter}
-	\end{subfigure}
-	\begin{subfigure}{\linewidth}
-		\includegraphics[width=\linewidth]{./Figures/Chapter2/%
-		OFDM_Transmit.png}
-		\caption{OFDM Receiver block diagram}
-		\label{subfig:OFDM_Receiver}
-	\end{subfigure}
-	\caption{OFDM transmission and reception diagrams}
-	\label{fig:OFDM}
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{./Figures/Chapter2/%
+	OFDM_Transmit.png}
+	\caption{OFDM Transmitter block diagram}
+	\label{fig:OFDMTransmit}
 \end{figure}
 
-Figure \ref{fig:OFDM}\subref{subfig:OFDM_Transmitter}. %
-depicts the block diagram of the OFDM transmitter.
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{./Figures/Chapter2/%
+	OFDM_Receive.png}
+	\caption{OFDM Receiver block diagram}
+	\label{fig:OFDMReceiver}
+\end{figure}
+
+Figure \ref{fig:OFDMTransmit} and \ref{fig:OFDMReceiver} %
+depict the block diagram of the OFDM transmitter and receiver.
 
 \section{Discrete Fourier Transform and Fast Fourier Transform}
 
@@ -75,7 +73,8 @@ evaluating the exponential:
 which expresses the orthogonality of the complex exponentials %
 $e^{(\frac{i 2\pi}{N})kn}$ and $e^{(\frac{-i 2\pi}{N})rn}$ for %
 integer values of $k$ and $r$. This can be interpreted as the %
-complex exponentials forming an orthonormal basis proving that %
+complex exponentials forming an orthonormal basis demonstrating %
+that %
 the DFT and IDFT have the orthogonality properties needed for %
 OFDM.
 
@@ -90,5 +89,56 @@ this report % TODO: thesis?
 is the default FFT provided by MATLAB built on FFTW\cite{FFTW}. %
 \section{Cyclic Prefix}
 
-%TODO: develop the mathematical reasoning for the cyclic
-% prefix
+In addition to the FFT a second principal component to the %
+operation of OFDM is the cyclic prefix. The development of %
+the cyclic prefix here follows that of \cite{Goldsmith05}.
+
+Consider an input to a wireless channel $x[n] = x[0],x[1],\cdots,%
+x[N-1]$ of length $N$ and a discrete-time channel with finite %
+impulse response (FIR) $h[n] = h[0],h[1],\cdots,h[\mu-1]$ of length %
+$\mu$. A cyclic prefix of $x[n]$ is defined as $\{x[N-(\mu-1)], %
+x[N-(\mu-2)], \cdots, x[N-1]\}$ which is appended to the beginning %
+of the input, the resulting series of samples $\hat{x} = x[N-(\mu-1)], %
+x[N-(\mu-2)], \cdots, x[N-1], x[0], x[1], \cdots, x[N-1]$, figure %
+\ref{fig:CyclicPrefix}. visualises $\hat{x}[n]$.
+
+\begin{figure}[h!]
+	\includegraphics[width=\linewidth]{./Figures/Chapter2/%
+	CyclicPrefix.png}
+	\caption{Appending the Cyclic Prefix}
+	\label{fig:CyclicPrefix}
+\end{figure}
+
+It's clear from the definition of the new sequence $\hat{x}[n]$ that %
+$\hat{x}[n]$ is equivalent to $x[n]_{N}$ from $-(\mu-1) \leq n \leq %
+N-1$. Where $x[n]_{N}$ denotes the sequence $x[n]$ modulo $N$, that %
+is to say the sequence $x[n]$ is periodic in $N$. Given $\hat{x}[n]$ %
+as the input to the channel and the channel response begin $h[n]$. %
+The channel output is:
+
+\begin{align}
+	y[n] =& \hat{x}[n]*h[n]\\
+	     =& \sum_{k=0}^{\mu-1}h[k]\hat{x}[n-k]\\
+	     =& \sum_{k=0}^{\mu-1}h[k]x[n-k]_{N}\\
+	     =& x[n]_{N}\circledast h[n]
+\end{align}
+
+where $\circledast$ represents a circular convolution. %
+
+The convolution theorem states that the convolution %
+of two  signals is equivalent to point wise %
+multiplication in the frequency domain\cite{MathWorldConvolution%
+Theorem}. In the special case of the DFT, the convolution theorem %
+applies under circular convolution i.e.
+
+\begin{align}
+	Y[i] = \text{DFT}\{y[n] = x[n]\circledast h[n]\} = X[i]H[i]	
+\end{align}
+
+This powerful result allows for the easy equalisation of the received %
+signal $y[n]$ in the frequency domain, as the sent signal $X[i]$ can %
+retrieved with a simple division.
+
+\begin{align}
+	X[i] = \frac{Y[i]}{H[i]}
+\end{align}
