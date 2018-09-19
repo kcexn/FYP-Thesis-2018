@@ -1,9 +1,10 @@
 \chapter{Orthogonal Frequency Division Multiplexing (OFDM)}
+\newpage
 Chapter 1 introduced the idea of OFDM and why it's %
 advantageous to use. This chapter will aim to develop %
 OFDM mathematically and provide some theoretical insight %
 into how and why it works.
-\begin{figure}
+\begin{figure}[ht]
 	\centering
 	\includegraphics[width=\linewidth]{./Figures/Chapter2/%
 	OFDM_Transmit.png}
@@ -11,7 +12,7 @@ into how and why it works.
 	\label{fig:OFDMTransmit}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[ht]
 	\centering
 	\includegraphics[width=\linewidth]{./Figures/Chapter2/%
 	OFDM_Receive.png}
@@ -30,7 +31,7 @@ allowing for efficient utilisation of the %
 frequency spectrum\cite{Chang66}.
 
 A key driver to the efficiency and widespread adoption %
-of OFDM is the discrete fourier transform (DFT) defined %
+of OFDM is the discrete Fourier transform (DFT) defined %
 as\cite{Rao2010}:
 
 \begin{align}
@@ -84,7 +85,7 @@ $N$ coefficients in the DFT. Fast versions of the DFT which %
 reduce the computational complexity of the DFT to $\mathcal{O}(%
 Nlog(N))$ have been fundamental to the adoption of OFDM.%
 
-The fast fourier transform (FFT) used in the remainder of %
+The fast Fourier transform (FFT) used in the remainder of %
 this report % TODO: thesis? 
 is the default FFT provided by MATLAB built on FFTW\cite{FFTW}. %
 \section{Cyclic Prefix}
