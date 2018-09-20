@@ -224,8 +224,262 @@ mean scattered signal power of $1$.
 
 \section{Time and Frequency Characteristics of Fading %
 Channels}
+\FloatBarrier
 
-% TODO: find and plot a measured Rayleigh distribution
+Figure \ref{fig:FadingBlocks} provides a broad %
+description of the important components within %
+fading channels. In this section we will draw our %
+attention to blocks $5$ and $6$ under small %
+scale fading.
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/%
+		WirelessChannel/FadingBlockDiagram%
+		.png}
+	\caption{Fading Channel manifestations%
+		\cite{Sklar97-1}}
+	\label{fig:FadingBlocks}
+\end{figure}
+
+As is apparent from the diagram, small-scale fading %
+can be described by two key components, the time %
+spreading of the signal or dispersion, and the time %
+variance of the channel. 
+
+Bello \cite{Bello63} proposed a simple wide-sense %
+stationary uncorrelated scattering model of fading in %
+1963. This model treats the received signals arriving %
+with different delays as being uncorrelated and that %
+the channel is wide sense stationary in both the time %
+and frequency domains. Using this model four functions %
+can be defined that characterise the fading as shown in %
+figure \ref{fig:FadingFunctions}.
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/%
+		WirelessChannel/FadingFunctions.png}
+	\caption{Four Functions that define Fading in %
+			a WSSUS channel \cite{Sklar01}}
+	\label{fig:FadingFunctions}
+\end{figure}
+
+\FloatBarrier
+\subsection{Time Spreading}
+In this section we will focus on figure %
+\ref{fig:FadingFunctions}a) and \ref{%
+fig:FadingFunctions}b). The multipath %
+intensity profile also referred to as the %
+power delay profile plots the received %
+signal power vs the excess delay. %
+Excess delay is defined as the propagation %
+delay of the signal that exceeds the delay %
+of the first signal arrival at the receiver %
+\cite{Sklar01}.
+
+In the fading channel, the maximum excess %
+excess delay time $T_{m}$ and symbol time %
+$T_{m}$ can be used to categorise the %
+fading into two categories:
+
+\begin{itemize}
+	\item{frequency-selective fading}
+	\item{frequency nonselective or flat fading}
+\end{itemize}
+
+The channel is frequency selective when %
+$T_{m} > T_{s}$. This occurs when the %
+excess delay induced by the multipath %
+components of the symbol last longer %
+than the symbols time duration. This leads %
+to an effect where the multipath components %
+of one symbol can interfere with the next symbol. %
+This effect is named channel induced ISI. The %
+channel exhibits flat fading when %
+$T_{m} < T_{s}$. This is when %
+the multipath components of a symbol %
+all arrive within the symbol time, the multipath %
+components are all contained within the symbol and %
+do not interfere with neighbouring symbols so ISI %
+does not happen, there is however still signal %
+degradation since the multipath components still %
+self-interfere.
+
+This same time spreading effect can be analysed in %
+the frequency domain. If the fourier transform of %
+$S(\tau)$ illustrated in figure \ref{fig:FadingFunctions}a) %
+is taken then the function $\lvert %
+R(\Delta f) \rvert$ as illustrated in figure %
+\ref{fig:FadingFunctions}b) is revealed. This function, %
+referred to as the \emph{spaced-frequency correlation %
+function} represents the correlation between the channel %
+response to two signals as a function of frequency %
+difference between the two signals. It can be thought of %
+as the frequency transfer function of the channel and so %
+the time spreading effect can be understood as the result %
+of the channel filter.
+\FloatBarrier
+The spaced-frequency correlation function allows us to %
+understand the similarity between two received signal %
+that are spaced in frequency $\Delta f = f_{1} - f_{2}$. %
+Frequency selective fading can be understood as the %
+spaced-frequency correlation function is poorly correlated %
+across the signal bandwidth, and flat fading can be understood %
+as the spaced-frequency correlation function being highly %
+correlated across the signal bandwidth. An important %
+parameter, the \emph{coherence bandwidth} $f_{0}$ %
+can be used as a statistical measure of the bandwidth %
+of which the signal of interest experiences equal gain %
+and linear phase. $f_{0}$ and $T_{m}$ are reciprocally %
+related and as an approximation
+
+\begin{align}
+	f_{0} \approx \frac{1}{T_{m}}
+\end{align}
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/%
+		WirelessChannel/FrequencyCoherence%
+		.png}
+	\caption{frequency selective and flat fading %
+	\cite{Sklar01}}
+	\label{fig:FadingFigure}
+\end{figure}
+
+Figure \ref{fig:FadingFigure} illustrates the difference %
+between frequency selective and flat fading in the %
+frequency domain. $W$ is the transmitted signal %
+bandwidth and $f_{0}$ is the coherence bandwidth.
+\FloatBarrier
+The maximum excess delay $T_{m}$ is not always the %
+best indicator of channel performance, as channels with %
+different $T_{m}$ can exhibit different power delay profiles. %
+A different parameter that is used for understanding %
+coherence bandwidth is the root-mean-squared delay spread.
+
+\begin{align}
+	\sigma_{\tau} = \sqrt{\overline{\tau^{2}} - (\bar{\tau}^{2})}
+\end{align}
+
+where $\overline{\tau^{2}}$ and $\bar{\tau}^{2}$ are defined %
+as:
+
+\begin{align}
+	\overline{\tau^{2}} =&  \frac{\int \tau^{2} S(\tau) d\tau}{\int S(\tau) d\tau} \\
+	\bar{\tau} =& \frac{\int \tau S(\tau) d\tau}{\int S(\tau) d\tau}
+\end{align}
+
+Using this rms delay a popular approximation of %
+the coherence bandwidth where the correlation %
+of the signal within this bandwidth is at least 0.5 is
+
+\begin{align}
+	f_{0} \approx \frac{1}{5\sigma_{\tau}}
+\end{align}
+
+\subsection{Time Variance}
+Time variance of the channel is caused by relative %
+motion between the transmitter and receiver or by %
+objects moving about within the channel \cite{Sklar01}. %
+Figure \ref{fig:FadingFunctions}c) shows the function %
+$R(\Delta t)$ named the \emph{spaced-time correlation %
+function}. Similar to the spaced-frequency correlation %
+function $R(\Delta t)$ measures the similarity between %
+two signals in the \emph{time} domain. It's measured %
+by sending two sinusoids through the channel at differing %
+times $\Delta t = t_{1} - t_{2}$ and evaluating their %
+cross correlation. 
+
+Just as the spaced-frequency correlation function has a %
+measure of coherence bandwidth, the spaced-time %
+correlation function has a measure of \emph{coherence %
+time} $T_{0}$. The coherence time is a measurement of %
+the duration the channel is invariant. 
+
+The coherence time of the channel allows the fading %
+to be categorised two ways as in figure \ref{fig:FadingBlocks}, %
+blocks 14, 15, 17, 18.
+
+\begin{itemize}
+	\item{fast fading}
+	\item{slow fading}
+\end{itemize}
+
+Fast fading occurs when the coherence time $T_{0}$ %
+is less than the symbol time $T_{s}$ ie.
+
+\begin{align}
+	T_{0} < T_{s}
+\end{align}
+
+Slow fading occurs whne the coherence time is %
+greater than the symbol time
+
+\begin{align}
+	T_{0} > T_{s}
+\end{align}
+
+In fast fading the received signal pulse undergoes %
+distortion that leaves it uncorrelated throughout time. %
+A slow fading channel does not induce this pulse distortion %
+as the channel is relatively invariant throughout one symbol %
+period.
+
+It's been shown \cite{Clarke68} that under the popular %
+dense scatterer model the normalized $R(\Delta t)$ is
+
+\begin{align}
+	R(\Delta t) = J_{0}(kV \Delta t)
+\end{align}
+
+where $J_{0}(\cdot)$ is the zeroth order Bessel %
+function of the first kind. $V$ is the relative velocity %
+between the transmitter and receiver and %
+$k = \frac{2\pi}{\lambda}$ is the free-space %
+phase constant. An interesting point about %
+this expression is that it can be expressed both %
+in time or distance (where distance is $V\Delta t$). %
+It has been shown \cite{Amoroso96} that at a %
+distance of $0.38\lambda$ from the point of %
+reference that the combined magnitudes and %
+phases of a continuous wave signal are %
+statistically uncorrelated.
+
+The frequency domain interpretation of %
+this time variation is that of a doppler-shift %
+represented in the frequency domain. Figure %
+\ref{fig:FadingBlocks}d) shows the \emph{%
+Doppler power spectral density} or simply %
+Doppler spectrum. For the case of the dense %
+scatterer model, a vertical receive antenna with %
+constant azimuthal gain, a uniform distribution of %
+signals arriving at all arrival angles, and an a %
+continuous wave signal the doppler spectrum is %
+\cite{Clarke68}
+
+\begin{align}
+	S(\nu) = \frac{1}{\pi f_{d} \sqrt{1 - %
+		(\frac{\nu - f_{c}}{f_{d}})^{2}}}
+\end{align}
+
+Where $\nu$ is the frequency shift, $f_{d}$ is the %
+doppler frequency and $f_{c}$ is the carrier frequency. %
+This spectrum is known as the Jakes' spectrum\cite{Iskander}. %
+The doppler shift is the result of the fourier transform %
+of the spaced-time correlation function similar to how %
+the spaced-frequency correlation function is the %
+Fourier transform of the power delay profile. The %
+shape of this spectrum is bowl shaped as can be seen in %
+figure \ref{fig:FadingFunctions}d).
+
+The magnitude of the doppler shift is given by:
+
+\begin{align}
+	f_{d} = \frac{V}{\lambda}
+\end{align}
+
+where $V$ is the relative velocity between the %
+transmitter and receiver and $\lambda$ is the signal %
+wavelength.
 
 \section{Wireless Channel as a Filter}
 
