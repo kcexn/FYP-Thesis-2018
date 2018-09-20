@@ -119,7 +119,7 @@ The multipath fading can be broadly organised into %
 two separate categories\cite{Jer00}.
 
 \begin{enumerate}
-	\item{The multipath signa paths are made up %
+	\item{The multipath signal paths are made up %
 		of relatively small and identifiable number %
 		of components reflected by small hills, %
 		houses, and other strucutres encountered in %
@@ -135,13 +135,6 @@ two separate categories\cite{Jer00}.
 		channel model is referred to as a \emph{diffuse %
 		multipath channel}.}
 \end{enumerate}
-
-Small scale fading is caused by a transmitted signal %
-arriving at the receiver with slightly different delays %
-and angles after having been scattered or reflected by %
-the environment in some way. The signals all self %
-interfere at the receiver causing constructive or %
-destructive interference. 
 
 Multipath reflected components can be described in %
 terms of orthogonal components $x_{n}(t)$ and %
@@ -163,9 +156,17 @@ of the received signal is going to follow a Rayleigh distribution %
 with probability density function:
 
 \begin{align}
-	f_{R}(r) = \frac{r}{\sigma^{2}}e^{-r^{2}/(2\sigma^{2})}
+	f_{R}(r_{0}) = \begin{cases}
+		\frac{r_{0}}{\sigma^{2}}e^{-r_{0}^{2}/(2\sigma^{2})} %
+		& \text{ for } r_{0} \geq 0 \\
+		0 & \text{ otherwise}
+	\end{cases}
 	\label{eq:RayleighPDF}
 \end{align}
+
+Where $\sigma^{2}$ is the mean power of the received %
+multipath signal. This type of fading is called Rayleigh %
+fading.
 
 \begin{figure}[h!]
 	\includegraphics[width=\linewidth]{./Figures/%
@@ -186,32 +187,47 @@ follows a Rician distribution with probability density %
 function:
 
 \begin{align}
-	f_{R}(r) = \frac{r}{\sigma^{2}}I_{0}%
-	\left[ \frac{A_{r}}{\sigma^{2}} \right]%
-	e^{-(r^{2}-A^{2})/(2 \sigma^{2})}
+	f_{R}(r_{0}) = \begin{cases}
+		\frac{r_{0}}{\sigma^{2}}I_{0}%
+		\left[ \frac{A_{r}}{\sigma^{2}} \right]%
+		e^{-(r_{0}^{2}-A^{2})/(2 \sigma^{2})}%
+		 & \text{ for } r_{0} \geq 0, A \geq 0\\
+		0 & \text{ Otherwise}
+	\end{cases}
 	\label{eq:RicianPDF}
-	%I_{0} is the zeroth order modified bessel function
-	% of the first kind
 \end{align}
 
 where $I_{0}$ is the modified zeroth order %
 bessel function of the first kind. This kind of %
-fading is commonly referred to as Rician fading. 
-% Cite the text cited by Sklar???
+fading is commonly referred to as Rician fading. %
+The Rician distribution is commonly described in %
+terms of a parameter K\cite{Sklar01}, which is defined as %
+the ratio of power in the specular component to the %
+power in the multipath signal and is given as:
 
-% TODO: Explain the rician v parameter
-% it comes from the expression describing the K parameter
-\begin{figure}[h!]
+\begin{align}
+	K = \frac{A^{2}}{2\sigma^{2}}
+\end{align}
+
+Figure \ref{fig:RicianDistribution} illustrates the relationship %
+of the rician probability density function to the rayleigh %
+PDF with respect to mean specular signal amplitude $v$ and %
+mean scattered signal power of $1$.
+
+\begin{figure}[ht]
 	\includegraphics[width=\linewidth]{./Figures/%
 	WirelessChannel/RicianDistribution.png}
-	\caption{Rayleigh and Rician Distributions}
+	\caption{Rayleigh and Rician Probability %
+	Density Function}
 	\label{fig:RicianDistribution}
 \end{figure}
 
-% TODO: make a diagram of the Rician distribution
+\section{Time and Frequency Characteristics of Fading %
+Channels}
+
 % TODO: find and plot a measured Rayleigh distribution
 
-
+\section{Wireless Channel as a Filter}
 
 Good modeling and simulation of this small scale fading %
 is crucial to the accurate simulation of wireless channels. %
@@ -221,7 +237,7 @@ the sums of sinusoids method first developed by Jakes in %
 The filtered white gaussian noise methodology is the chosen %
 method of simulation for this report.
 
-\section{Wireless Channel as a Filter}
+
 
 % TODO: Develop Finite impulse response filter model 
 % of the wireless channel
