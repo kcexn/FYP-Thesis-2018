@@ -28,7 +28,17 @@ in the subject line please include #Feedback_FYP
 
 ## OFDM
 
+My first draft of this section is now complete
+and should be completely readable as a whole.
+It connects in with a section in the introduction 
+on OFDM so these two parts should make sense together
+as a whole.
+
 ## Wireless Channel Modeling
+
+My first draft of this section is now complete.
+I've also drafted up a section in the introduction
+so these two should now be completely readable as a whole
 
 ## Adaptive Filtering
 
