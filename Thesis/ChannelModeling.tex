@@ -483,15 +483,61 @@ wavelength.
 
 \section{Wireless Channel as a Filter}
 
-Good modeling and simulation of this small scale fading %
-is crucial to the accurate simulation of wireless channels. %
-There are two main methods of simulating small scale fading, %
-the sums of sinusoids method first developed by Jakes in %
-\cite{Jakes74} and a filtered white gaussian noise method. %
-The filtered white gaussian noise methodology is the chosen %
-method of simulation for this report.
+Multipath fading can be modeled as a kind of %
+finite impulse response filter where each %
+sample at the receiver is a linear combination %
+of the samples transmitted over the multipath %
+channel.
 
+\begin{align}
+	y(t) = \sum_{n} \alpha_{n}(t)s(t-\tau_{n}(t))
+	\label{eq:ChannelFIR}
+\end{align}
 
+where $s(t)$ is the bandpass input signal, $\alpha_n(t)$ %
+is the attenuation factor for the signal received %
+on the $n\text{th}$ path, and $\tau_n(t)$ is the %
+propagation delay along that path. A natural model %
+for equation \ref{eq:ChannelFIR} is that of a %
+tapped-delay line with time-varying coefficients. %
+If the bandpass signal $s(t)$ is represented as:
+
+\begin{align}
+	s(t) = Re\left\{ \tilde{s}%
+	(t)e^{j2\pi f_{c} t} \right\}
+\end{align}
+
+where $\tilde{s}$ is the complex baseband signal. %
+Then the channel output $y(t)$ can be represented as:
+
+\begin{align}
+	y(t) = Re\left\{\left( \sum_{n} %
+	\alpha_{n}(t) e^{-j2 \pi f_{c} \tau_{n}(t)} %
+	\tilde{s}(t - \tau_{n}(t)) \right)%
+	e^{j 2\pi f_{c} t} \right\}
+\end{align}
+
+the complex envelope of $y(t)$ is:
+
+\begin{align}
+	\tilde{y}(t) =& \sum_{n}\alpha_{n}(t)%
+	e^{-j 2\pi f_{c} \tau_{n}(t)} %
+	\tilde{s}(t - \tau_{n}(t))
+		     =& \sum_{n}%
+	\tilde{\alpha}_{n}(t)\tilde{s}(%
+	t-\tau_{n}(t))
+	\label{eq:ChannelOutput}
+\end{align}
+
+Equation \ref{eq:ChannelOutput} makes it clear that %
+the channel response can be represented using a %
+complex, baseband equivalent impulse response.
+
+\begin{align}
+	\tilde{h}(\tau;t) = \sum_{n} %
+	\alpha_{n}(t)\delta(\tau - %
+	\tau_{n}(t))
+\end{align}
 
 % TODO: Develop Finite impulse response filter model 
 % of the wireless channel
