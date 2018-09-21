@@ -22,7 +22,8 @@ is to either
 
 - find me at uni and tell me
 - email me at kcext1+evernote@student.monash.edu
-in the subject line please include #Feedback_FYP
+in the subject line please include #Feedback_FYP 
+at the end of the subject line.
 
 ## Introduction
 
