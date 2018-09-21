@@ -110,8 +110,73 @@ explored as well as the nature of the cyclic prefix.
 
 \section{Channel Modeling}
 
-%TODO: Do some reading to find a good way to motivate channel
-% models. Want to introduce the wireless system model. And 
-% connect the channel model to the idea of a filter. Connecting
-% it to adaptive filtering and OFDM.
+The wireless communication channel is a %
+hostile environment. There are three %
+major types of impairments that affect %
+wireless communication
+
+\begin{itemize}
+	\item{Path loss}
+	\item{Thermal electronic noise}
+	\item{Fading}
+\end{itemize}
+
+Path loss is an impairment that affects %
+all forms of electronic communication and is %
+caused by the natural decay in amplitude %
+that electromagnetic waves undergo as they %
+propagate through free space. Path loss %
+is proportional to $\frac{1}{d^2}$ where %
+$d$ is the distance between the transmitter %
+and receiver.
+
+Thermal electronic noise is the noise %
+caused by the electronics at the %
+transmitter and receiver. The measure %
+of thermal noise that is important %
+will be the ratio between average %
+signal power and average noise power %
+commonly referred to as signal-to-%
+noise ratio (SNR). The noise is %
+commonly fixed by the temperature %
+of operation for the electronics. %
+The noise power spectral density %
+is defined as %
+
+\begin{align}
+	N_{0} = \kappa T
+\end{align}
+
+where $\kappa$ is the boltzmann %
+constant and $T$ is the temperature %
+of operation in Kelvin. Noise %
+power is typically relative constant %
+in a given system and is defined as
+
+\begin{align}
+	\sigma^{2} = BT
+\end{align}
+
+where $B$ is the bandwidth of the %
+signal of interest.
+
+Fading is a stochastic impairment %
+that is unique to wireless %
+channels and is caused by obstructions %
+in the surrounding environment, %
+relative movement between the %
+transmitter and receiver %
+or movement of objects between %
+the transmitter and receiver. The %
+combination of movement and %
+obstructions cause the wave to %
+reflect and scatter throughout %
+throughout the environment of %
+interest before arriving %
+at the receiver. This is a %
+severe impairment to the wireless %
+channel and is central to my %
+analysis of adaptive filtering. So %
+Chapter \ref{chap:ChannelModeling} %
+will develop this in much more detail.
 

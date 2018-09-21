@@ -1,5 +1,5 @@
 \chapter{Wireless Channel Modeling}
-
+\label{chap:ChannelModeling}
 % TODO: Introduce Fadnig impairments following
 % Simulation of Communication Systems
 
@@ -539,11 +539,17 @@ complex, baseband equivalent impulse response.
 	\tau_{n}(t))
 \end{align}
 
-% TODO: Develop Finite impulse response filter model 
-% of the wireless channel
+where the output is
+% I need to check this with the latest textbook
+% When I get home.
+\begin{align}
+	\tilde{y}(t) = \sum_{n} \tilde{h}%
+	(\tau;t)s(t - \tau)
+\end{align}
 
-% TODO: develop the model for the time-varying characteristics
-% of wireless channels
+If $h(\tau;t)$ was time-invariant this would be the %
+equivalent of a normal convolution sum.
+
 
 % TODO: Develop the mathematics of the finite gaussian channel model
 
