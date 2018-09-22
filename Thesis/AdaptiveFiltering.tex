@@ -60,11 +60,239 @@ development of the recursive least square will be covered here as %
 well.
 
 \section{A Static Filter and The Wiener Solution}
+% Need to introduce this section
+\subsection{A Simple Filter the Zero-Forcing Solution}
+\label{subsec:ZeroForcing}
+Previously in chapter \ref{chap:OFDM} on OFDM, a key insight to %
+the advantage of using the DFT was that the circular convolution %
+in combination with the convolution theorem provided the nice %
+property that the distortion introduced by the FIR channel filter %
+introduced in chapter \ref{chap:ChannelModeling} can be represented %
+as element wise multiplication in the frequency domain (see equation %
+\ref{eq:DFTConvolutionTheorem}). It's clear that equation %
+\ref{eq:ZeroForcing} does in fact represent a filtering operation %
+in the frequency domain. This simple filter is commonly known as %
+the zero forcing filter and is defined as the reciprocal of the %
+frequency response of the channel filter $\frac{1}{H(f)}$. %
+It's most easily found when a known set of symbols $X[i]$ have %
+been transmitted such that
+\begin{align}
+	H\left[i\right] = \frac{Y\left[i\right]}{X\left[i\right]}
+\end{align}
+In a noiseless and time invariant environment this is the optimal %
+solution to the equalisation problem. However a more accurate %
+model for the received samples $y[nT]$ is
+\begin{align}
+	y[nT]=h[nT]\circledast x[nT]%
+	+ v
+\end{align}
+where $h[nT]$ represents the channel filter of length %
+$\mu$ at time $nT$ and $x[nT]$ are the inputs to %
+$h[nT]$, $v$ represents the additive white gaussian %
+noise (AWGN). Taking the DFT of both sides gives %
+\begin{align}
+	Y[i] = H[i]X[i] + V[i]%
+	,\quad \text{ for } i = 0,1,\cdots,N-1
+	\label{eq:AWGNModel}
+\end{align}
+Where $N$ is the length of the DFT. It's clear from %
+equation \ref{eq:AWGNModel} that dividing through %
+by $X[i]$ gives a noisy estimate of the channel %
+frequency response
+\begin{align}
+	\frac{Y[i]}{X[i]} = H[i] + \frac{V[i]}{X[i]}, %
+	\text{ for } i = 0,1,\cdots,N-1
+\end{align}
+equalising using this expression will lead to estimates %
+of $X$
+\begin{align}
+	\hat{X}[i] =& \frac{H[i]X[i]+V[i]}{H[i]+V[i]/X[i]} \\
+	=& \frac{H[i]X[i]}{H[i]+V[i]/X[i]} + \frac{V[i]}{H[i]
+	+ V[i]/X[i]} \\
+	=& \frac{H[i]}{H[i]+V[i]/X[i]}X[i] + 
+	\frac{V[i]X[i]}{H[i]X[i]+V[i]}\\
+	=& \frac{H[i]}{H[i]+V[i]/X[i]}X[i] + 
+	\frac{V[i]X[i]}{Y[i]}
+	\label{eq:NoiseAmplification}
+\end{align}
+Should $X[i]/Y[i]$ in equation \ref{eq:NoiseAmplification} %
+be greater than $1$ then the noise in the received estimate %
+$\hat{X}[i]$ will be amplified reducing SNR and increasing the bit %
+error rate (BER).
 
-%TODO: develop the Zero-forcing solution
-
-%TODO: Develop the Wiener Solution
-
+\subsection{The Wiener Solution}
+A solution to the noise amplification problem seen in %
+section \ref{subsec:ZeroForcing} is to find the optimal %
+solution taking noise into consideration. It's clear that %
+this problem can be framed as an optimisation problem %
+and so a measure of performance or cost function must %
+first be defined to optimise. A natural choice for cost function %
+is that of the mean square value of the estimation error. This %
+is because the mean square error criterion results in a %
+second order dependence for the cost function on the %
+unknown coefficients in the impulse response of %
+the filter. This leads to the cost function having a distinct %
+minimum that uniquely defines the optimum %
+statistical design of the filter \cite{Hay02}.
+\subsubsection{The Wiener-Hopf Equations}
+To develop this optimum solution first we revisit equation %
+\ref{eq:BasebandChannelFIR} which describes the wireless channel %
+as an FIR filter and for consistency with \cite{Hay02} and %
+with my later development on my system model redefine it as
+\begin{align}
+	u(n) = \sum_{i}\tilde{h}(\tau)\tilde{s}(t-\tau)
+	\label{eq:ChannelOut}
+\end{align}
+where $u(n)$ are now the series of inputs to an optimally %
+designed filter with form shown in equation \ref{eq:FilterOut}. %
+For the purposes of this chapter %
+we will assume that the channel is time-invariant and set %
+$\tilde{h}(\tau;t)$ to $\tilde{h}(\tau)$.
+\begin{align}
+	y(n) = \sum_{k=0}^{N-1}w_{k}^{*}u(n-k), n - 0,1,2,\cdots,N-1
+	\label{eq:FilterOut}
+\end{align}
+where $u(n-k)$ are the discrete samples being received %
+after having been distorted by the wireless channel, %
+$w_{k}^{*}$ are the %
+filter coefficients and the asterisk $^*$ represents %
+complex conjugation. The estimation error will be defined as 
+\begin{align}
+	e(n) = d(n) - y(n)
+	\label{eq:EstimationError}
+\end{align}
+where $d(n)$ is the desired output of the filter %
+hence the %
+mean square error criterion will be defined as
+\begin{align}
+	J =& E\left[e(n)e^{*}(n)\right]
+	\label{eq:MeanSquareError}\\
+	=& E\left[\lvert e(n) \rvert^{2}\right]
+\end{align}
+where $E\left[\cdot\right]$ denotes the expectation %
+operator. With these definitions in mind the aim is now %
+to minimise $J$. To do this the complex derivative of $J$ with %
+respect to the filter coefficients $w_{k}^{*}$ needs %
+to be found. First we'll define
+\begin{align}
+	w_{k}^{*} = a_{k} + jb_{k}
+\end{align}
+and 
+\begin{align}
+	\nabla_{k} = \frac{\partial}{\partial a_{k}} + j 
+	\frac{\partial}{\partial b_{k}}
+\end{align}
+where $\nabla_{k}$ is the complex derivative %
+operator with respect to $w_{k}^{*}$. From %
+equations \ref{eq:FilterOut}, \ref{eq:EstimationError} %
+and \ref{eq:MeanSquareError} %
+\begin{align}
+	\nabla_{k}J =& E\left[ \frac{\partial e(n)}
+	{\partial a_{k}} e^{*}(n) + \frac{\partial
+	e^{*}(n)}{\partial a_{k}}e(n) + \frac{
+	\partial e(n)}{\partial b_{k}}je^{*}(n) 
+	+ \frac{\partial e^{*}(n)}{\partial b_{
+	k}}je(n)\right] \label{eq:DerivativeJ}
+\end{align}
+When evaluated 
+\begin{align}
+	\nabla_{k}J = -2E\left[u(n-k)e^{*}(n)\right]
+\end{align}
+Since the mean square error criterion is quadratic %
+the optimum solution can be found at its stationary %
+point by setting
+\begin{align}
+	\nabla_{k}J =& 0,\quad\text{ for } k=0,1,2,\cdots,N-1
+\end{align}
+which implies that
+\begin{align}
+	E\left[u(n-k)e^{*}(n)\right] = 0,\quad\text{ for } k = 0,1,2,\cdots,N-1
+	\label{eq:OptimalityCondition}
+\end{align}
+substituting equation \ref{eq:EstimationError} into %
+\ref{eq:OptimalityCondition} gives
+\begin{align}
+	E\left[u(n-k)\left(d^{*}(n) - \sum_{m=0}^{N-1}w_{o_{m}}u
+	^{*}(n-m)\right)\right]=0,\quad\text{ for }k=0,1,\cdots,N-1
+\end{align}
+where $w_{o_{m}}$ is the $m\text{th}$ coefficient of %
+the impulse response of the optimum filter. Expanding and %
+rearranging
+\begin{align}
+	&E\left[u(n-k)d^{*}(n) - u(n-k)\sum_{m=0}^{N-1}w
+	_{o_{m}}u^{*}(n-m)\right] = 0\\
+	\implies &E\left[u(n-k)d^{*}(n)\right] - E\left[u(n-k)\sum
+	_{m=0}^{N-1}w_{o_{m}}u^{*}(n-m)\right] = 0\\
+	\implies &E\left[u(n-k)d^{*}(n)\right] - \sum_{m=0}^{N-1}
+	w_{o_{m}}E\left[u(n-k)u^{*}(n-m)\right] = 0\\
+	\implies &E\left[u(n-k)d^{*}(n)\right] = 
+	\sum_{m=0}^{N-1}w_{o_{m}}E\left[u(n-k)u^{*}(
+	n-m)\right],\quad\text{for }k=0,1,\cdots,N-1
+	\label{eq:ExpandedOptimalityCondition}
+\end{align}
+The expectation on the right side of equation %
+\ref{eq:ExpandedOptimalityCondition} is the %
+\emph{autocorrelation function} of the filter input %
+for a lag of $m-k$ and can be expressed as
+\begin{align}
+	r(m-k) = E\left[u(n-k)u^{*}(n-m)\right]
+	\label{eq:WienerAutocorrelation}
+\end{align}
+The expectation on the left side of equation %
+\ref{eq:ExpandedOptimalityCondition} is the %
+\emph{cross correlation} between the filter %
+input and the desired response for a lag %
+of $-k$ and can be expressed as
+\begin{align}
+	p(-k) = E\left[u(n-k)d^{*}(n)\right]
+	\label{eq:WienerCrossCorrelation}
+\end{align}
+Substituting equations \ref{eq:WienerAutocorrelation} %
+and \ref{eq:WienerCrossCorrelation} into %
+\ref{eq:ExpandedOptimalityCondition} %
+we get
+\begin{align}
+	\sum_{m=0}^{N-1}w_{o_{m}}r(m-k)=p(-k),\quad
+	\text{for }k=0,1,\cdots,N-1
+	\label{eq:WienerHopf}
+\end{align}
+The system of equations in \ref{eq:WienerHopf} %
+define the optimal filter coefficients for the %
+equaliser and are named the \emph{Wiener-%
+Hopf equations}.
+\subsubsection{Solution to the Wiener-Hopf Equations}
+Matrix representations of the system of equations in %
+\ref{eq:WienerHopf} will let us easily solve for %
+the optimum filter coefficients $w_{o_{m}}$. %
+Let $\bold{R}$ denote the $N$-by-$N$ correlation %
+matrix of the vector of inputs to the optimal filter %
+$\bold{u}(n) = [u(n),u(n-1),\cdots,u(n-(N-1))]^T$.
+\begin{align}
+	\bold{R} = E\left[\bold{u}(n)\bold{u}^{H}(n)\right]
+\end{align}
+where $^{T}$ denotes the transpose operation and %
+$^{H}$ denotes the Hermitian or the complex conjugate %
+tranpose operation. Similarly let $\bold{p}$ be the %
+$N$-by-$1$ cross correlation vector between %
+the inputs and the desired output. 
+\begin{align}
+	\bold{p} = E\left[\bold{u}(n)d^{*}(n)\right]
+\end{align}
+Equation \ref{eq:WienerHopf} may now be rewritten %
+as
+\begin{align}
+	\bold{R}\bold{w_{o}} = \bold{p}
+	\label{eq:WienerHopfMatrix}
+\end{align}
+where $\bold{w_{o}}$ denotes the $N$-by-$1$ optimal %
+filter coefficient vector $[w_{o_{0}},w_{o_{1}},%
+\cdots,w_{o_{N-1}}]^T$. To solve for $\bold{w_{o}}$ %
+we simply premultiply both sides of equation %
+\ref{eq:WienerHopfMatrix} by $\bold{R}^{-1}$ giving
+\begin{align}
+	\bold{w_{o}} = \bold{R}^{-1}\bold{p}
+	\label{eq:WienerHopfSolution}
+\end{align}
 \section{Stochastic Gradient and the Least Mean Square}
 \subsection{Normalised-Least Mean Square}
 

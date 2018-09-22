@@ -1,4 +1,5 @@
 \chapter{Orthogonal Frequency Division Multiplexing (OFDM)}
+\label{chap:OFDM}
 \newpage
 Chapter 1 introduced the idea of OFDM and why it's %
 advantageous to use. This chapter will aim to develop %
@@ -134,6 +135,7 @@ applies under circular convolution i.e.
 
 \begin{align}
 	Y[i] = \text{DFT}\{y[n] = x[n]\circledast h[n]\} = X[i]H[i]	
+	\label{eq:DFTConvolutionTheorem}
 \end{align}
 
 This powerful result allows for the easy equalisation of the received %
@@ -142,4 +144,5 @@ retrieved with a simple division.
 
 \begin{align}
 	X[i] = \frac{Y[i]}{H[i]}
+	\label{eq:ZeroForcing}
 \end{align}
