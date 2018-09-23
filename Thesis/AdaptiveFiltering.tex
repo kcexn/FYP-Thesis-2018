@@ -197,6 +197,7 @@ and \ref{eq:MeanSquareError} %
 When evaluated 
 \begin{align}
 	\nabla_{k}J = -2E\left[u(n-k)e^{*}(n)\right]
+	\label{eq:CostDerivative}
 \end{align}
 Since the mean square error criterion is quadratic %
 the optimum solution can be found at its stationary %
@@ -293,9 +294,189 @@ we simply premultiply both sides of equation %
 	\bold{w_{o}} = \bold{R}^{-1}\bold{p}
 	\label{eq:WienerHopfSolution}
 \end{align}
-\section{Stochastic Gradient and the Least Mean Square}
+\section{Gradient Descent and the Least Mean Square}
+The expectations in equations \ref{eq:WienerAutocorrelation} %
+and \ref{eq:WienerCrossCorrelation} are usually not %
+available to find $\bold{w}_{o}$. This motivates the %
+need to develop an alternative way to estimate the %
+optimal solution. One approach to finding this estimate %
+is to find the solution using an iterative method using %
+local information. I'll first develop the method of %
+gradient descent as an iterative optimisation method %
+which will naturally lead into an the Least Mean Square %
+algorithm to estimate the optimal solution.
+\subsection{Gradient Descent}
+When considering the cost function $J(\cdot)$, %
+the optimal solution can be defined as
+\begin{align}
+	J(\bold{w}_{o}) \leq J(\bold{w})\quad
+	\text{for all }\bold{w}
+\end{align}
+The gradient descent method aims to iteratively %
+solve for $J(\bold{w_{o}})$ by developing an %
+algorithm with the following invariant
+\begin{align}
+	J(\bold{w}(n+1)) < J(\bold{w}(n))
+\end{align}
+starting with an arbitrary initial guess $\bold{w}(0)$. %
+The method of steepest descent is a method which aims %
+to achieve this by taking steps in the direction of %
+of the optimal solution at each iteration. This can %
+be done by finding the local direction of steepest %
+descent defined as the negative of the gradient vector %
+\begin{align}
+	\bold{g} = \nabla J(\bold{w})
+\end{align}
+The algorithm is formally described by
+\begin{align}
+	\bold{w}(n+1) = \bold{w}(n) - \frac{1}{2}
+	\mu\bold{g}(n)
+	\label{eq:GradientDescent}
+\end{align}
+From equations \ref{eq:CostDerivative} and %
+\ref{eq:WienerHopfMatrix} $\nabla J$ is
+\begin{align}
+	\nabla J(\bold{w}(n)) = 
+	-2\bold{p} + 2\bold{R}\bold{w}(n)
+	\label{eq:CostGradient}
+\end{align}
+substituting equation \ref{eq:CostGradient} into %
+equation \ref{eq:GradientDescent}
+\begin{align}
+	\bold{w}(n+1) = \bold{w}(n) - \mu(
+	\bold{R}\bold{w}(n) - \bold{p})
+	\label{eq:WienerGradientDescent}
+\end{align}
+There are some problems around stability that %
+need to be considered when using gradient descent. %
+However as long as $\mu$ is chosen carefully this %
+algorithm will converge to the optimal solution \cite{Hay02}.
+\subsection{Least Mean Square}
+The gradient descent method doesn't solve the problem of %
+the expectations in equations \ref{eq:WienerAutocorrelation} %
+and \ref{eq:WienerCrossCorrelation}. The simplest solution %
+to this problem may instead be to use an instantaneous %
+estimate of the autocorrelation
+\begin{align}
+	\hat{\bold{R}} = \bold{u}(n)\bold{u}^{H}(n)
+	\label{eq:WienerAutocorrelationEstimate}
+\end{align}
+and an instantaneous estimate of the cross correlation
+\begin{align}
+	\hat{\bold{p}} = \bold{u}(n)d^{*}(n)
+	\label{eq:WienerCrossCorrelationEstimate}
+\end{align}
+substituting equations \ref{eq:WienerAutocorrelationEstimate} %
+and \ref{eq:WienerCrossCorrelationEstimate} into %
+\ref{eq:WienerGradientDescent}
+\begin{align}
+	\hat{\bold{w}}(n+1) =&~\hat{\bold{w}}(n)-\mu(
+	\hat{\bold{R}}\hat{\bold{w}}(n) - \hat{
+	\bold{p}})\\
+	=&~\hat{\bold{w}}(n) - \mu(\bold{u}(n)
+	\bold{u}^{H}(n)\hat{\bold{w}}(n) - 
+	\bold{u}(n)d^{*}(n))\\
+	=&~\hat{\bold{w}}(n) - \mu\bold{u}(n)(
+	\bold{u}^{H}(n)\hat{\bold{w}}(n) - d^{*}
+	(n))
+	\label{eq:LMSUpdate}
+\end{align}
+The new estimate of $\hat{\bold{w}}$ lead %
+to a new filter output and error estimate %
+using the estimate of $\bold{w_{o}}$ 
+\begin{align}
+	y(n) =&~\hat{\bold{w}}^{H}(n)\bold{u}(n)
+	\label{eq:EstimatedFilterOut}\\
+	e(n) =&~d(n) - y(n)
+	\label{eq:EstimatedError}
+\end{align}
+Rearranging equation \ref{eq:LMSUpdate} and substituting %
+in \ref{eq:EstimatedError}
+\begin{align}
+	\hat{\bold{w}}(n+1) =&~\hat{\bold{w}}(n) + 
+	\mu\bold{u}(n)\left(d^{*}(n) - \bold{u}^{H}
+	(n)\hat{\bold{w}}(n)\right)\\
+	=&~\hat{\bold{w}}(n) + \mu\bold{u}(n)\left(
+	d^{*}(n) - y(n)\right)\\
+	=&~\hat{\bold{w}}(n) + \mu\bold{u}(n)e^{*}(n)
+	\label{eq:SimplifiedLMSUpdate}
+\end{align}
+Equations \ref{eq:EstimatedFilterOut}, \ref{%
+eq:EstimatedError}, and \ref{eq:SimplifiedLMSUpdate} %
+together define the Least-Mean-Square (LMS) algorithm. %
+The LMS algorithm removes the dependency on knowing the %
+expectations in equations \ref{eq:WienerAutocorrelation} %
+and \ref{eq:WienerCrossCorrelation}. The cost is that %
+the gradient descent is no longer a deterministic one %
+and is now sensitive to random noise in the inputs. The LMS %
+algorithm is therefore considered to be a stochastic gradient %
+descent algorithm.
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{l}
+		\hline
+		\emph{Parameters}: \\
+		$\begin{aligned}
+			\quad M =&~\text{number of taps (
+			i.e., filter length)}\\
+			\quad \mu =&~\text{step-size 
+			parameter}
+		\end{aligned}$\\
+		\\
+		$0 < \mu < \frac{2}{MS_{\text{max}}}$\\
+		\\
+		Where $S_{\text{max}}$ is the maximum
+		value fo the power spectral density\\
+		of the tap inputs $u(n)$ and the filter
+		length $M$ is moderate to large.\\
+		\\
+		\emph{Initialization}: If prior
+		knowledge of the coefficient vector 
+		$\hat{\bold{w}}(n)$ is \\available, use 
+		it to select an appropriate value for 
+		$\hat{\bold{w}}(0)$. \\Otherwise, set 
+		$\hat{\bold{w}}(0) = \bold{0}$.\\
+		\\
+		\emph{Data}: \\
+		$\begin{aligned}
+			\text{\textbullet}~
+			\text{Given } \bold{u}(n) =&~
+			M-\text{by}-1~\text{tap-input 
+			vector at time }n\\
+			=&~\left[u(n),u(n-1),\ldots,
+			u(n-M+1)\right]^{T}\\
+			d(n) =&~\text{desired response
+			at time }n
+		\end{aligned}$\\
+		$\begin{aligned}
+			\text{\textbullet}~
+			\text{To be computed:}\\
+			\quad\hat{\bold{w}}(n+1)=~
+			\text{estimate of coefficient vector
+			at time }n+1
+		\end{aligned}$\\
+		\\
+		\emph{Computation}:~For $n=0,1,2,\ldots,$~compute\\
+		$\begin{aligned}
+			\quad e(n)=&~d(n) - \hat{\bold{w}}^{H}(n)
+			\bold{u}(n)\\
+			\quad \hat{\bold{w}}(n+1) =&~ 
+			\hat{\bold{w}}(n) + \mu\bold{u}(n)e
+			^{*}(n)
+		\end{aligned}$\\
+		\hline
+	\end{tabular}
+	\caption{Summary of the LMS Algorithm \cite{Hay02}}
+\end{table}
+\FloatBarrier
 \subsection{Normalised-Least Mean Square}
-
+The LMS algorithm derived in the previous section has a static %
+step size $\mu$ which defines the rate of convergence of the %
+LMS algorithm to the optimal solution $\bold{w}_{o}$. It is %
+a natural next step to think that a variable step size $\tilde{\mu}$ %
+might provide better performance. It is with this motivation %
+in mind that I will develop the Normalised-Least Mean Square or %
+NLMS algorithm in this section.
 \section{Recursive Least Square}
 \subsection{Kalman filters}  % Do I want to cover these?
 
