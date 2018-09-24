@@ -37,6 +37,12 @@ are a bit dodgy. They're photo scans from texts.
 - Some of the equations have some wack spacing. This 
 is because I haven't gone through and inserted spaces or 
 removed extra lines in places.
+- I would highly appreciate feedback on flow and clarity. 
+The document should make enough sense to you to at least 
+fudge your way through even if you know nothing about wireless 
+communication. So if parts are overly confusing or seem like 
+they come out of nowhere. I'd appreciate it if you picked it 
+up and let me know.
 
 ## Introduction
 
@@ -47,9 +53,6 @@ and should be completely readable as a whole.
 It connects in with a section in the introduction 
 on OFDM so these two parts should make sense together
 as a whole.
-
-Generally speaking I'm aware that some of the figures
-are a bit dodgy. They're photo scans from texts.
 
 ## Wireless Channel Modeling
 
