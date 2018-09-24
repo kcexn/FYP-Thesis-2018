@@ -21,8 +21,8 @@ as I'm going through. The easiest way to provide feedback
 is to either
 
 - find me at uni and tell me
-- email me at kcext1+evernote@student.monash.edu
-in the subject line please include #Feedback_FYP 
+- email me at kcext1+evernote@student.monash.edu 
+please include #Feedback_FYP 
 at the end of the subject line.
 
 ## Overall
