@@ -20,6 +20,7 @@ and compare them with whats available in the %
 literature.
 
 \section{Time Invariant System Model}
+\label{sec:TIModel}
 \FloatBarrier
 \begin{figure}[ht]
 	\includegraphics[width=\textwidth]{./%
@@ -143,28 +144,183 @@ will perform the grey mapping of pairs of bits in a %
 bit stream to QPSK constellation points and perform %
 the energy normalisation.
 
-%TODO: Finish up QPSK Demodulation
+Paired with the \texttt{QPSKModulator} MATLAB also %
+provides a \texttt{QPSKDemodulator} which performs %
+performs maximum likelihood detection and maps %
+the received QPSK constellation back to a bit %
+stream.
 
 \subsection{OFDM}
 
-%TODO: Finish describing MATLAB's OFDM
-% system object since it's reasonably 
-% complicated
+OFDM has been covered in some detail in chapter %
+\ref{chap:OFDM} so here I'll focus on the simulation %
+implementation. MATLAB's communication systems %
+toolbox provides an \text{OFDMModulator} which %
+takes in an input stream of symbols and performs %
+an IFFT followed by an IFFT shift to place the DC %
+components in the centre. It also prepends the %
+last $\mu$ samples of the output of the IFFT to %
+generate a cyclic prefix and allows the use %
+of a DC Null, the DC null will be relevant in %
+our discussion on thhe USRP model.
 
 \subsection{AWGN}
 
+The power of additive white gaussian noise $\sigma_n^{2}$ %
+was defined relative to the transmit signal power, through %
+the following evaluation
+
+\texttt{%
+powerdB = 10*log10(var(OFDM\_Symbol));\\%
+snr = EbNo + 10*log10(BitsPerSymbol);\\%
+noiseVar = 10\textasciicircum(0.1*(powerdB-snr));}
+
+here \texttt{var(OFDM\_Symbol)} is being evaluated %
+as 
+\begin{align}
+	\frac{1}{N} %
+	\sum_{n=0}^{N-1} \lvert\lvert \texttt{OFDM\_Symbol}%
+	(n) \rvert\rvert^{2}
+\end{align}
+
+Where $N$ is the length of the FFT. \texttt{EbNo} is a %
+variable which defines the normalised bit energy %
+to noise power spectral density and is % TODO: Cite EbNo
+expressed as
+\begin{align}
+	\frac{E_b}{N_0} = \frac{S}{R_b} \div 
+	\frac{\sigma_n^{2}}{B}
+\end{align}
+where $S$ is the average received signal power, %
+$R_b$ is the bit rate, $\sigma_n^{2}$ is the %
+total additive white gaussian noise power and %
+$B$ is the total signal bandwidth. The relation %
+between $SNR$ and $E_b/N_0$ is as follows
+\begin{align}
+	\frac{S}{\sigma_n^{2}} = \frac{E_b}{N_0}
+	\frac{R_b}{B}
+\end{align}
+A modulation scheme such as QPSK doubles the bit %
+rate relative to a binary scheme such as on off %
+keying or binary phase shift keying (BPSK), so %
+SNR needs to be multipled by $2$ for the different %
+schemes to experience the same normalised %
+signal to noise ratio. In log units multiplication %
+is evaluated as addition as can be seen above.
+
+MATLAB's Commmunications System Toolbox system object %
+\\\texttt{comm.AWGNChannel} takes an input stream of %
+symbols and generates complex gaussian noise with %
+zero mean and defined variance. This noise is then %
+summed with the samples in the stream to make a noisy %
+received signal. In the case of the system model shown in %
+figure \ref{fig:SysModel}, the power of the complex %
+additive white gaussian noise calculated based on the transmit %
+power before channel impairments. This is because the Rayleigh %
+fading channel impairment does not affect all subbands equally as %
+it is a frequency selective effect, so setting the noise power based %
+on the post channel impairment signal would disproportinately affect %
+the subcarriers that are experiencing deep fades.
+
 \subsection{Channel Impairment}
+\label{sec:TIChannelImpairment}
+The channel impairment designed for the time invariant model %
+will be different to the channel impairment designed for the time varying model. %
+Here the channel impairment will be chosen as a random complex gaussian that %
+defines the fading in the frequency domain. For the purpose of testing the convergence %
+of the LMS algorithm, a flat fading scenario is introduced where each subcarrier %
+is multiplied by the same coefficient $w$ as illustrated in figure \ref{fig:TIChannel}.
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/System/%
+	ChannelTimeInvariant.png}
+	\caption{Time Invariant Flat Fading Channel Model}
+	\label{fig:TIChannel}
+\end{figure}
+By introducing AWGN to the system after channel impairment and then %
+applying the LMS individually to each subcarrier in the frequency domain, %
+ensemble averages can be taken for differing channel conditions simply by %
+increasing the number of subcarriers. A subcarrier count of $1024$ was %
+chosen to generate the time invariant results discussed in the next chapter. %
 
 \subsection{Equalisation}
 
+As illustrated in figure \ref{fig:FrequencyLMS}, a frequency domain %
+LMS scheme was made with a single tap variant of the LMS algorithm on %
+each subcarrier. As discussed in previous chapters, this can be done %
+because the subcarrier bandwidths have been designed to be significantly %
+narrower than the coherence bandwidth, so can be approximated with a %
+single filter coefficient. This approximation has been made explicit in this %
+time invariant model as described in section \ref{sec:TIChannelImpairment}. %
+
+The single tap LMS approximation follows closely from the development of the %
+LMS filter in section \ref{sec:LMS}, in particular we take equation \ref{eq:SimplifiedLMSUpdate} %
+and replace the vector of coefficients $\hat{\bold{w}}(n+1)$ and $\hat{\bold{w}}(n)$ with scalar %
+versions, and the vector of filter inputs $\bold{u}(n)$ with a scalar input. Giving the %
+new expression
+\begin{align}
+	\hat{w}(n+1) = \hat{w}(n) + \mu u(n) e^{*}(n)
+	\label{eq:ScalarLMS}
+\end{align}
+This version of the LMS update is the computationally simplest %
+the LMS can be with two multiplications and one addition. %
+The constant computational complexity of the designed LMS means %
+that the complexity of this filtering scheme grows with the %
+the size of the FFT needed to ensure that the subcarrier bandwidth %
+is narrower than the coherence frequency of the fading channel, and %
+has computational complexity $\mathcal{O}(N log(N))$. This scalar version %
+of the LMS filter is substituted into the LMS blocks shown in figure %
+\ref{fig:FrequencyLMS} at the receiver.
+
+In a similar fashion the NLMS filter can be developed with a scalar equation %
+\begin{align}
+	\hat{w}(n+1) = \hat{w}(n) + \frac{\mu}{\lvert u(n) \rvert^{2}} %
+	u(n) e^{*}(n)
+	\label{eq:ScalarNLMS}
+\end{align}
+and substitued into the LMS blocks in figure \ref{fig:FrequencyLMS} to %
+evaluate the performance of the NLMS filter.
 
 \section{Time Varying System Model}
 
-%TODO: Insert my MATLAB code here for generating 
-% a random frame.
+The time varying system model only contains two key differences to the %
+time invariant model. The first is the introduction of the time-varying Rayleigh %
+and Rician channel models, these channel models have been simulated using %
+the filtered white gaussian noise method. The Rayleigh and Rician fading %
+channels introduce design constraints to the model not present in the %
+simplified time invariant model examined in the previous section %
+regarding subcarrier bandwidth and coherence frequency %
+as well as the OFDM symbol time and channel coherence time. The second %
+key difference is the introduction of a decision directed scheme for the LMS %
+filter to examine its tracking performance after achieving the optimal Wiener solution.
 
+\subsection{Filtered White Gaussian Noise Channel Simulation}
 
-%NOTE: Rigourously justify every use of a MATLAB library function.
+\subsection{Decision Directed Performance}
+
+It's important to evaluate the performance of the time varying model in a %
+decision directed scheme. That is, after a given training period the Wiener %
+solution has been found using an adaptive filtering approach. The performance %
+of the system needs to be evaluated after achieving the Wiener solution. In %
+particular it is of interest how long the adaptive filtering approach can %
+maintain a solution that is near optimal without additional further training %
+information. A decision directed model is one where the output of the %
+equaliser is fed into the maximum likelihood decision slicer and the output %
+of the decision slicer is fed back into the equaliser as the desired %
+output in the update equation (\ref{eq:ScalarLMS} and \ref{eq:%
+ScalarNLMS}) where $e(n) = d(n) - y(n)$ as illustrated in figure %
+\ref{fig:DDLMS}.
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/System/%
+	DecisionDirectedOperation.png}
+	\caption{LMS in Decision Directed Operation}
+	\label{fig:DDLMS}
+\end{figure}
+This region of operation introduces some delay to the system as %
+the decision slicer needs to map the received symbol onto the %
+nearest constellation point before the adaptive step can begin. %
+As discussed in section \ref{sec:TIModel} the decision slicer being used %
+here is MATLAB's \texttt{comm.QPSKDemodulator} from the %
+Communications System Toolbox.
 
 \section{USRP Implementation of the Time Varying System Model}
 
