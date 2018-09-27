@@ -324,5 +324,22 @@ Communications System Toolbox.
 
 \section{USRP Implementation of the Time Varying System Model}
 
-%TODO: Carefully develop the USRP implementation
+\subsection{NI USRP 2943R Hardware Model}
+Figure \ref{fig:USRPDiagram} shows the hardware diagram %
+for the radio front-end of the national instruments %
+software defined radio. The radio front end uses a homodyne %
+receiver architecture over a more traditional heterodyne %
+architecture as shown in the DUC (Direct Up Conversion) and %
+DDC (Direct Down Conversion) blocks in the diagram. The homodyne %
+receiver architecture offers a simpler hardware receiver design %
+which is in line with the software defined radio philosophy of %
+moving the signal processing to software.
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/System/%
+	USRP2943R.png}
+	\caption{System Diagram for the Software Defined Radio%
+	\cite{USRPDiagram}}
+	\label{fig:USRPDiagram}
+\end{figure}
+
 
