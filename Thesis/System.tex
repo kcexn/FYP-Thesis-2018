@@ -295,6 +295,58 @@ filter to examine its tracking performance after achieving the optimal Wiener so
 
 \subsection{Filtered White Gaussian Noise Channel Simulation}
 
+The time varying fading channel can be broken down into three %
+steps. The power delay definition needs to be defined, using the %
+power delay profile the average powers of each multipath tap can %
+be defined. Once this is done the time varying component of the %
+fading channel needs to be introduced, the method of choice %
+for this simulation will be one of filtered white gaussian noise. %
+\subsubsection{The Power Delay Profile}
+
+% TODO: Finish the Power Delay Profile section
+
+\subsubsection{Filtered White Gaussian Noise}
+
+In chapter \ref{chap:ChannelModeling} the time-varying nature of %
+the fading channel was established as being closely related to the %
+doppler shift of the signal and the maximum doppler frequency $f_d$. %
+The doppler spectrum chosen for simulation is the Jakes spectrum as %
+defined in equation \ref{eq:JakesSpectrum} as it is a popular spectrum %
+widely used in the literature. %TODO: Cite the literature
+
+The filtered white gaussian noise approach aims to recreate this %
+time varying effect by directly filtering the random noise representing %
+the scattering with a doppler spectrum in the frequency domain\cite{%
+MIMO-OFDM10, Iskander}. 
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/System/%
+	FilteringProcess.png}
+	\caption{Channel Filter Tap Generation}
+	\label{fig:ChannelFilterSimulation}
+\end{figure}
+Figure \ref{fig:ChannelFilterSimulation} illustrates the process used %
+to generate each individual coefficient in the discrete multipath channel. %
+$z(t)$ is an independent and identically distributed time series where %
+at each timestep $t$, $z(t)\sim\mathcal{N}(0,1)$ (is normally distributed %
+with mean $0$ and standard deviation $1$), $S(\nu)$ is the Jakes doppler %
+spectrum as described in equation \ref{eq:JakesSpectrum} and $\sigma_n$ is %
+a scaling factor to ensure the average power of the tap matches that of the %
+power delay profile.
+
+MATLAB's Communications System Toolbox provides a system object %
+\\\texttt{comm.RayleighChannel}, which implements the filtered %
+white gaussian noise method of simulation as described in \cite{Iskander}. %
+Rician distributions are implemented slightly differently where the Rician %
+taps are further scaled by a deterministic component with a specular to %
+scattered power ratio $K$ as described in equation \ref{eq:KFactor}. The %
+Rician fading component is scaled by
+\begin{align}
+	h(\tau;t) = \sigma_n\left[ \frac{z_{k}\left[n\right]}{\sqrt{K + 1}} + 
+	\sqrt{\frac{K}{K+1}}\right]
+\end{align}
+Where $z_{k}$ is the filtered noise output of the doppler filter \cite{Iskander}.
+
+
 \subsection{Decision Directed Performance}
 
 It's important to evaluate the performance of the time varying model in a %
@@ -324,7 +376,6 @@ Communications System Toolbox.
 
 \section{USRP Implementation of the Time Varying System Model}
 
-\subsection{NI USRP 2943R Hardware Model}
 Figure \ref{fig:USRPDiagram} shows the hardware diagram %
 for the radio front-end of the national instruments %
 software defined radio. The radio front end uses a homodyne %
@@ -342,4 +393,40 @@ moving the signal processing to software.
 	\label{fig:USRPDiagram}
 \end{figure}
 
+\subsection{Direct Conversion Architecture}
+The direct conversion or homodyne architecture converts received %
+bandpass signals directly to baseband signals without the need for an %
+intermediate frequency. This done by selecting a local oscillator (LO) %f
+frequency to be the same as the centre frequency of the bandpass %
+signal.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=\textwidth]{./Figures/System/%
+	DirectConversionScheme.png}
+	\caption{Direct Down Conversion Process}
+	\label{fig:DDC}
+\end{figure}
+Figure \ref{fig:DDC} illustrates this process where $I(t)$ is the %
+in phase component and $Q(t)$ is the quadrature component. %
+Although the direct conversion process offers advantages to the %
+heterodyne architecture in terms of hardware simplicity, it comes %
+with a key disadvantage in that if any part of the LO signal %
+leaks into the RF input stream it introduces distortion into the %
+received baseband signal as a DC offset. OFDM avoids %
+additional interference caused by this LO leakage by inserting %
+null carriers in and around the DC component.
 
+\subsection{Transmitter Model}
+
+%TODO: Include the block diagram of the transmitter.
+%TODO: Discuss the use of finite capture and upsampling 
+% to remove difficulties of synchronisation
+
+\subsection{Receiver Model}
+
+%TODO: Insert block diagram of the receiver
+%TODO: Discuss the received constellation and explain 
+% the ring caused by frequency offset between the Local 
+% Oscillator and the subcarrier frequency
+
+\subsection{Equalisation and Top Level Design}
