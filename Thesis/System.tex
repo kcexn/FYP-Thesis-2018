@@ -1,5 +1,5 @@
 \chapter{System Design}
-
+\label{chap:System}
 The system model is developed in three stages. %
 The first two stages were developed in MATLAB, %
 and consist of a time invariant model %
@@ -303,7 +303,31 @@ fading channel needs to be introduced, the method of choice %
 for this simulation will be one of filtered white gaussian noise. %
 \subsubsection{The Power Delay Profile}
 
-% TODO: Finish the Power Delay Profile section
+The power delay profile is critical in scaling the average power %
+of each multipath coefficient. In figure \ref{fig:ChannelFilterSimulation} %
+an illustration of the simulation mechanism by which a single channel %
+coefficient process can be generated, $\sigma_{n}$ represents %
+is the scaling factor to ensure that the $n\text{th}$ coefficient %
+of the multipath channel $h(\tau_{n};t)$ has average power %
+$\sigma_{n}^{2}$. In the simplest form of an uncorrelated %
+tap-gain model \cite{Jer00} 
+\begin{align}
+	E\left[\lvert h(\tau_{n};t) \rvert^{2} \right] = %
+	\sigma_{n}^{2} = T^{2}p(nT)
+	\label{eq:TapPower}
+\end{align}
+where $p(nT)$ is the sampled version of a diffuse power %
+delay profile where $T$ is the sampling period. Or of a %
+discrete multipath channel where the multipath coefficients %
+are symbol spaced. For the purpose of my investigation I %
+will not consider the case of a discrete multipath channel %
+where the multipath channel coefficients are not symbol %
+spaced since in general this requires us to filter the power %
+delay profile by the measurement bandlimiting filter (i.e., matched filtering) %
+and so more information would be needed about the pulse shaping %
+used. With symbol spacing an assumption is made that the filters used %
+are nyquist in nature and so there are no additional components %
+introduced by neighbouring multipath coefficients.
 
 \subsubsection{Filtered White Gaussian Noise}
 
@@ -344,7 +368,8 @@ Rician fading component is scaled by
 	h(\tau;t) = \sigma_n\left[ \frac{z_{k}\left[n\right]}{\sqrt{K + 1}} + 
 	\sqrt{\frac{K}{K+1}}\right]
 \end{align}
-Where $z_{k}$ is the filtered noise output of the doppler filter \cite{Iskander}.
+Where $z_{k}$ is the filtered noise output of the doppler filter \cite{Iskander} %
+immediately after the normalization step in figure \ref{fig:ChannelFilterSimulation}.
 
 
 \subsection{Decision Directed Performance}
