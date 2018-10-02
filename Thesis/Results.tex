@@ -150,16 +150,516 @@ than $2$ the NLMS algorithm diverges.
 	\caption{Excess Mean Square Error Divergence of NLMS}
 	\label{fig:NLMS-EMSE-Diverge}
 \end{figure}
-%TODO: Develop the time invariant results. Compare 
-% With existing literature
 
 \section{Time Varying Simulation Results}
-
+\label{sec:TVResults}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/LongCP/DD/HighSNR/LongTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean Square Error of Time Varying LMS with 
+	a long cyclic prefix, in decision directed operation, with 
+	a long coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/LongCP/DD/HighSNR/MediumTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	long cyclic prefix, in decision directed operation, with a 
+	medium coherence time at high SNR}
+	\label{fig:Medium-High-Directed-Long}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/LongCP/DD/HighSNR/ShortTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	long cyclic prefix, in decision directed operation, with a 
+	short coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/LongCP/DD/LowSNR/LongTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	long cyclic prefix, in decision directed operation, with a 
+	long coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/LongCP/DD/LowSNR/MediumTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	long cyclic prefix, in decision directed operation, with a 
+	medium coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/LongCP/DD/LowSNR/ShortTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	long cyclic prefix, in decision directed operation, with a 
+	short coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/LongCP/NoDD/HighSNR/LongTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	long cyclic prefix, with a long coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/LongCP/NoDD/HighSNR/MediumTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	long cyclic prefix, with a medium coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/LongCP/NoDD/HighSNR/ShortTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	long cyclic prefix, with a short coherence time at high SNR}
+	\label{fig:LMS-Short-High-None}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/LongCP/NoDD/LowSNR/LongTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	long cyclic prefix, with a long coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/LongCP/NoDD/LowSNR/MediumTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	long cyclic prefix, with a medium coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/LongCP/NoDD/LowSNR/ShortTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	long cyclic prefix, with a short coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/ShortCP/DD/HighSNR/LongTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	short cyclic prefix, in decision directed operation, 
+	with a long coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/ShortCP/DD/HighSNR/MediumTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	short cyclic prefix, in decision directed operation, 
+	with a medium coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/ShortCP/DD/HighSNR/ShortTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	short cyclic prefix, in decision directed operation, 
+	with a short coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/ShortCP/DD/LowSNR/LongTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	short cyclic prefix, in decision directed operation, 
+	with a long coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/ShortCP/DD/LowSNR/MediumTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	short cyclic prefix, in decision directed operation, 
+	with a medium coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/ShortCP/DD/LowSNR/ShortTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	short cyclic prefix, in decision directed operation, 
+	with a short coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/ShortCP/NoDD/HighSNR/LongTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	short cyclic prefix, with a long coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/ShortCP/NoDD/HighSNR/MediumTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	short cyclic prefix, with a medium coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/ShortCP/NoDD/HighSNR/ShortTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	short cyclic prefix, with a short coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/ShortCP/NoDD/LowSNR/LongTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	short cyclic prefix, with a long coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/ShortCP/NoDD/LowSNR/MediumTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	short cyclic prefix, with a medium coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/ShortCP/NoDD/LowSNR/ShortTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying LMS with a 
+	short cyclic prefix, with a short coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/BER/DD/LongTimeCoherence/BER.png}
+	\caption{Bit error rate of time varying LMS with a long coherence time 
+	in decision directed operation}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/BER/DD/MediumTimeCoherence/BER.png}
+	\caption{Bit error rate of time varying LMS with a medium coherence time 
+	in decision directed operation}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/BER/DD/ShortTimeCoherence/BER.png}
+	\caption{Bit error rate of time varying LMS with a short coherence time 
+	in decision directed operation}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/BER/NoDD/LongTimeCoherence/BER.png}
+	\caption{Bit error rate of time varying LMS with a long coherence time}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/BER/NoDD/MediumTimeCoherence/BER.png}
+	\caption{Bit error rate of time varying LMS with a medium coherence time}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+LMS_Time_Varying/BER/NoDD/ShortTimeCoherence/BER.png}
+	\caption{Bit error rate of time varying LMS with a short coherence time}
+\end{figure}
+%% LMS and NLMS Results Divider
+\FloatBarrier
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/LongCP/DD/HighSNR/LongTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean Square Error of Time Varying NLMS with 
+	a long cyclic prefix, in decision directed operation, with 
+	a long coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/LongCP/DD/HighSNR/MediumTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	long cyclic prefix, in decision directed operation, with a 
+	medium coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/LongCP/DD/HighSNR/ShortTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	long cyclic prefix, in decision directed operation, with a 
+	short coherence time at high SNR}
+	\label{fig:NLMS-Short-High-Directed-Long}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/LongCP/DD/LowSNR/LongTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	long cyclic prefix, in decision directed operation, with a 
+	long coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/LongCP/DD/LowSNR/MediumTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	long cyclic prefix, in decision directed operation, with a 
+	medium coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/LongCP/DD/LowSNR/ShortTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	long cyclic prefix, in decision directed operation, with a 
+	short coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/LongCP/NoDD/HighSNR/LongTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	long cyclic prefix, with a long coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/LongCP/NoDD/HighSNR/MediumTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	long cyclic prefix, with a medium coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/LongCP/NoDD/HighSNR/ShortTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	long cyclic prefix, with a short coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/LongCP/NoDD/LowSNR/LongTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	long cyclic prefix, with a long coherence time at low SNR}
+	\label{fig:NLMS-Long-Low-None-Long}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/LongCP/NoDD/LowSNR/MediumTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	long cyclic prefix, with a medium coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/LongCP/NoDD/LowSNR/ShortTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	long cyclic prefix, with a short coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/ShortCP/DD/HighSNR/LongTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	short cyclic prefix, in decision directed operation, 
+	with a long coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/ShortCP/DD/HighSNR/MediumTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	short cyclic prefix, in decision directed operation, 
+	with a medium coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/ShortCP/DD/HighSNR/ShortTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	short cyclic prefix, in decision directed operation, 
+	with a short coherence time at high SNR}
+	\label{fig:NLMS-Short-High-Directed-Short}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/ShortCP/DD/LowSNR/LongTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	short cyclic prefix, in decision directed operation, 
+	with a long coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/ShortCP/DD/LowSNR/MediumTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	short cyclic prefix, in decision directed operation, 
+	with a medium coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/ShortCP/DD/LowSNR/ShortTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	short cyclic prefix, in decision directed operation, 
+	with a short coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/ShortCP/NoDD/HighSNR/LongTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	short cyclic prefix, with a long coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/ShortCP/NoDD/HighSNR/MediumTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	short cyclic prefix, with a medium coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/ShortCP/NoDD/HighSNR/ShortTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	short cyclic prefix, with a short coherence time at high SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/ShortCP/NoDD/LowSNR/LongTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	short cyclic prefix, with a long coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/ShortCP/NoDD/LowSNR/MediumTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	short cyclic prefix, with a medium coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/ShortCP/NoDD/LowSNR/ShortTimeCoherence/%
+MeanSquareError.png}
+	\caption{Mean square error of time varying NLMS with a 
+	short cyclic prefix, with a short coherence time at low SNR}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/BER/DD/LongTimeCoherence/BER.png}
+	\caption{Bit error rate of time varying NLMS with a long coherence time 
+	in decision directed operation}
+	\label{fig:NLMS-BER-Long-DD-TV}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/BER/DD/MediumTimeCoherence/BER.png}
+	\caption{Bit error rate of time varying NLMS with a medium coherence time 
+	in decision directed operation}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/BER/DD/ShortTimeCoherence/BER.png}
+	\caption{Bit error rate of time varying NLMS with a short coherence time 
+	in decision directed operation}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/BER/NoDD/LongTimeCoherence/BER.png}
+	\caption{Bit error rate of time varying NLMS with a long coherence time}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/BER/NoDD/MediumTimeCoherence/BER.png}
+	\caption{Bit error rate of time varying NLMS with a medium coherence time}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/Results/%
+NLMS_Time_Varying/BER/NoDD/ShortTimeCoherence/BER.png}
+	\caption{Bit error rate of time varying NLMS with a short coherence time}
+\end{figure}
 %TODO: Develop the time varying results. Compare with 
 % existing literature
 
 \section{USRP Implementation Results}
+\label{sec:USRPResults}
+\FloatBarrier
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/%
+	Results/USRP/LMS_ebno11/EqualisedQPSK.png}
+	\caption{Equalised QPSK Scatterplot for LMS}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/%
+	Results/USRP/LMS_ebno11/UnEqualisedQPSK.png}
+	\caption{Unequalised QPSK Scatterplot for LMS}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/%
+	Results/USRP/LMS_ebno11/MeanSquareError.png}
+	\caption{Mean Square Error for LMS}
+\end{figure}
 
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/%
+	Results/USRP/NLMS_ebno11/EqualisedQPSK.png}
+	\caption{Equalised QPSK Scatterplot for NLMS}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/%
+	Results/USRP/NLMS_ebno11/UnEqualisedQPSK.png}
+	\caption{Unequalised QPSK Scatterplot for NLMS}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/%
+	Results/USRP/NLMS_ebno11/MeanSquareError.png}
+	\caption{Mean Square Error for NLMS}
+\end{figure}
 
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/%
+	Results/USRP/ZF_ebno11/EqualisedQPSK.png}
+	\caption{Equalised QPSK Scatterplot for Zero 
+	Forcing}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/%
+	Results/USRP/ZF_ebno11/UnEqualisedQPSK.png}
+	\caption{Unequalised QPSK Scatterplot for Zero 
+	Forcing}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/%
+	Results/USRP/ZF_ebno11/MeanSquareError.png}
+	\caption{Mean Square Error for Zero Forcing}
+\end{figure}
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/%
+	Results/USRP/LMSBER.png}
+	\caption{BER of LMS}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/%
+	Results/USRP/NLMSBER.png}
+	\caption{BER of NLMS}
+	\label{fig:NLMS-BER-USRP}
+\end{figure}
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/%
+	Results/USRP/ZFBER.png}
+	\caption{BER of Zero Forcing}
+\end{figure}
+
+	
 % TODO: Develop the USRP results and compare with the
 % simulation results

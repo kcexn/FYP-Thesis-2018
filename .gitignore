@@ -7,3 +7,5 @@
 *.toc
 *.gz
 *.bak
+*.fig
+*.bmp

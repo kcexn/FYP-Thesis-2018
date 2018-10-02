@@ -15,12 +15,35 @@
 \usepackage{url}
 \usepackage{mathrsfs}
 \usepackage{courier}
+\usepackage{rotating}
+\usepackage[toc,page]{appendix}
 \begin{document}
 \maketitle
-
 \renewcommand{\abstractname}{Executive Summary}
 \begin{abstract}
-
+Real wireless channels we may wish to communicate over %
+are often frequency selective and time varying. The rate %
+at which the channel varies and the extent to which it %
+is frequency selective may greatly limit valid choices of %
+signal bandwidth. Orthogonal Frequency Division Multiplexing %
+(OFDM) has become a popular modulation scheme in wireless %
+communication in large part due to the fact that the overall %
+bandwidth of the OFDM symbol and the bandwidth of the %
+subcarriers within the OFDM symbol can be decoupled overcoming %
+challenges related to frequency selectivity of the wireless channel. %
+The time varying nature of the wireless channel still poses a significant %
+challenge to successful communication however. This study %
+looks at two adaptive equalisation schemes that can track %
+the changes in the channel state over time in the frequency %
+domain to work with OFDM, the least mean square (LMS) %
+filter and the normalised least mean square filter (NLMS). As the %
+coherence time of the channel reduces the faster the channel %
+changes with time and the more difficult it is to track with %
+adaptive equalisation, as such, this study constrains itself to %
+only slowly time varying scenarios where adaptive equalisation %
+will track the changes in the channel state. A hardware implementation %
+has been developed on the National Instruments universal software %
+radio platform (USRP) to demonstrate the proof of concept.
 \end{abstract}
 \tableofcontents
 \include{./Thesis/Introduction}
@@ -33,4 +56,45 @@
 \newpage
 \bibliography{./References/references}
 \bibliographystyle{IEEETrans}
+\begin{appendices}
+\chapter{Tx System Model}
+\label{app:TxSysModel}
+\begin{sidewaysfigure}
+	\centering
+	\begin{subfigure}{\paperwidth}
+		\includegraphics[width=\linewidth]{./Figures/System/%
+		TxPart1.png}
+		\caption{Tx System Model}
+		\label{fig:USRPTx1}
+	\end{subfigure}
+	\begin{subfigure}{\linewidth}
+		\centering
+		\includegraphics[width=0.7\linewidth]%
+		{./Figures/System/%
+		TxPart2.png}
+		\caption{Tx System Model}
+		\label{fig:USRPTx2}
+	\end{subfigure}
+\end{sidewaysfigure}
+\chapter{Rx System Model}
+\label{app:RxSysModel}
+\begin{sidewaysfigure}
+	\centering
+	\begin{subfigure}{\paperwidth}
+		\centering
+		\includegraphics[width=\linewidth]{./Figures/System/%
+		RxPart1.png}
+		\caption{Rx System Model}
+		\label{fig:USRPRx1}
+	\end{subfigure}
+	\begin{subfigure}{\linewidth}
+		\centering
+		\includegraphics[width=0.7\linewidth]%
+		{./Figures/System/%
+		RxPart2.png}
+		\caption{Rx System Model}
+		\label{fig:USRPRx2}
+	\end{subfigure}
+\end{sidewaysfigure}
+\end{appendices}
 \end{document}

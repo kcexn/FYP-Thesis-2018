@@ -419,11 +419,12 @@ moving the signal processing to software.
 \end{figure}
 
 \subsection{Direct Conversion Architecture}
+\label{subsec:DirectConversion}
 The direct conversion or homodyne architecture converts received %
-bandpass signals directly to baseband signals without the need for an %
-intermediate frequency. This done by selecting a local oscillator (LO) %f
-frequency to be the same as the centre frequency of the bandpass %
-signal.
+bandpass signals directly to baseband signals without the need for %
+an intermediate frequency. This done by selecting a local oscillator %
+(LO) frequency to be the same as the centre frequency of the %
+bandpass signal.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=\textwidth]{./Figures/System/%
@@ -443,15 +444,69 @@ null carriers in and around the DC component.
 
 \subsection{Transmitter Model}
 
-%TODO: Include the block diagram of the transmitter.
-%TODO: Discuss the use of finite capture and upsampling 
-% to remove difficulties of synchronisation
+The radio transmitter model was modeled on the finite %
+synchronous transmit example model given in the LabView %
+Instrument IO library. A diagram of transmitter is given %
+in appendix \ref{app:TxSysModel}. %
+The synchronous finite capture allows me to %
+transmit and receive simultaneously triggered on %
+an internal clock, this removes the problem of %
+synchronisation that would trouble a real %
+wireless communication system and lets us %
+constrain our attention to purely the effectiveness %
+of the adaptive filtering algorithm at the receiver. %
+
+In addition to the use of the synchronous transmit and %
+receive an upsampling factor of $4$ has been used %
+to ensure that the samples definitely occur on the %
+modulated amplitude levels and not on any edges that %
+occur to compensate for any fractional delay that %
+might be present.
+
 
 \subsection{Receiver Model}
+\FloatBarrier
+The radio receiver model was modeled on the finite %
+synchronous receiver example model given in the Lab%
+View Instrument IO library. A diagram of the receiver %
+is given in appendix \ref{app:RxSysModel}. %
 
-%TODO: Insert block diagram of the receiver
-%TODO: Discuss the received constellation and explain 
-% the ring caused by frequency offset between the Local 
-% Oscillator and the subcarrier frequency
-
+Unequalised the receiver constellation is a ring as is %
+illustrated in figure \ref{fig:ReceivedRing}. The line %
+leading from the centre of the ring to the edge is %
+caused by the null carriers and the DC offset distortion %
+caused by the LO as discussed in section \ref{subsec:Direct%
+Conversion}. The ring itself is caused by the frequency offset %
+between the LO that shifts the bandpass signal to the baseband %
+and the central frequencies of each of the subcarriers. This %
+frequency offset effect causes a rotation from the constellation %
+point equal to the difference between the LO frequency and the %
+central frequency of the subcarrier as described by 
+\begin{align}
+	r(t) = r'(t)e^{j 2\pi f_{e}t}
+\end{align}
+where $r'(t)$ is the ideal received constellation $r(t)$ is %
+the received constellation and $f_{e}$ is the difference %
+between the LO frequency and the subcarrier frequency.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.6\textwidth]{./Figures/System/%
+	UnequalisedRing.png}
+	\caption{Received Constellation before equalisation}
+	\label{fig:ReceivedRing}
+\end{figure}
+\FloatBarrier
 \subsection{Equalisation and Top Level Design}
+The equalisation step in the USRP model follows %
+the diagram in figure \ref{fig:USRPEqualisation}. The transmitted %
+symbols are passed to the equalisation block and the received %
+symbols are also passed to the equalisation block. Within this block %
+the LMS, NLMS and zero forcing equalisers are implemented as %
+described in chapter \ref{chap:AdaptiveFiltering}.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.6\textwidth]{./Figures/System/%
+	USRPEqualisation.png}
+	\caption{USRP Equalisation}
+	\label{fig:USRPEqualisation}
+\end{figure}

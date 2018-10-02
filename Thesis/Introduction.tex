@@ -106,13 +106,6 @@ The details of OFDM will be developed in Chapter 2.
 Where the mathematical construction of OFDM will be
 explored as well as the nature of the cyclic prefix.
 
-\section{Adaptive Filtering}
-
-%TODO: Do some reading to find a good way to motivate Adaptive
-% filters. Want to compare it to static filters at the 
-% very least. Maybe even want to introduce some filter
-% theory full stop.
-
 \section{Channel Modeling}
 
 The wireless communication channel is a %
@@ -185,3 +178,33 @@ analysis of adaptive filtering. So %
 Chapter \ref{chap:ChannelModeling} %
 will develop this in much more detail.
 
+\section{Adaptive Filtering}
+
+In the time varying scenario described earlier in %
+section \ref{sec:MotivatingScenario} an single %
+static estimate of the wireless channel impairments %
+will not give the best equalisation performance as %
+the channel will change. Adaptive filters offer a %
+a way to track the changes in the wireless channel %
+over time so that the optimal solution can be %
+followed providing the best equalisation performance %
+and minimising the number of bit errors in the received %
+bit stream. The filters studied in this report will be %
+the least mean square (LMS) filter and the %
+normalized least mean square (NLMS) filter. Both %
+are considered a member of the class of filters known %
+as stochastic gradient filters which minimise mean square %
+error by finding the stationary point of the paraboloid %
+that defines the mean square error.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.4\textwidth]{./Figures/%
+Circular_Paraboloid_Quadric.png}
+	\caption{Circular parabaloid in three dimensions 
+	\cite{Paraboloid12}}
+\end{figure}
+
+%TODO: Do some reading to find a good way to motivate Adaptive
+% filters. Want to compare it to static filters at the 
+% very least. Maybe even want to introduce some filter
+% theory full stop.

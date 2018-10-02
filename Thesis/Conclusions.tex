@@ -2,10 +2,134 @@
 
 \section{Concluding Remarks}
 
-% TODO: Develop concluding remarks this should be at least 500
-% to 1000 words. Any less and there's not a whole lot to conclude
-% about is there.
+A variety of adaptive filtering algorithms have been tested %
+and their performance in the learning and decision directed %
+schemes measured. Several things can be concluded from the %
+results provided in chapter \ref{chap:Results}, firstly the %
+frequency domain adaptive filtering model described in section %
+\ref{sec:TIModel} performs as expected. The single tap %
+variant of the LMS and NLMS algorithm converges to the %
+Wiener solution as expected and exhibits excess mean square error %
+that increases with increasing step size. 
+
+Section \ref{sec:TVResults} %
+results reveal some interesting properties about the LMS and %
+NLMS algorithms in both convergence to the wiener solution and tracking %
+of the time varying channel in a decision directed manner. three different %
+parameters were varied to see what effect they had on the performance %
+of the LMS and NLMS filters in both the learning and decision directed modes, %
+the length of the cyclic prefix which will make a difference on how much change %
+there is between OFDM symbols, the coherence time, and the SNR. In %
+decision directed operation the LMS algorithm overall performs better than %
+the NLMS algorithm in tracking the change over time regardless of whether %
+the SNR is high or low. The results indicate that the LMS algorithm performs better %
+at lower SNR's than high ones, this is likely due to the fact that in a purely %
+learning state at high SNR's, the LMS algorithm is unable to converge to the %
+wiener solution, this is particularly visible in figure \ref{fig:LMS-Short-High-None} where %
+the LMS solution converges to a result that is significantly higher than the %
+Wiener solution, the LMS's fixed step size and relatively slow rate of convergence %
+is likely to be the culprit in preventing the LMS to converge to the optimal %
+solution under these parameters. At lower SNR's the optimal solution has a %
+much higher mean square error and so the LMS algorithm even with the slower %
+rate of convergence is able to achieve the Wiener solution. %
+In contrast to this the NLMS algorithm is always capable of converging to the %
+Wiener solution in both high and low SNR's, this is distinctly better than %
+the performance exhibited by the LMS algorithm. A peculiar result occurs at %
+low SNR's for the NLMS algorithm in the sense that it appears to overfit the %
+optimal solution by a significant margin as can be seen in figure %
+\ref{fig:NLMS-Long-Low-None-Long}, it's unclear why this occurs. % TODO: mention this in future directions
+
+The decision directed performance of the NLMS in both low and high %
+SNR's is considerably worse than that of the LMS algorithm, this is %
+attributable to the fact that the NLMS algorithm takes significantly %
+larger steps than the LMS algorithm towards what it believes is %
+an optimal solution, so when an incorrect decision is made by the %
+decision slicer the filter coefficients may change significantly, %
+a property that makes this problem particularly worse is that unlike %
+the LMS algorithm's performance in figure \ref{fig:Medium-High-Directed-Long} 
+the NLMS filter coefficients may never recover even at high SNR's as %
+is clear in figure \ref{fig:NLMS-Short-High-Directed-Short}.
+
+The results from section \ref{sec:USRPResults} demonstrate that %
+the mean square error convergence on the software defined %
+radio does converge in a way that is consistent with the MATLAB %
+simulations. It was not possible to examine the decision directed %
+performance of the radio implementation with any kind of rigour %
+as the unknown channel between the antennae meant that %
+a wiener solution cannot be found and as was made clear in section %
+\ref{sec:TVResults} the LMS algorithm does not guarantee %
+convergence to the optimal solution under a time varying scenario, and %
+the NLMS algorithm has a tendency to overfit. Comparing figures %
+\ref{fig:NLMS-BER-USRP} with \ref{fig:NLMS-BER-Long-DD-TV}, it %
+clear that this overfitting behaviour is present in the radio implementation %
+as well.
+
+Overall the length of the cyclic prefix seemed to have minimal effect %
+on the system performance so long as it is longer than the %
+channel memory so that the circular convolution described in %
+chapter \ref{chap:OFDM} still applies.
+
+A good frequency domain adaptive receiver should require a short %
+number of training symbols to initialise itself to the Wiener solution %
+so that most of the symbols transmitted can be useful data. These %
+results indicate that the NLMS algorithms significantly faster convergence %
+time in training make it a better choice for initialisation. The NLMS algorithms %
+poor performance in decision directed operation make the standard LMS %
+algorithm a better choice for tracking the time-varying nature of the channel %
+without additional training symbols. Close attention should be paid to the %
+coherence time, coherence bandwidth, and SNR as these channel parameters %
+will greatly influence choices of OFDM FFT length, OFDM symbol time and %
+step size.
 
 \section{Future Directions}
+
+There are many improvements and areas of study left to %
+investigate in this system. Firstly, it is clear that faster %
+converging algorithms such as the NLMS are significantly %
+better for initialisation to the Wiener solution than slower %
+converging algorithms. References \cite{Qureshi77} and %
+\cite{Crozier91} suggest that some training sequences %
+may have properties that allow for fast convergence %
+to the Wiener solution, and so more intelligent choices of %
+training sequence is worth investigating. Other types of %
+adaptive filters may also be worth looking at such %
+as the recursive least square (RLS), given that %
+OFDM reduces the channel estimation problem to that %
+of a single filter coefficient, it may be computationally %
+tractable to look at more computationally complex filters %
+such as an affine projection filter or variants on the Kalman %
+filter. 
+
+Reference \cite{Wei17} suggests that both time and frequency %
+coherence can be exploited for equalisation. Investigating %
+the performance of introducing weighted filter coefficient %
+interpolation in the frequency domain may significantly %
+improve the performance of the adaptive receiver in decision %
+directed operation. In addition if the continuous stream of data %
+is long, periodic retraining symbols can be transmitted to %
+provide corrections to accumulated errors under decision %
+directed operation, in combination with frequency domain %
+coefficient interpolation, it may not be necessary to %
+retransmit these retraining symbols on all the subcarriers. If %
+quality of service information can be transmitted upstream %
+to the base station and can be responded to in real time, it %
+may also be feasible to only selectively resend training %
+symbols on subcarriers that are experiencing significant %
+departure from the optimal solution. 
+
+In section \ref{sec:TVResults} it was made apparent that the %
+NLMS algorithm performed poorly in decision directed operation %
+due to the fact that it steps further away from the correct %
+decision when the decision slicer makes an incorrect decision. %
+The number of incorrect decisions made due to noise, the density %
+of the symbol constellation (i.e., 16-QAM, 64-QAM etc.) will both %
+have a significant impact on how well these adaptive filters will %
+perform while decision directed. This study does not spend any %
+time evaluating the relationship between constellation density, %
+noise and decision directed performance, and it may be %
+important to characterise this as higher constellation density %
+may reduce decision directed performance to an impractical %
+level at similar $E_b/N_0$, so additional $E_b/N_0$ may be %
+required.
 
 % TODO: Develop future study directions for this.
