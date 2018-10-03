@@ -1,31 +1,50 @@
 \chapter{Introduction}
 \label{ch:Introduction}
+Wireless communications systems suffer from a wide %
+range of impairments that make the communications %
+channel a hostile environment to communicate over. %
+The convenience of wireless communication over %
+wired communication drives demand for being able %
+to accomodate for the wireless environment. %
+As the internet of things becomes more ubiquitous %
+it will be necessary to develop methods of %
+equalisation and filtering that are well suited to the %
+wireless channel and are robust enough to function %
+on cheaper hardware. Here, the motivating %
+scenario for the study done throughout this %
+report will be developed as well as a surface level %
+coverage of the three major theoretical components, %
+orthogonal frequency division multiplexing (OFDM) %
+Modulation, wireless channel modeling, and %
+adaptive filtering. Chapters \ref{chap:OFDM}, %
+\ref{chap:ChannelModeling}, and %
+\ref{chap:AdaptiveFiltering} will give a more detailed %
+coverage of the theory for OFDM, wireless channel %
+modeling and adaptive filtering respectively.
+
 \section{Motivating Scenario}
 \label{sec:MotivatingScenario}
 The next generation of wireless communication %
-dubbed 5G makes promises of a hyper connected %
-world with billions of devices coming online % TODO: cite this
-connected by the radio network. With this kind %
-of communication network in mind, it is easy %
+dubbed 5G makes promises of a densely connected %
+network with numerous devices coming online % TODO: cite this
+connected by the radio network \cite{Demestichas13,Hossain15}. %
+With this kind of communication network in mind, it is easy %
 to imagine a scenario in which a cell needs %
-to serve many almost static users a steady stream %
+to serve many near static users a steady stream %
 of data over a long period of time.% 
-
 \begin{figure}[h!]
 	\includegraphics[width=\linewidth]{./Figures/%
 	Application_Scenario.png}
 	\caption{Application Scenario}
 	\label{fig:AppScene}
 \end{figure}
-
 Figure \ref{fig:AppScene}. visualises the motivating %
 scenario in mind of one base station serving many %
 terminals over a bidirectional link. I'll be constraining %
-% TODO: Add up-link study to the conclusion about future study
 the study done within this report to simply the down-link % 
 between the base station and a terminal. This link will %
 have a few properties of interest to us. The first is that %
-the terminal will be fairly static with very little movement, %
+the terminal will be nearly static with very little movement, %
 the second, is that the environment is prone to change. We can %
 imagine this scenario as being a user, sitting down in a busy %
 courtyard watching streaming video on their mobile phone. The %
@@ -33,33 +52,12 @@ user equipment is unlikely to move much however the environment %
 connecting the user to the base station is prone to change as %
 people and vehicles move about. I will model this environment %
 as one that will introduce slow time-variations to the wireless %
-% Find some examples or citations of this?
-channel connecting the station to the user. No more time will be %
-spent analysing the validity of this channel model as %
-the key focus of this report will be to analyse the %
-effectiveness of adaptive filters under these channel %
-conditions.
-
-With this scenario in mind this report will be broken %
-into the following sections. The rest of this chapter %
-will aim to introduce the topics of the wireless %
-communication principles used throughout the rest %
-of the report, adaptive filtering, orthogonal %
-frequency division multiplexing, and wireless %
-channel modeling will receive a high level treatment %
-here. Chapter 2 will give OFDM a more in-depth %
-mathematical discussion. % This will probably be very short
-% but I can probably flesh it out if I give it some 
-% comparison and look at OOB emissions and the such.
-Chapter 3 will give adaptive filtering a similar %
-in-depth mathematical treatment. Chapter 4 will study %
-channel models and channel modeling techniques. %
-Chapter 5 will develop my system model both under %
-under simulation and on the software defined radio. %
-Chapter 6 will look at the results under simulation %
-both on the radio and in MATLAB. Chapter 7 will draw %
-some conclusions and make some remarks about future %
-directions that can be explored.
+channel connecting the station to the user. Although this %
+particular example is an oversimiplification of how streaming %
+video works over standard communication protocols, the idea %
+of internet of things (IoT) devices needing to operate in %
+slowly time varying conditions efficiently is not too far %
+of a stretch from this simple example.
 
 \section{Orthogonal Frequency Division Multiplexing %
 (OFDM)}
