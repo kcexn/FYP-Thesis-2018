@@ -32,22 +32,28 @@ show the results for mean square error, mean square deviation and %
 excess mean square error for the LMS filter under a variety of %
 different step sizes $\mu$.
 \begin{figure}[ht]
-	\includegraphics[width=\textwidth]{./Figures/Results/%
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{./Figures/Results/%
+		TimeInvariantLMS/NoDivergence/ExcessMeanSquareError.png}
+		\caption{Excess Mean Square Error of LMS}
+		\label{fig:LMS-EMSE}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{./Figures/Results/%
+		TimeInvariantLMS/NoDivergence/MeanSquareDeviation.png}
+		\caption{Mean Square Deviation of LMS}
+		\label{fig:LMS-MSD}
+	\end{minipage}
+\end{figure}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.55\textwidth]{./Figures/Results/%
 	TimeInvariantLMS/NoDivergence/MeanSquareError.png}
 	\caption{Mean Square Error of LMS}
 	\label{fig:LMS-MSE}
-\end{figure}
-\begin{figure}[ht]
-	\includegraphics[width=\textwidth]{./Figures/Results/%
-	TimeInvariantLMS/NoDivergence/MeanSquareDeviation.png}
-	\caption{Mean Square Deviation of LMS}
-	\label{fig:LMS-MSD}
-\end{figure}
-\begin{figure}[ht]
-	\includegraphics[width=\textwidth]{./Figures/Results/%
-	TimeInvariantLMS/NoDivergence/ExcessMeanSquareError.png}
-	\caption{Excess Mean Square Error of LMS}
-	\label{fig:LMS-EMSE}
 \end{figure}
 It's apparent for the figures that as the step size increases the %
 rate of convergence increases as well. Recalling the discussion in %
@@ -64,16 +70,26 @@ frequency domain does in fact converge to the optimal solution and that %
 the expected tradeoff between convergence time and misadjustment is %
 present.
 \begin{figure}[ht]
-	\includegraphics[width=\textwidth]{./Figures/Results/%
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\includegraphics[width=\linewidth]{./Figures/Results/%
+		TimeInvariantLMS/Divergence/MeanSquareDeviation.png}
+		\caption{Mean Square Deviation diverging of LMS}
+		\label{fig:LMS-MSD-Diverge}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\includegraphics[width=\linewidth]{./Figures/Results/%
+		TimeInvariantLMS/Divergence/ExcessMeanSquareError.png}
+		\caption{Excess Mean Square Error diverging of LMS}
+		\label{fig:LMS-EMSE-Diverge}
+	\end{minipage}
+\end{figure}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.55\textwidth]{./Figures/Results/%
 	TimeInvariantLMS/Divergence/MeanSquareError.png}
 	\caption{Mean Square Error diverging of LMS}
 	\label{fig:LMS-MSE-Diverge}
-\end{figure}
-\begin{figure}[ht]
-	\includegraphics[width=\textwidth]{./Figures/Results/%
-	TimeInvariantLMS/Divergence/MeanSquareDeviation.png}
-	\caption{Mean Square Deviation diverging of LMS}
-	\label{fig:LMS-MSD-Diverge}
 \end{figure}
 Table \ref{tab:LMS} lists that valid step sizes for $\mu$ range between %
 $0$ and $2/(M S_{\text{max}})$, however this is only valid for when %
@@ -92,12 +108,6 @@ show systems that diverge at a $\mu = 0.35$. This occurs %
 when the randomly generated fading is very large and reduces %
 the upper bound in equation \ref{eq:LMS-Stability} to beneath %
 $\mu$.
-\begin{figure}[ht]
-	\includegraphics[width=\textwidth]{./Figures/Results/%
-	TimeInvariantLMS/Divergence/ExcessMeanSquareError.png}
-	\caption{Excess Mean Square Error diverging of LMS}
-	\label{fig:LMS-EMSE-Diverge}
-\end{figure}
 \FloatBarrier
 \subsection{Normalized Least Mean Square}
 \FloatBarrier
@@ -112,43 +122,53 @@ a much higher misadjustment as can be seen in figure \ref{fig:NLMS-EMSE} which i
 a result of the faster rate of convergence. The regularisation parameter chosen %
 for this NLMS experiment is chosen to be $0.05$.
 \begin{figure}[ht]
-	\includegraphics[width=\textwidth]{./Figures/Results/%
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\includegraphics[width=\linewidth]{./Figures/Results/%
+		TimeInvariantNLMS/NoDivergence/MeanSquareDeviation.png}
+		\caption{Mean Square Deviation of NLMS}
+		\label{fig:NLMS-MSD}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\includegraphics[width=\linewidth]{./Figures/Results/%
+		TimeInvariantNLMS/NoDivergence/ExcessMeanSquareError.png}
+		\caption{Excess Mean Square Deviation of NLMS}
+		\label{fig:NLMS-EMSE}
+	\end{minipage}
+\end{figure}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.55\textwidth]{./Figures/Results/%
 	TimeInvariantNLMS/NoDivergence/MeanSquareError.png}
 	\caption{Mean Square Error of NLMS}
 	\label{fig:NLMS-MSE}
-\end{figure}
-\begin{figure}[ht]
-	\includegraphics[width=\textwidth]{./Figures/Results/%
-	TimeInvariantNLMS/NoDivergence/MeanSquareDeviation.png}
-	\caption{Mean Square Deviation of NLMS}
-	\label{fig:NLMS-MSD}
-\end{figure}
-\begin{figure}[ht]
-	\includegraphics[width=\textwidth]{./Figures/Results/%
-	TimeInvariantNLMS/NoDivergence/ExcessMeanSquareError.png}
-	\caption{Excess Mean Square Deviation of NLMS}
-	\label{fig:NLMS-EMSE}
 \end{figure}
 In figures \ref{fig:NLMS-MSE-Diverge}, \ref{fig:NLMS-MSD-Diverge}, and %
 \ref{fig:NLMS-EMSE-Diverge} it's apparent that for choices of $\mu$ greater %
 than $2$ the NLMS algorithm diverges.
 \begin{figure}[ht]
-	\includegraphics[width=\textwidth]{./Figures/Results/%
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{./Figures/Results/%
+		TimeInvariantNLMS/Divergence/MeanSquareDeviation.png}
+		\caption{Mean Square Deviation Divergence of NLMS}
+		\label{fig:NLMS-MSD-Diverge}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{./Figures/Results/%
+		TimeInvariantNLMS/Divergence/ExcessMeanSquareError.png}
+		\caption{Excess Mean Square Error Divergence of NLMS}
+		\label{fig:NLMS-EMSE-Diverge}
+	\end{minipage}
+\end{figure}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.55\textwidth]{./Figures/Results/%
 	TimeInvariantNLMS/Divergence/MeanSquareError.png}
 	\caption{Mean Square Error Divergence of NLMS}
 	\label{fig:NLMS-MSE-Diverge}
-\end{figure}
-\begin{figure}[ht]
-	\includegraphics[width=\textwidth]{./Figures/Results/%
-	TimeInvariantNLMS/Divergence/MeanSquareDeviation.png}
-	\caption{Mean Square Deviation Divergence of NLMS}
-	\label{fig:NLMS-MSD-Diverge}
-\end{figure}
-\begin{figure}[ht]
-	\includegraphics[width=\textwidth]{./Figures/Results/%
-	TimeInvariantNLMS/Divergence/ExcessMeanSquareError.png}
-	\caption{Excess Mean Square Error Divergence of NLMS}
-	\label{fig:NLMS-EMSE-Diverge}
 \end{figure}
 
 \section{Time Varying Simulation Results}
