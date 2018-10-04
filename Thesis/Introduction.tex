@@ -59,64 +59,15 @@ of internet of things (IoT) devices needing to operate in %
 slowly time varying conditions efficiently is not too far %
 of a stretch from this simple example.
 
-\section{Orthogonal Frequency Division Multiplexing %
-(OFDM)}
-
-The simplest way to modulate signals over the wireless %
-channel is to use some form of single carrier modulation. %
-Single carrier modulation simply takes input data, separates %
-it into in-phase and quadrature components if necessary, pulse %
-shapes the signal, up converts to the carrier frequency and %
-transmits over the wireless channel.
-%TODO: add figure to depict single carrier methodology
-
-This method of modulation has some drawbacks. %TODO: find some 
-% references that list some drawbacks of single carrier modulation.
-The main drawbacks of interest to us will be the complexity of %
-channel equalisation. The wireless propagation medium can be %
-modeled as a finite impulse response filter %TODO: cite this
-and so as the filter length increases estimating, %
-the channel becomes an increasingly more complex task. %
-A modulation technique that helps to overcome this challenge %
-is orthogonal frequency division multiplexing or OFDM. %
-OFDM works differently to traditional single carrier %
-modulation in the sense that it separates the modulation %
-bandwidth into $N$ subcarriers each with a subband bandwidth of %
-$\frac{B_total}{N}$. A key advantage of these subcarriers in %
-relation to the scenario in \ref{sec:MotivatingScenario} is that %
-the the subbands of the OFDM subcarriers can be designed to %
-be narrower than the coherence bandwidth of the time %
-varying fading channel. More on coherence bandwidth will %
-be covered in chapter \ref{chap:ChannelModeling}
-
-%TODO: add figure depicting the serial to parallel OFDM
-
-A cyclic prefix can be added to the beginning of each OFDM %
-symbol which gives it the nice mathematical properties %
-which make equalisation simple regardless of the length %
-of the channel filter. In addition, the parallel nature %
-of the signal means that signal processing can happen %
-on each subband independently and can reduce the bandwidth %
-requirements for signal processing electronics.
-
-The details of OFDM will be developed in Chapter 2. 
-%TODO: fix chapter numbers
-Where the mathematical construction of OFDM will be
-explored as well as the nature of the cyclic prefix.
-
 \section{Channel Modeling}
 
-The wireless communication channel is a %
-hostile environment. There are three %
-major types of impairments that affect %
-wireless communication
-
+There are three major types of impairments that affect %
+wireless communication.
 \begin{itemize}
 	\item{Path loss}
 	\item{Thermal electronic noise}
 	\item{Fading}
 \end{itemize}
-
 Path loss is an impairment that affects %
 all forms of electronic communication and is %
 caused by the natural decay in amplitude %
@@ -138,21 +89,17 @@ commonly fixed by the temperature %
 of operation for the electronics. %
 The noise power spectral density %
 is defined as %
-
 \begin{align}
 	N_{0} = \kappa T
 \end{align}
-
 where $\kappa$ is the boltzmann %
 constant and $T$ is the temperature %
 of operation in Kelvin. Noise %
 power is typically relative constant %
 in a given system and is defined as
-
 \begin{align}
 	\sigma^{2} = BT
 \end{align}
-
 where $B$ is the bandwidth of the %
 signal of interest.
 
@@ -169,31 +116,89 @@ obstructions cause the wave to %
 reflect and scatter throughout %
 throughout the environment of %
 interest before arriving %
-at the receiver. This is a %
-severe impairment to the wireless %
-channel and is central to my %
-analysis of adaptive filtering. So %
-Chapter \ref{chap:ChannelModeling} %
-will develop this in much more detail.
+at the receiver. Fading is %
+characterised by four functions, %
+coherence time, which is a measure %
+of how long the fading channel %
+remains constant, coherence bandwidth, %
+a measure of how correlated two neighbouring %
+frequencies are with respect to frequency %
+separation, doppler spread, a measure of %
+the frequency spread caused by doppler shift %
+and the power delay profile, a measure of %
+how spread out a pulse spreads in time. %
+These functions define two main properties %
+of fading, the rate of fading (slow or fast), %
+and the frequency selectivity of the fading %
+(how distorted the signal of interest is %
+in the frequency domain). A deeper discussion %
+of these concepts is discussed in chapter %
+\ref{chap:ChannelModeling} where a description %
+of the channel as finite impulse response filter %
+is also provided.
 
+\section{Orthogonal Frequency Division Multiplexing %
+(OFDM)}
+\label{sec:OFDMIntro}
+The simplest way to modulate signals over the wireless %
+channel is to use some form of single carrier modulation. %
+Single carrier modulation takes an input data stream, %
+separates the stream into in-phase and quadrature components %
+if necessary, pulse shapes, the signal, up converts to the %
+carrier frequency and transmits over the wireless channel. %
+There are many methodologies of single carrier modulation %
+however in all methods of single carrier modulation %
+the symbol time is inversely proportional the transmission %
+bandwidth, $T_{s} \propto 1/B$. This means that in order to %
+achieve faster data rates, more bandwidth is always required. %
+In frequency selective wireless channels, this induces intersymbol %
+interference (ISI) that can extend for many symbols. This ISI %
+can introduce a complex and computationally expensive equalisation %
+operation to undo the distortion introduced by ISI.
+
+As will be discussed in more detail in chapter %
+\ref{chap:ChannelModeling} the wireless propagation medium can be %
+modeled as a finite impulse response filter\cite{Jer00}. 
+As the filter length increases, estimating %
+the channel becomes an increasingly more complex task as %
+equalisation complexity grows with filter length. %
+Orthogonal frequency division multiplexing or OFDM significantly %
+helps to simplify the problem of equalisation caused by %
+the frequency selectivity of the channel. OFDM works by %
+separating the bandwidth of the signal of interest into %
+$N$ subcarriers each with a subband bandwidth of %
+$B_{\text{total}}/N$. A key advantage of these subcarriers %
+is that the bandwidths of each of the OFDM subcarreirs can %
+be designed to be narrower than the coherence bandwidth %
+of the frequency selective wireless channel. As will be %
+developed in chapter \ref{chap:AdaptiveFiltering} each %
+subcarrier can be equalised independently with a single %
+coefficient that approximates the locally flat properties %
+of the fading channel. Chapter \ref{chap:OFDM} develops %
+the mathematical construction of OFDM and develops %
+properties of orthogonality and circular convolution.
+\newpage
 \section{Adaptive Filtering}
 
-In the time varying scenario described earlier in %
-section \ref{sec:MotivatingScenario} an single %
-static estimate of the wireless channel impairments %
-will not give the best equalisation performance as %
-the channel will change. Adaptive filters offer a %
-a way to track the changes in the wireless channel %
-over time so that the optimal solution can be %
-followed providing the best equalisation performance %
-and minimising the number of bit errors in the received %
-bit stream. The filters studied in this report will be %
-the least mean square (LMS) filter and the %
-normalized least mean square (NLMS) filter. Both %
-are considered a member of the class of filters known %
-as stochastic gradient filters which minimise mean square %
-error by finding the stationary point of the paraboloid %
-that defines the mean square error.
+In section \ref{sec:OFDMIntro} OFDM was introduced %
+as a solution to the equalisation complexity introduced %
+by the frequency selectivity of the wireless channel. In %
+the time varying scenario described in section %
+\ref{sec:MotivatingScenario}, a time invariant %
+estimate of the wireless channel will need %
+to be periodically updated with time in order %
+to provide adequate filtering.
+
+Adaptive filters offer a method to track changes in the %
+wireless channel over time, so that the equalisation filter %
+can follow the optimal solution over time. The filters %
+studied in this report will be te least mean square (LMS) %
+filter and the normalised least mean square (NLMS) filter. Both %
+filters are considered members of the class of filters known %
+as stochastic gradient filters. Stochastic gradient filters %
+minimise mean square error between the received symbol %
+and a desired output by finding the stationary point %
+of the paraboloid that defines the mean square error.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.4\textwidth]{./Figures/%
@@ -201,8 +206,6 @@ Circular_Paraboloid_Quadric.png}
 	\caption{Circular parabaloid in three dimensions 
 	\cite{Paraboloid12}}
 \end{figure}
-
-%TODO: Do some reading to find a good way to motivate Adaptive
-% filters. Want to compare it to static filters at the 
-% very least. Maybe even want to introduce some filter
-% theory full stop.
+A more formal definition of the method of gradient descent, %
+mean square error, least mean square, and normalised least mean %
+square will be provided in chapter \ref{chap:AdaptiveFiltering}

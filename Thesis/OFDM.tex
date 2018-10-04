@@ -1,6 +1,5 @@
 \chapter{Orthogonal Frequency Division Multiplexing (OFDM)}
 \label{chap:OFDM}
-\newpage
 Chapter 1 introduced the idea of OFDM and why it's %
 advantageous to use. This chapter will aim to develop %
 OFDM mathematically and provide some theoretical insight %
@@ -12,7 +11,6 @@ into how and why it works.
 	\caption{OFDM Transmitter block diagram}
 	\label{fig:OFDMTransmit}
 \end{figure}
-
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=\linewidth]{./Figures/Chapter2/%
@@ -20,7 +18,6 @@ into how and why it works.
 	\caption{OFDM Receiver block diagram}
 	\label{fig:OFDMReceiver}
 \end{figure}
-
 Figure \ref{fig:OFDMTransmit} and \ref{fig:OFDMReceiver} %
 depict the block diagram of the OFDM transmitter and receiver.
 
@@ -34,36 +31,29 @@ frequency spectrum\cite{Chang66}.
 A key driver to the efficiency and widespread adoption %
 of OFDM is the discrete Fourier transform (DFT) defined %
 as\cite{Rao2010}:
-
 \begin{align}
 	X^F(k) = \sum_{n=0}^{N-1}x(n)e^{(\frac{-i 2\pi}{N})kn}, %
 	k=0,1,\cdots,N-1,\quad N \text{ DFT coefficients}
 \end{align}
-
 And the inverse transform is defined as:
-
 \begin{align}
 	x(n) = \frac{1}{N}\sum_{k=0}^{N-1}X^{F}(k)%
 	e^{(\frac{i 2\pi}{N})kn}, n = 0,1,\cdots,N-1, \quad%
 	N \text{ data samples}
 	\label{eq:IDFT}
 \end{align}
-
 The discrete fourier transform has the orthogonality %
 properties necessary for orthogonal spectral allocation. %
 To show this I'll follow the development in \cite{Opp99}. %
 multiply both sides of eq \ref{eq:IDFT}. by %
 $e^{-j(\frac{2\pi}{N})rn}$ and summing from $n=0$ %
 to $n=N-1$ gives:
-
 \begin{align}
 	\sum_{n=0}^{N-1}x(n)e^{(\frac{-i 2\pi}{N})rn} = %
 	\sum_{k=0}^{N-1}X^{F}(k)\left[\frac{1}{N} \sum_{n=0}^{N-1} %
 	e^{(\frac{i 2\pi}{N})(k-r)n}\right]
 \end{align}
-
 evaluating the exponential:
-
 \begin{align}
 	\frac{1}{N}\sum_{n=0}^{N-1}e^{(\frac{i 2\pi}{N})(k-r)n}%
 	= \begin{cases}
@@ -71,7 +61,6 @@ evaluating the exponential:
 		0,\quad \text{otherwise.}
 	\end{cases}
 \end{align}
-
 which expresses the orthogonality of the complex exponentials %
 $e^{(\frac{i 2\pi}{N})kn}$ and $e^{(\frac{-i 2\pi}{N})rn}$ for %
 integer values of $k$ and $r$. This can be interpreted as the %
@@ -100,31 +89,28 @@ x[N-1]$ of length $N$ and a discrete-time channel with finite %
 impulse response (FIR) $h[n] = h[0],h[1],\cdots,h[\mu-1]$ of length %
 $\mu$. A cyclic prefix of $x[n]$ is defined as $\{x[N-(\mu-1)], %
 x[N-(\mu-2)], \cdots, x[N-1]\}$ which is appended to the beginning %
-of the input, the resulting series of samples $\hat{x} = x[N-(\mu-1)], %
+of the input, the resulting series of samples %
+$\hat{x} = x[N-(\mu-1)], %
 x[N-(\mu-2)], \cdots, x[N-1], x[0], x[1], \cdots, x[N-1]$, figure %
 \ref{fig:CyclicPrefix}. visualises $\hat{x}[n]$.
-
 \begin{figure}[h!]
 	\includegraphics[width=\linewidth]{./Figures/Chapter2/%
 	CyclicPrefix.png}
 	\caption{Appending the Cyclic Prefix}
 	\label{fig:CyclicPrefix}
 \end{figure}
-
 It's clear from the definition of the new sequence $\hat{x}[n]$ that %
 $\hat{x}[n]$ is equivalent to $x[n]_{N}$ from $-(\mu-1) \leq n \leq %
 N-1$. Where $x[n]_{N}$ denotes the sequence $x[n]$ modulo $N$, that %
 is to say the sequence $x[n]$ is periodic in $N$. Given $\hat{x}[n]$ %
 as the input to the channel and the channel response begin $h[n]$. %
 The channel output is:
-
 \begin{align}
 	y[n] =& \hat{x}[n]*h[n]\\
 	     =& \sum_{k=0}^{\mu-1}h[k]\hat{x}[n-k]\\
 	     =& \sum_{k=0}^{\mu-1}h[k]x[n-k]_{N}\\
 	     =& x[n]_{N}\circledast h[n]
 \end{align}
-
 where $\circledast$ represents a circular convolution. %
 
 The convolution theorem states that the convolution %
@@ -132,16 +118,14 @@ of two  signals is equivalent to point wise %
 multiplication in the frequency domain\cite{MathWorldConvolution%
 Theorem}. In the special case of the DFT, the convolution theorem %
 applies under circular convolution i.e.
-
 \begin{align}
 	Y[i] = \text{DFT}\{y[n] = x[n]\circledast h[n]\} = X[i]H[i]	
 	\label{eq:DFTConvolutionTheorem}
 \end{align}
-
-This powerful result allows for the easy equalisation of the received %
+This powerful result allows for the easy equalisation of the %
+received %
 signal $y[n]$ in the frequency domain, as the sent signal $X[i]$ can %
 retrieved with a simple division.
-
 \begin{align}
 	X[i] = \frac{Y[i]}{H[i]}
 	\label{eq:ZeroForcing}
