@@ -16,8 +16,7 @@ filtering in slowly time varying channels. %
 This section will be dedicated to developing %
 the system models. Chapter \ref{chap:Results} %
 will develop the results that I collected %
-and compare them with whats available in the %
-literature.
+and compare them. 
 
 \section{Time Invariant System Model}
 \label{sec:TIModel}
@@ -52,12 +51,12 @@ immediately after the FFT and before the %
 parallel to serial step. By designing %
 the OFDM subcarrier bandwidth to be %
 significantly less than the coherence %
-bandwidth of the fading channel a simple %
+bandwidth of the fading channel, a simple %
 version of the LMS filter with only one %
 filter coefficient can be assigned to %
 each subcarrier for equalisation as %
 illustrated in figure \ref{fig:Frequency%
-LMS}
+LMS}.
 \FloatBarrier
 \begin{figure}[ht]
 	\centering
@@ -76,7 +75,7 @@ in digital communications systems can be %
 modeled as a Bernoulli distribution. %TODO: Cite this
 My model simulates this using MATLAB's in-built %
 \texttt{randi} function which generates %
-a random vector $\bold{X}$ where each %
+a random vector $\vec{X}$ where each %
 random variable $X$ can take on values from %
 a user defined set of integers and is %
 uniformly distributed, i.e. where each integer %
@@ -89,13 +88,12 @@ the set of integers can be defined as $\{0,1\}$.
 QPSK or Quadrature Phase Shift Keying is a popular %
 modulation scheme. I've chosen to use it primarily %
 for its simplicity but also because it contains both
-an in-phase and a quadrature component, which are%
+an in-phase and a quadrature component, which are %
 the elements required to construct %
 Quadrature Amplitude Modulation (QAM) %
 which is the current modulation scheme employed %
 in 4G systems % TODO: Find a citation for this.
-and is likely to be used in 5G schemes.
-
+and are seriously being considered for 5G systems.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.7\textwidth]{./%
@@ -139,13 +137,13 @@ minimises the bit error rate caused by %
 symbol errors. %TODO: Find a citation for grey mapping
 
 MATLAB's Communications System Toolbox offers %
-a system object name \texttt{QPSKModulator} which %
+a system object name \texttt{comm.QPSKModulator} which %
 will perform the grey mapping of pairs of bits in a %
 bit stream to QPSK constellation points and perform %
 the energy normalisation.
 
-Paired with the \texttt{QPSKModulator} MATLAB also %
-provides a \texttt{QPSKDemodulator} which performs %
+Paired with the \texttt{comm.QPSKModulator} MATLAB also %
+provides a \texttt{comm.QPSKDemodulator} which performs %
 performs maximum likelihood detection and maps %
 the received QPSK constellation back to a bit %
 stream.
@@ -155,14 +153,14 @@ stream.
 OFDM has been covered in some detail in chapter %
 \ref{chap:OFDM} so here I'll focus on the simulation %
 implementation. MATLAB's communication systems %
-toolbox provides an \text{OFDMModulator} which %
+toolbox provides an \texttt{comm.OFDMModulator} which %
 takes in an input stream of symbols and performs %
 an IFFT followed by an IFFT shift to place the DC %
 components in the centre. It also prepends the %
 last $\mu$ samples of the output of the IFFT to %
 generate a cyclic prefix and allows the use %
 of a DC Null, the DC null will be relevant in %
-our discussion on thhe USRP model.
+our discussion on the USRP model.
 
 \subsection{AWGN}
 
@@ -195,7 +193,7 @@ where $S$ is the average received signal power, %
 $R_b$ is the bit rate, $\sigma_n^{2}$ is the %
 total additive white gaussian noise power and %
 $B$ is the total signal bandwidth. The relation %
-between $SNR$ and $E_b/N_0$ is as follows
+between SNR and $E_b/N_0$ is as follows
 \begin{align}
 	\frac{S}{\sigma_n^{2}} = \frac{E_b}{N_0}
 	\frac{R_b}{B}
@@ -205,11 +203,12 @@ rate relative to a binary scheme such as on off %
 keying or binary phase shift keying (BPSK), so %
 SNR needs to be multipled by $2$ for the different %
 schemes to experience the same normalised %
-signal to noise ratio. In log units multiplication %
+signal to noise ratio, given the same signal bandwidth. %
+In log units multiplication %
 is evaluated as addition as can be seen above.
 
 MATLAB's Commmunications System Toolbox system object %
-\\\texttt{comm.AWGNChannel} takes an input stream of %
+\texttt{comm.AWGNChannel} takes an input stream of %
 symbols and generates complex gaussian noise with %
 zero mean and defined variance. This noise is then %
 summed with the samples in the stream to make a noisy %
@@ -243,7 +242,7 @@ increasing the number of subcarriers. A subcarrier count of $1024$ was %
 chosen to generate the time invariant results discussed in the next chapter. %
 
 \subsection{Equalisation}
-
+\label{subsec:Equalisation}
 As illustrated in figure \ref{fig:FrequencyLMS}, a frequency domain %
 LMS scheme was made with a single tap variant of the LMS algorithm on %
 each subcarrier. As discussed in previous chapters, this can be done %
@@ -287,27 +286,30 @@ time invariant model. The first is the introduction of the time-varying Rayleigh
 and Rician channel models, these channel models have been simulated using %
 the filtered white gaussian noise method. The Rayleigh and Rician fading %
 channels introduce design constraints to the model not present in the %
-simplified time invariant model examined in the previous section %
-regarding subcarrier bandwidth and coherence frequency %
-as well as the OFDM symbol time and channel coherence time. The second %
-key difference is the introduction of a decision directed scheme for the LMS %
-filter to examine its tracking performance after achieving the optimal Wiener solution.
+simplified time invariant model examined in section %
+\ref{sec:TIModel} regarding subcarrier bandwidth and coherence %
+frequency as well as the OFDM symbol time and channel %
+coherence time. The second key difference is the introduction %
+of a decision directed scheme for the LMS %
+filter to examine its tracking performance after achieving %
+the optimal Wiener solution.
 
 \subsection{Filtered White Gaussian Noise Channel Simulation}
 
 The time varying fading channel can be broken down into three %
 steps. The power delay definition needs to be defined, using the %
-power delay profile the average powers of each multipath tap can %
-be defined. Once this is done the time varying component of the %
-fading channel needs to be introduced, the method of choice %
-for this simulation will be one of filtered white gaussian noise. %
+power delay profile the average powers of each multipath %
+coefficient can be defined. Once this is done the time varying %
+component of the fading channel needs to be introduced, %
+the method of choice for this simulation will be one of filtered %
+white gaussian noise. 
 \subsubsection{The Power Delay Profile}
 
 The power delay profile is critical in scaling the average power %
 of each multipath coefficient. In figure \ref{fig:ChannelFilterSimulation} %
 an illustration of the simulation mechanism by which a single channel %
 coefficient process can be generated, $\sigma_{n}$ represents %
-is the scaling factor to ensure that the $n\text{th}$ coefficient %
+the scaling factor to ensure that the $n\text{th}$ coefficient %
 of the multipath channel $h(\tau_{n};t)$ has average power %
 $\sigma_{n}^{2}$. In the simplest form of an uncorrelated %
 tap-gain model \cite{Jer00} 
@@ -348,43 +350,48 @@ MIMO-OFDM10, Iskander}.
 	\caption{Channel Filter Tap Generation}
 	\label{fig:ChannelFilterSimulation}
 \end{figure}
-Figure \ref{fig:ChannelFilterSimulation} illustrates the process used %
-to generate each individual coefficient in the discrete multipath channel. %
-$z(t)$ is an independent and identically distributed time series where %
-at each timestep $t$, $z(t)\sim\mathcal{N}(0,1)$ (is normally distributed %
-with mean $0$ and standard deviation $1$), $S(\nu)$ is the Jakes doppler %
-spectrum as described in equation \ref{eq:JakesSpectrum} and $\sigma_n$ is %
-a scaling factor to ensure the average power of the tap matches that of the %
-power delay profile.
+Figure \ref{fig:ChannelFilterSimulation} illustrates the process %
+used to generate each individual coefficient in the discrete %
+multipath channel. $z(t)$ is an independent and identically %
+distributed (i.i.d) time series where at each timestep $t$, % 
+$z(t)\sim\mathcal{N}(0,1)$ (is normally distributed %
+with mean $0$ and standard deviation $1$), $S(\nu)$ is the %
+Jakes doppler spectrum as described in equation %
+\ref{eq:JakesSpectrum} and $\sigma_n$ is %
+a scaling factor to ensure the average power of the coefficient %
+matches that of the power delay profile.
 
 MATLAB's Communications System Toolbox provides a system object %
-\\\texttt{comm.RayleighChannel}, which implements the filtered %
-white gaussian noise method of simulation as described in \cite{Iskander}. %
-Rician distributions are implemented slightly differently where the Rician %
-taps are further scaled by a deterministic component with a specular to %
-scattered power ratio $K$ as described in equation \ref{eq:KFactor}. The %
-Rician fading component is scaled by
+\texttt{comm.RayleighChannel}, which implements the filtered %
+white gaussian noise method of simulation as described in 
+\cite{Iskander}. Rician distributions are implemented slightly %
+differently where the Rician coefficients are further scaled by a %
+deterministic component with a specular to %
+scattered power ratio $K$ as described in equation %
+\ref{eq:KFactor}. The Rician fading component is scaled by %
 \begin{align}
-	h(\tau;t) = \sigma_n\left[ \frac{z_{k}\left[n\right]}{\sqrt{K + 1}} + 
+	h(\tau;t) = \sigma_n\left[ \frac{z_{k}\left[n\right]}
+	{\sqrt{K + 1}} + 
 	\sqrt{\frac{K}{K+1}}\right]
 \end{align}
-Where $z_{k}$ is the filtered noise output of the doppler filter \cite{Iskander} %
-immediately after the normalization step in figure \ref{fig:ChannelFilterSimulation}.
-
+Where $z_{k}$ is the filtered noise output of the doppler filter 
+\cite{Iskander} immediately after the normalization step in figure %
+\ref{fig:ChannelFilterSimulation}.
 
 \subsection{Decision Directed Performance}
 
-It's important to evaluate the performance of the time varying model in a %
-decision directed scheme. That is, after a given training period the Wiener %
-solution has been found using an adaptive filtering approach. The performance %
-of the system needs to be evaluated after achieving the Wiener solution. In %
-particular it is of interest how long the adaptive filtering approach can %
-maintain a solution that is near optimal without additional further training %
-information. A decision directed model is one where the output of the %
-equaliser is fed into the maximum likelihood decision slicer and the output %
-of the decision slicer is fed back into the equaliser as the desired %
+It's important to evaluate the performance of the time varying model %
+in a decision directed scheme. That is, after a given %
+training period the Wiener solution has been found using an adaptive %
+filtering approach. In particular it is of interest how long the %
+adaptive filtering approach can maintain a solution that is near %
+optimal without additional further training %
+information. A decision directed model is one where the %
+output of the equaliser is fed into the maximum likelihood %
+decision slicer, and the output of the decision slicer is fed back %
+into the equaliser as the desired %
 output in the update equation (\ref{eq:ScalarLMS} and \ref{eq:%
-ScalarNLMS}) where $e(n) = d(n) - y(n)$ as illustrated in figure %
+ScalarNLMS}), where $e(n) = d(n) - y(n)$ as illustrated in figure %
 \ref{fig:DDLMS}.
 \begin{figure}[ht]
 	\includegraphics[width=\textwidth]{./Figures/System/%
@@ -395,9 +402,9 @@ ScalarNLMS}) where $e(n) = d(n) - y(n)$ as illustrated in figure %
 This region of operation introduces some delay to the system as %
 the decision slicer needs to map the received symbol onto the %
 nearest constellation point before the adaptive step can begin. %
-As discussed in section \ref{sec:TIModel} the decision slicer being used %
-here is MATLAB's \texttt{comm.QPSKDemodulator} from the %
-Communications System Toolbox.
+As discussed in section \ref{sec:TIModel} the decision slicer %
+being used here is MATLAB's \texttt{comm.QPSKDemodulator} %
+from the Communications System Toolbox.
 
 \section{USRP Implementation of the Time Varying System Model}
 
@@ -422,9 +429,9 @@ moving the signal processing to software.
 \label{subsec:DirectConversion}
 The direct conversion or homodyne architecture converts received %
 bandpass signals directly to baseband signals without the need for %
-an intermediate frequency. This done by selecting a local oscillator %
-(LO) frequency to be the same as the centre frequency of the %
-bandpass signal.
+an intermediate frequency. This is done by selecting a local %
+oscillator (LO) frequency to be the same as the centre %
+frequency of the bandpass signal.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=\textwidth]{./Figures/System/%
@@ -449,7 +456,7 @@ synchronous transmit example model given in the LabView %
 Instrument IO library. A diagram of transmitter is given %
 in appendix \ref{app:TxSysModel}. %
 The synchronous finite capture allows me to %
-transmit and receive simultaneously triggered on %
+transmit and receive simultaneously, triggered on %
 an internal clock, this removes the problem of %
 synchronisation that would trouble a real %
 wireless communication system and lets us %
@@ -502,7 +509,8 @@ the diagram in figure \ref{fig:USRPEqualisation}. The transmitted %
 symbols are passed to the equalisation block and the received %
 symbols are also passed to the equalisation block. Within this block %
 the LMS, NLMS and zero forcing equalisers are implemented as %
-described in chapter \ref{chap:AdaptiveFiltering}.
+described in chapter \ref{chap:AdaptiveFiltering} and %
+\ref{subsec:Equalisation}.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.6\textwidth]{./Figures/System/%
@@ -510,3 +518,5 @@ described in chapter \ref{chap:AdaptiveFiltering}.
 	\caption{USRP Equalisation}
 	\label{fig:USRPEqualisation}
 \end{figure}
+\subsection{AWGN}
+\subsection{Multipath Channel Simulation}

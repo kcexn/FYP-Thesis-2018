@@ -4,8 +4,8 @@ Wireless communications systems suffer from a wide %
 range of impairments that make the communications %
 channel a hostile environment to communicate over. %
 The convenience of wireless communication over %
-wired communication drives demand for being able %
-to accomodate for the wireless environment. %
+wired communication drives demand for accomodating %
+the wireless environment. %
 As the internet of things becomes more ubiquitous %
 it will be necessary to develop methods of %
 equalisation and filtering that are well suited to the %
@@ -20,7 +20,12 @@ adaptive filtering. Chapters \ref{chap:OFDM}, %
 \ref{chap:ChannelModeling}, and %
 \ref{chap:AdaptiveFiltering} will give a more detailed %
 coverage of the theory for OFDM, wireless channel %
-modeling and adaptive filtering respectively.
+modeling and adaptive filtering respectively. Chapters %
+\ref{chap:System}, and \ref{chap:Results} will cover %
+the experimental system model and the experiment %
+results respectively. Chapter \ref{chap:Conclusion} %
+draws some conclusions and provides some future %
+directions of study.
 
 \section{Motivating Scenario}
 \label{sec:MotivatingScenario}
@@ -124,9 +129,9 @@ remains constant, coherence bandwidth, %
 a measure of how correlated two neighbouring %
 frequencies are with respect to frequency %
 separation, doppler spread, a measure of %
-the frequency spread caused by doppler shift %
+the frequency spread caused by doppler shift, %
 and the power delay profile, a measure of %
-how spread out a pulse spreads in time. %
+the amount of pulse spreading in time. %
 These functions define two main properties %
 of fading, the rate of fading (slow or fast), %
 and the frequency selectivity of the fading %
@@ -154,7 +159,7 @@ achieve faster data rates, more bandwidth is always required. %
 In frequency selective wireless channels, this induces intersymbol %
 interference (ISI) that can extend for many symbols. This ISI %
 can introduce a complex and computationally expensive equalisation %
-operation to undo the distortion introduced by ISI.
+operation to undo the distortion introduced.
 
 As will be discussed in more detail in chapter %
 \ref{chap:ChannelModeling} the wireless propagation medium can be %
@@ -192,7 +197,7 @@ to provide adequate filtering.
 Adaptive filters offer a method to track changes in the %
 wireless channel over time, so that the equalisation filter %
 can follow the optimal solution over time. The filters %
-studied in this report will be te least mean square (LMS) %
+studied in this report will be the least mean square (LMS) %
 filter and the normalised least mean square (NLMS) filter. Both %
 filters are considered members of the class of filters known %
 as stochastic gradient filters. Stochastic gradient filters %
@@ -205,6 +210,7 @@ of the paraboloid that defines the mean square error.
 Circular_Paraboloid_Quadric.png}
 	\caption{Circular parabaloid in three dimensions 
 	\cite{Paraboloid12}}
+	\label{fig:Paraboloid}
 \end{figure}
 A more formal definition of the method of gradient descent, %
 mean square error, least mean square, and normalised least mean %
