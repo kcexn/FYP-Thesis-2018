@@ -127,19 +127,17 @@ modulation scheme has a symbol set of size $4$. %
 So is capable of transmitting $log_{2}(4)$ bits %
 per symbol. In general a M-QAM modulation scheme %
 is able to transmit $log_{2}(M)$ bits per symbol. %
-A grey mapping between pairs of bits to the QPSK %
+A gray mapping between pairs of bits to the QPSK %
 constellation needs to be chosen so that symbol %
 errors that are due to the received symbol mapping %
 incorrectly to a neighbouring symbol than what was %
 desired will introduce only one bit error instead %
-of multiple, it can be shown that grey mapping %
-minimises the bit error rate caused by %
-symbol errors. %TODO: Find a citation for grey mapping
+of multiple \cite{Sklar01,Goldsmith05}.
 
 MATLAB's Communications System Toolbox offers %
 a system object name \texttt{comm.QPSKModulator} %
 \cite{QPSKModulator} which %
-will perform the grey mapping of pairs of bits in a %
+will perform the gray mapping of pairs of bits in a %
 bit stream to QPSK constellation points and perform %
 the energy normalisation.
 
@@ -187,7 +185,7 @@ as
 Where $N$ is the length of the FFT. \texttt{EbNo} is a %
 variable which defines the normalised bit energy %
 to noise power spectral density and is % TODO: Cite EbNo
-expressed as
+expressed as \cite{Sklar01}
 \begin{align}
 	\frac{E_b}{N_0} = \frac{S}{R_b} \div 
 	\frac{\sigma_n^{2}}{B}
@@ -257,8 +255,8 @@ time invariant model as described in section \ref{sec:TIChannelImpairment}. %
 
 The single tap LMS approximation follows closely from the development of the %
 LMS filter in section \ref{sec:LMS}, in particular we take equation \ref{eq:SimplifiedLMSUpdate} %
-and replace the vector of coefficients $\hat{\bold{w}}(n+1)$ and $\hat{\bold{w}}(n)$ with scalar %
-versions, and the vector of filter inputs $\bold{u}(n)$ with a scalar input. Giving the %
+and replace the vector of coefficients $\hat{\mathbf{w}}(n+1)$ and $\hat{\mathbf{w}}(n)$ with scalar %
+versions, and the vector of filter inputs $\mathbf{u}(n)$ with a scalar input. Giving the %
 new expression
 \begin{align}
 	\hat{w}(n+1) = \hat{w}(n) + \mu u(n) e^{*}(n)
@@ -545,10 +543,10 @@ defined as half that of $\sigma_{n}^{2}$, where $\sigma_{n}^{2}$ %
 is the power of the complex gaussian noise. The resulting %
 real and imaginary random vectors are then summed
 \begin{align}
-	\bold{Z} = \bold{X} + i\bold{Y}
+	\mathbf{Z} = \mathbf{X} + i\mathbf{Y}
 \end{align}
-where $\bold{X}$ is the random gaussian vector %
-representing the real component, and $\bold{Y}$ %
+where $\mathbf{X}$ is the random gaussian vector %
+representing the real component, and $\mathbf{Y}$ %
 is the random gaussian vector representing the %
 imaginary component.
 

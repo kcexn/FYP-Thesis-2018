@@ -253,39 +253,39 @@ Hopf equations}.
 Matrix representations of the system of equations in %
 \ref{eq:WienerHopf} will let us easily solve for %
 the optimum filter coefficients $w_{o_{m}}$. %
-Let $\bold{R}$ denote the $N$-by-$N$ correlation %
+Let $\mathbf{R}$ denote the $N$-by-$N$ correlation %
 matrix of the vector of inputs to the optimal filter %
-$\bold{u}(n) = [u(n),u(n-1),\cdots,u(n-(N-1))]^T$.
+$\mathbf{u}(n) = [u(n),u(n-1),\ldots,u(n-(N-1))]^T$.
 \begin{align}
-	\bold{R} = E\left[\bold{u}(n)\bold{u}^{H}(n)\right]
+	\mathbf{R} = E\left[\mathbf{u}(n)\mathbf{u}^{H}(n)\right]
 \end{align}
 where $^{T}$ denotes the transpose operation and %
 $^{H}$ denotes the Hermitian or the complex conjugate %
-tranpose operation. Similarly let $\bold{p}$ be the %
+tranpose operation. Similarly let $\mathbf{p}$ be the %
 $N$-by-$1$ cross correlation vector between %
 the inputs and the desired output. 
 \begin{align}
-	\bold{p} = E\left[\bold{u}(n)d^{*}(n)\right]
+	\mathbf{p} = E\left[\mathbf{u}(n)d^{*}(n)\right]
 \end{align}
 Equation \ref{eq:WienerHopf} may now be rewritten %
 as
 \begin{align}
-	\bold{R}\bold{w_{o}} = \bold{p}
+	\mathbf{R}\mathbf{w_{o}} = \mathbf{p}
 	\label{eq:WienerHopfMatrix}
 \end{align}
-where $\bold{w_{o}}$ denotes the $N$-by-$1$ optimal %
+where $\mathbf{w_{o}}$ denotes the $N$-by-$1$ optimal %
 filter coefficient vector $[w_{o_{0}},w_{o_{1}},%
-\cdots,w_{o_{N-1}}]^T$. To solve for $\bold{w_{o}}$ %
+\cdots,w_{o_{N-1}}]^T$. To solve for $\mathbf{w_{o}}$ %
 we simply premultiply both sides of equation %
-\ref{eq:WienerHopfMatrix} by $\bold{R}^{-1}$ giving
+\ref{eq:WienerHopfMatrix} by $\mathbf{R}^{-1}$ giving
 \begin{align}
-	\bold{w_{o}} = \bold{R}^{-1}\bold{p}
+	\mathbf{w_{o}} = \mathbf{R}^{-1}\mathbf{p}
 	\label{eq:WienerHopfSolution}
 \end{align}
 \section{Gradient Descent and the Least Mean Square}
 The expectations in equations \ref{eq:WienerAutocorrelation} %
 and \ref{eq:WienerCrossCorrelation} are usually not %
-available to find $\bold{w}_{o}$. This motivates the %
+available to find $\mathbf{w}_{o}$. This motivates the %
 need to develop an alternative way to estimate the %
 optimal solution. One approach to finding this estimate %
 is to find the solution using an iterative method using %
@@ -297,42 +297,42 @@ coefficients.
 When considering the cost function $J(\cdot)$, %
 the optimal solution can be defined as
 \begin{align}
-	J(\bold{w}_{o}) \leq J(\bold{w})\quad
-	\text{for all }\bold{w}
+	J(\mathbf{w}_{o}) \leq J(\mathbf{w})\quad
+	\text{for all }\mathbf{w}
 \end{align}
 The gradient descent method aims to iteratively %
-solve for $J(\bold{w_{o}})$ by developing an %
+solve for $J(\mathbf{w_{o}})$ by developing an %
 algorithm with the following invariant
 \begin{align}
-	J(\bold{w}(n+1)) < J(\bold{w}(n))
+	J(\mathbf{w}(n+1)) < J(\mathbf{w}(n))
 \end{align}
-starting with an arbitrary initial guess $\bold{w}(0)$. %
+starting with an arbitrary initial guess $\mathbf{w}(0)$. %
 The method of steepest descent is a method which aims %
 to achieve this by taking steps in the direction of %
 of the optimal solution at each iteration. This can %
 be done by finding the local direction of steepest %
 descent defined as the negative of the gradient vector %
 \begin{align}
-	\bold{g} = \nabla J(\bold{w})
+	\mathbf{g} = \nabla J(\mathbf{w})
 \end{align}
 The algorithm is formally described by
 \begin{align}
-	\bold{w}(n+1) = \bold{w}(n) - \frac{1}{2}
-	\mu\bold{g}(n)
+	\mathbf{w}(n+1) = \mathbf{w}(n) - \frac{1}{2}
+	\mu\mathbf{g}(n)
 	\label{eq:GradientDescent}
 \end{align}
 From equations \ref{eq:CostDerivative} and %
 \ref{eq:WienerHopfMatrix} $\nabla J$ is
 \begin{align}
-	\nabla J(\bold{w}(n)) = 
-	-2\bold{p} + 2\bold{R}\bold{w}(n)
+	\nabla J(\mathbf{w}(n)) = 
+	-2\mathbf{p} + 2\mathbf{R}\mathbf{w}(n)
 	\label{eq:CostGradient}
 \end{align}
 substituting equation \ref{eq:CostGradient} into %
 equation \ref{eq:GradientDescent}
 \begin{align}
-	\bold{w}(n+1) = \bold{w}(n) - \mu(
-	\bold{R}\bold{w}(n) - \bold{p})
+	\mathbf{w}(n+1) = \mathbf{w}(n) - \mu(
+	\mathbf{R}\mathbf{w}(n) - \mathbf{p})
 	\label{eq:WienerGradientDescent}
 \end{align}
 There are some problems around stability that %
@@ -347,34 +347,34 @@ and \ref{eq:WienerCrossCorrelation}. The simplest solution %
 to this problem may instead be to use an instantaneous %
 estimate of the autocorrelation
 \begin{align}
-	\hat{\bold{R}} = \bold{u}(n)\bold{u}^{H}(n)
+	\hat{\mathbf{R}} = \mathbf{u}(n)\mathbf{u}^{H}(n)
 	\label{eq:WienerAutocorrelationEstimate}
 \end{align}
 and an instantaneous estimate of the cross correlation
 \begin{align}
-	\hat{\bold{p}} = \bold{u}(n)d^{*}(n)
+	\hat{\mathbf{p}} = \mathbf{u}(n)d^{*}(n)
 	\label{eq:WienerCrossCorrelationEstimate}
 \end{align}
 substituting equations \ref{eq:WienerAutocorrelationEstimate} %
 and \ref{eq:WienerCrossCorrelationEstimate} into %
 \ref{eq:WienerGradientDescent}
 \begin{align}
-	\hat{\bold{w}}(n+1) =&~\hat{\bold{w}}(n)-\mu(
-	\hat{\bold{R}}\hat{\bold{w}}(n) - \hat{
-	\bold{p}})\\
-	=&~\hat{\bold{w}}(n) - \mu(\bold{u}(n)
-	\bold{u}^{H}(n)\hat{\bold{w}}(n) - 
-	\bold{u}(n)d^{*}(n))\\
-	=&~\hat{\bold{w}}(n) - \mu\bold{u}(n)(
-	\bold{u}^{H}(n)\hat{\bold{w}}(n) - d^{*}
+	\hat{\mathbf{w}}(n+1) =&~\hat{\mathbf{w}}(n)-\mu(
+	\hat{\mathbf{R}}\hat{\mathbf{w}}(n) - \hat{
+	\mathbf{p}})\\
+	=&~\hat{\mathbf{w}}(n) - \mu(\mathbf{u}(n)
+	\mathbf{u}^{H}(n)\hat{\mathbf{w}}(n) - 
+	\mathbf{u}(n)d^{*}(n))\\
+	=&~\hat{\mathbf{w}}(n) - \mu\mathbf{u}(n)(
+	\mathbf{u}^{H}(n)\hat{\mathbf{w}}(n) - d^{*}
 	(n))
 	\label{eq:LMSUpdate}
 \end{align}
-The new estimate of $\hat{\bold{w}}$ leads %
+The new estimate of $\hat{\mathbf{w}}$ leads %
 to a new filter output and error estimate %
-using the estimate of $\bold{w_{o}}$ 
+using the estimate of $\mathbf{w_{o}}$ 
 \begin{align}
-	y(n) =&~\hat{\bold{w}}^{H}(n)\bold{u}(n)
+	y(n) =&~\hat{\mathbf{w}}^{H}(n)\mathbf{u}(n)
 	\label{eq:EstimatedFilterOut}\\
 	e(n) =&~d(n) - y(n)
 	\label{eq:EstimatedError}
@@ -382,12 +382,12 @@ using the estimate of $\bold{w_{o}}$
 Rearranging equation \ref{eq:LMSUpdate} and substituting %
 in \ref{eq:EstimatedError}
 \begin{align}
-	\hat{\bold{w}}(n+1) =&~\hat{\bold{w}}(n) + 
-	\mu\bold{u}(n)\left(d^{*}(n) - \bold{u}^{H}
-	(n)\hat{\bold{w}}(n)\right)\\
-	=&~\hat{\bold{w}}(n) + \mu\bold{u}(n)\left(
+	\hat{\mathbf{w}}(n+1) =&~\hat{\mathbf{w}}(n) + 
+	\mu\mathbf{u}(n)\left(d^{*}(n) - \mathbf{u}^{H}
+	(n)\hat{\mathbf{w}}(n)\right)\\
+	=&~\hat{\mathbf{w}}(n) + \mu\mathbf{u}(n)\left(
 	d^{*}(n) - y^{*}(n)\right)\\
-	=&~\hat{\bold{w}}(n) + \mu\bold{u}(n)e^{*}(n)
+	=&~\hat{\mathbf{w}}(n) + \mu\mathbf{u}(n)e^{*}(n)
 	\label{eq:SimplifiedLMSUpdate}
 \end{align}
 Equations \ref{eq:EstimatedFilterOut}, \ref{%
@@ -416,20 +416,20 @@ descent algorithm.
 		\\
 		Where $S_{\text{max}}$ is the maximum
 		value for the power spectral density\\
-		of the tap inputs $\bold{u}(n)$ and the filter
+		of the tap inputs $\mathbf{u}(n)$ and the filter
 		length $M$ is moderate to large.\\
 		\\
 		\emph{Initialization}: If prior
 		knowledge of the coefficient vector 
-		$\hat{\bold{w}}(n)$ is \\available, use 
+		$\hat{\mathbf{w}}(n)$ is \\available, use 
 		it to select an appropriate value for 
-		$\hat{\bold{w}}(0)$. \\Otherwise, set 
-		$\hat{\bold{w}}(0) = \bold{0}$.\\
+		$\hat{\mathbf{w}}(0)$. \\Otherwise, set 
+		$\hat{\mathbf{w}}(0) = \mathbf{0}$.\\
 		\\
 		\emph{Data}: \\
 		$\begin{aligned}
 			\text{\textbullet}~
-			\text{Given } \bold{u}(n) =&~
+			\text{Given } \mathbf{u}(n) =&~
 			M-\text{by}-1~\text{tap-input 
 			vector at time }n\\
 			=&~\left[u(n),u(n-1),\ldots,
@@ -440,17 +440,17 @@ descent algorithm.
 		$\begin{aligned}
 			\text{\textbullet}~
 			\text{To be computed:}\\
-			\quad\hat{\bold{w}}(n+1)=~
+			\quad\hat{\mathbf{w}}(n+1)=~
 			\text{estimate of coefficient vector
 			at time }n+1
 		\end{aligned}$\\
 		\\
 		\emph{Computation}:~For $n=0,1,2,\ldots,$~compute\\
 		$\begin{aligned}
-			\quad e(n)=&~d(n) - \hat{\bold{w}}^{H}(n)
-			\bold{u}(n)\\
-			\quad \hat{\bold{w}}(n+1) =&~ 
-			\hat{\bold{w}}(n) + \mu\bold{u}(n)e
+			\quad e(n)=&~d(n) - \hat{\mathbf{w}}^{H}(n)
+			\mathbf{u}(n)\\
+			\quad \hat{\mathbf{w}}(n+1) =&~ 
+			\hat{\mathbf{w}}(n) + \mu\mathbf{u}(n)e
 			^{*}(n)
 		\end{aligned}$\\
 		\hline
@@ -479,43 +479,43 @@ It can be shown \cite{Hay02,Sayed03} that the %
 gradient descent equation \ref{eq:GradientDescent} %
 can be improved by the hessian matrix as following
 \begin{align}
-	\bold{w}(n+1) = \bold{w}(n) - \mu\left[\nabla_{w}^{2}(J)\right]^{-1}\bold{g}(n)
+	\mathbf{w}(n+1) = \mathbf{w}(n) - \mu\left[\nabla_{w}^{2}(J)\right]^{-1}\mathbf{g}(n)
 \end{align}
 and that
 \begin{align}
-	\nabla_{w}^{2}(J) = 2\bold{R}
+	\nabla_{w}^{2}(J) = 2\mathbf{R}
 \end{align}
-such that substituting in equation \ref{eq:CostGradient} for $\bold{g}(n)$ gives
+such that substituting in equation \ref{eq:CostGradient} for $\mathbf{g}(n)$ gives
 \begin{align}
-	\bold{w}(n+1) = \bold{w}(n) - \frac{\mu}{2}\bold{R}^{-1}\left(
-	-2\bold{p} + 2\bold{R}\bold{w}(n)\right)
+	\mathbf{w}(n+1) = \mathbf{w}(n) - \frac{\mu}{2}\mathbf{R}^{-1}\left(
+	-2\mathbf{p} + 2\mathbf{R}\mathbf{w}(n)\right)
 	\label{eq:CoefficientUpdateNewton}
 \end{align}
 This naturally leads into the development of the normalised %
 least mean square filter. When using the instantaneous estimates %
-as in the LMS filter, the pseudoinverse of $\bold{R}$ is found to be
+as in the LMS filter, the pseudoinverse of $\mathbf{R}$ is found to be
 \begin{align}
-	\bold{R}^{\dagger} =& \left[\bold{u}\bold{u}^{H}
-	\bold{u}\bold{u}^{H}\right]^{-1}\bold{u}\bold{u}^{H}\\
-	=& \frac{1}{\lvert\lvert\bold{u}\rvert\rvert^{2}}
+	\mathbf{R}^{\dagger} =& \left[\mathbf{u}\mathbf{u}^{H}
+	\mathbf{u}\mathbf{u}^{H}\right]^{-1}\mathbf{u}\mathbf{u}^{H}\\
+	=& \frac{1}{\lvert\lvert\mathbf{u}\rvert\rvert^{2}}
 \end{align}
 Substituting this into \ref{eq:CoefficientUpdateNewton} and %
 following %
 the same substitution and simplification in section \ref{sec:LMS}. %
 The coefficient update works out to be.
 \begin{align}
-	\bold{w}(n+1) = \bold{w}(n) + \frac{\mu}{\lvert\lvert\bold{u}(n)\rvert
-	\rvert^{2}}\bold{u}(n)e^{*}(n)
+	\mathbf{w}(n+1) = \mathbf{w}(n) + \frac{\mu}{\lvert\lvert\mathbf{u}(n)\rvert
+	\rvert^{2}}\mathbf{u}(n)e^{*}(n)
 	\label{eq:NLMS}
 \end{align}
-As $\lvert\lvert\bold{u}(n)\rvert\rvert^{2}$ becomes very %
+As $\lvert\lvert\mathbf{u}(n)\rvert\rvert^{2}$ becomes very %
 small, numerical %
 difficulties arise so a regularisation parameter $\epsilon$ can be %
 added as %
 follows
 \begin{align}
-	\bold{w}(n+1) = \bold{w}(n) + \frac{\mu}{\epsilon + \lvert\lvert
-	\bold{u}(n) \rvert\rvert^{2}}\bold{u}(n)e^{*}(n)
+	\mathbf{w}(n+1) = \mathbf{w}(n) + \frac{\mu}{\epsilon + \lvert\lvert
+	\mathbf{u}(n) \rvert\rvert^{2}}\mathbf{u}(n)e^{*}(n)
 \end{align}
 \begin{table}[ht]
 	\centering
@@ -538,27 +538,27 @@ follows
 	\end{aligned}$\\
 	\\
 	\emph{Initialisation}: If prior knowledge about the coefficient vector 
-	$\bold{w}(n)$ \\is available, use that 
-	knowledge to select an appropriate value for $\bold{w}(0)$. \\Otherwise, 
-	set $\bold{w}(0) =\bold{0}$.\\
+	$\mathbf{w}(n)$ \\is available, use that 
+	knowledge to select an appropriate value for $\mathbf{w}(0)$. \\Otherwise, 
+	set $\mathbf{w}(0) =\mathbf{0}$.\\
 	\\
 	\emph{Data}\\
 	$\begin{aligned}
-	\text{\textbullet}~\text{Given: } \bold{u}(n) =&~N\text{-by-}1~\text{
+	\text{\textbullet}~\text{Given: } \mathbf{u}(n) =&~N\text{-by-}1~\text{
 	input vector at time }n\\
 	d(n) =&~\text{desired response at time step }n
 	\end{aligned}$\\
 	$\begin{aligned}
-	\text{\textbullet}~\text{To be computed: } \\\bold{w}(n+1) =&~\text{
+	\text{\textbullet}~\text{To be computed: } \\\mathbf{w}(n+1) =&~\text{
 	estimate of coefficient vector at time step }n+1
 	\end{aligned}$\\
 	\\
 	\emph{Computation}:\\
 	$\begin{aligned}
 	&\text{For }n =~0,1,2,\ldots,~\text{compute}\\
-	&e(n) =~d(n) - \bold{w}^{H}(n)\bold{u}(n)\\
-	&\bold{w}(n+1) = \bold{w}(n) + \frac{\mu}{\lvert\lvert
-	\bold{u}(n) \rvert\rvert^{2}}\bold{u}(n)e^{*}(n)
+	&e(n) =~d(n) - \mathbf{w}^{H}(n)\mathbf{u}(n)\\
+	&\mathbf{w}(n+1) = \mathbf{w}(n) + \frac{\mu}{\lvert\lvert
+	\mathbf{u}(n) \rvert\rvert^{2}}\mathbf{u}(n)e^{*}(n)
 	\end{aligned}$\\
 	\\
 	\hline
@@ -570,7 +570,7 @@ Table \ref{tab:NLMS} outlines the normalised least mean square %
 algorithm. Mean square deviation in table \ref{tab:NLMS} %
 is defined as
 \begin{align}
-	\mathscr{D}(n) = E\left[ \lvert\lvert \bold{\mathscr{E}}(n) \rvert\rvert^{2}\right]
+	\mathscr{D}(n) = E\left[ \lvert\lvert \mathbf{\mathscr{E}}(n) \rvert\rvert^{2}\right]
 \end{align}
 where $\mathscr{E}(n)$ is the difference vector between the optimal %
 filter coefficients and the filter coefficients at step $n$. %
