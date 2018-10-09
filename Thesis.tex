@@ -18,6 +18,7 @@
 \usepackage{rotating}
 \usepackage[toc,page]{appendix}
 \usepackage[margin=1.1in]{geometry}
+\renewcommand{\bibname}{References}
 \begin{document}
 \maketitle
 \renewcommand{\abstractname}{Executive Summary}
@@ -55,10 +56,8 @@ radio platform (USRP) to demonstrate the proof of concept.
 \include{./Thesis/Results}
 \include{./Thesis/Conclusions}
 \newpage
-\chapter*{References}
 \addcontentsline{toc}{chapter}{References}
 \bibliography{./References/references}
-\renewcommand{\bibname}{References}
 \bibliographystyle{IEEETrans}
 \begin{appendices}
 \chapter{Tx System Model}

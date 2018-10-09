@@ -74,7 +74,7 @@ that without further information, data %
 in digital communications systems can be %
 modeled as a Bernoulli distribution. %TODO: Cite this
 My model simulates this using MATLAB's in-built %
-\texttt{randi} function which generates %
+\texttt{randi} \cite{randi} function which generates %
 a random vector $\vec{X}$ where each %
 random variable $X$ can take on values from %
 a user defined set of integers and is %
@@ -92,7 +92,7 @@ an in-phase and a quadrature component, which are %
 the elements required to construct %
 Quadrature Amplitude Modulation (QAM) %
 which is the current modulation scheme employed %
-in 4G systems % TODO: Find a citation for this.
+in 4G systems \cite{Rumney13}
 and are seriously being considered for 5G systems.
 \begin{figure}[ht]
 	\centering
@@ -137,13 +137,15 @@ minimises the bit error rate caused by %
 symbol errors. %TODO: Find a citation for grey mapping
 
 MATLAB's Communications System Toolbox offers %
-a system object name \texttt{comm.QPSKModulator} which %
+a system object name \texttt{comm.QPSKModulator} %
+\cite{QPSKModulator} which %
 will perform the grey mapping of pairs of bits in a %
 bit stream to QPSK constellation points and perform %
 the energy normalisation.
 
 Paired with the \texttt{comm.QPSKModulator} MATLAB also %
-provides a \texttt{comm.QPSKDemodulator} which performs %
+provides a \texttt{comm.QPSKDemodulator} \cite{QPSKDemodulator} %
+which performs %
 performs maximum likelihood detection and maps %
 the received QPSK constellation back to a bit %
 stream.
@@ -153,7 +155,8 @@ stream.
 OFDM has been covered in some detail in chapter %
 \ref{chap:OFDM} so here I'll focus on the simulation %
 implementation. MATLAB's communication systems %
-toolbox provides an \texttt{comm.OFDMModulator} which %
+toolbox provides an \texttt{comm.OFDMModulator} %
+\cite{OFDMModulator} which %
 takes in an input stream of symbols and performs %
 an IFFT followed by an IFFT shift to place the DC %
 components in the centre. It also prepends the %
@@ -208,7 +211,8 @@ In log units multiplication %
 is evaluated as addition as can be seen above.
 
 MATLAB's Commmunications System Toolbox system object %
-\texttt{comm.AWGNChannel} takes an input stream of %
+\texttt{comm.AWGNChannel} \cite{AWGNChannel} takes an %
+input stream of %
 symbols and generates complex gaussian noise with %
 zero mean and defined variance. This noise is then %
 summed with the samples in the stream to make a noisy %
@@ -297,7 +301,7 @@ the optimal Wiener solution.
 \subsection{Filtered White Gaussian Noise Channel Simulation}
 
 The time varying fading channel can be broken down into three %
-steps. The power delay definition needs to be defined, using the %
+steps. The power delay needs to be defined, using the %
 power delay profile the average powers of each multipath %
 coefficient can be defined. Once this is done the time varying %
 component of the fading channel needs to be introduced, %
@@ -318,18 +322,19 @@ tap-gain model \cite{Jer00}
 	\sigma_{n}^{2} = T^{2}p(nT)
 	\label{eq:TapPower}
 \end{align}
+
 where $p(nT)$ is the sampled version of a diffuse power %
 delay profile where $T$ is the sampling period. Or of a %
 discrete multipath channel where the multipath coefficients %
 are symbol spaced. For the purpose of my investigation I %
 will not consider the case of a discrete multipath channel %
 where the multipath channel coefficients are not symbol %
-spaced since in general this requires us to filter the power %
-delay profile by the measurement bandlimiting filter (i.e., matched filtering) %
-and so more information would be needed about the pulse shaping %
-used. With symbol spacing an assumption is made that the filters used %
-are nyquist in nature and so there are no additional components %
-introduced by neighbouring multipath coefficients.
+spaced. In general the latter case introduces the need %
+to bandlimit the channel filter and interpolate the coefficients. %
+This is usually done with an ideal bandlimiting filter %
+\cite{Jer00}, and introduces additional complexity that %
+is unnecessary for evaluating the effectiveness of %
+adaptive equalisation.
 
 \subsubsection{Filtered White Gaussian Noise}
 
@@ -362,7 +367,8 @@ a scaling factor to ensure the average power of the coefficient %
 matches that of the power delay profile.
 
 MATLAB's Communications System Toolbox provides a system object %
-\texttt{comm.RayleighChannel}, which implements the filtered %
+\texttt{comm.RayleighChannel} \cite{RayleighChannel}, %
+which implements the filtered %
 white gaussian noise method of simulation as described in 
 \cite{Iskander}. Rician distributions are implemented slightly %
 differently where the Rician coefficients are further scaled by a %
@@ -376,7 +382,9 @@ scattered power ratio $K$ as described in equation %
 \end{align}
 Where $z_{k}$ is the filtered noise output of the doppler filter 
 \cite{Iskander} immediately after the normalization step in figure %
-\ref{fig:ChannelFilterSimulation}.
+\ref{fig:ChannelFilterSimulation}. Rician fading channels are %
+are implemented in MATLAB following this methodology in %
+\texttt{comm.RicianChannel} \cite{RicianChannel}.
 
 \subsection{Decision Directed Performance}
 
@@ -519,4 +527,56 @@ described in chapter \ref{chap:AdaptiveFiltering} and %
 	\label{fig:USRPEqualisation}
 \end{figure}
 \subsection{AWGN}
+NI Labview does not provide a simple API for generating %
+complex, circularly symmetric, gaussian noise. Instead %
+complex noise is generated given the properties that %
+a complex, circularly symmetric random variable $z$ is %
+distributed as $\sim\mathcal{CN}(0,1)$ has independent %
+and identically distributed (i.i.d) real and imaginary %
+components each distributed as $\sim\mathcal{N}(0,1/2)$, %
+and that a collection of $n$ of these complex random %
+variables forms a standard circularly symmetric %
+gaussian random vector \cite{Tse05}.
+
+Following from these properties random real and %
+random noise components are generated independently %
+with $\sigma_{\text{real}^{2}}$ and $\sigma_{\text{imag}^{2}}$ %
+defined as half that of $\sigma_{n}^{2}$, where $\sigma_{n}^{2}$ %
+is the power of the complex gaussian noise. The resulting %
+real and imaginary random vectors are then summed
+\begin{align}
+	\bold{Z} = \bold{X} + i\bold{Y}
+\end{align}
+where $\bold{X}$ is the random gaussian vector %
+representing the real component, and $\bold{Y}$ %
+is the random gaussian vector representing the %
+imaginary component.
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/%
+	System/USRPNoiseGeneration.png}
+	\caption{USRP noise generation}
+	\label{fig:USRPNoiseGen}
+\end{figure}
+
 \subsection{Multipath Channel Simulation}
+Similarly Labview does not provide an API for rayleigh %
+fading channel models. The system model shown below %
+takes the time-varying multipath coefficients output %
+from MATLAB's \texttt{comm.RayleighChannel} and %
+\texttt{comm.RicianChannel} and performs the discrete time %
+convolution.
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{./Figures/%
+	System/USRPSimulatedChannel.png}
+	\caption{USRP simulated channel model}
+	\label{fig:USRPSimChan}
+\end{figure}
+
+This is performed before adding AWGN similarly to how the %
+time varying and time invariant models. The addition of %
+a real line of sight wireless channel in the radio introduces %
+unknown attenuation and rotation to the simulated channel, %
+preventing an analytical evaluation of the Wiener solution. %
+%TODO: add the USRP radio diagram
