@@ -1,55 +1,89 @@
 \chapter{Conclusions and Future Directions}
 \label{chap:Conclusion}
 
-\section{Concluding Remarks}
-
-A variety of adaptive filtering algorithms have been tested %
+A variery of adaptive filtering algorithms have been tested %
 and their performance in the learning and decision directed %
-schemes measured. Several things can be concluded from the %
-results provided in chapter \ref{chap:Results}, firstly the %
-frequency domain adaptive filtering model described in section %
-\ref{sec:TIModel} performs as expected. The single tap %
-variant of the LMS and NLMS algorithm converges to the %
-Wiener solution as expected and exhibits excess mean square error %
-that increases with increasing step size. 
+schemes measured. Several things can be concluded from %
+the results provided in chapter \ref{chap:Results}. Firstly, %
+the frequency domain adaptive filtering model described in %
+section \ref{sec:TIModel} performs as expected. The single %
+variant of the LMS and NLMS algorithms both converge to %
+the Wiener solution and exhibit the expected excess %
+mean square error increase with step size increase.
 
-Section \ref{sec:TVResults} %
-results reveal some interesting properties about the LMS and %
-NLMS algorithms in both convergence to the wiener solution and tracking %
-of the time varying channel in a decision directed manner. three different %
-parameters were varied to see what effect they had on the performance %
-of the LMS and NLMS filters in both the learning and decision directed modes, %
-the length of the cyclic prefix which will make a difference on how much change %
-there is between OFDM symbols, the coherence time, and the SNR. In %
-decision directed operation the LMS algorithm overall performs better than %
-the NLMS algorithm in tracking the change over time regardless of whether %
-the SNR is high or low. The results indicate that the LMS algorithm performs better %
-at lower SNR's than high ones, this is likely due to the fact that in a purely %
-learning state at high SNR's, the LMS algorithm is unable to converge to the %
-wiener solution, this is particularly visible in figure \ref{fig:LMS-Short-High-None} where %
-the LMS solution converges to a result that is significantly higher than the %
-Wiener solution, the LMS's fixed step size and relatively slow rate of convergence %
-is likely to be the culprit in preventing the LMS to converge to the optimal %
-solution under these parameters. At lower SNR's the optimal solution has a %
-much higher mean square error and so the LMS algorithm even with the slower %
-rate of convergence is able to achieve the Wiener solution. %
-In contrast to this the NLMS algorithm is always capable of converging to the %
-Wiener solution in both high and low SNR's, this is distinctly better than %
-the performance exhibited by the LMS algorithm. A peculiar result occurs at %
-low SNR's for the NLMS algorithm in the sense that it appears to overfit the %
-optimal solution by a significant margin as can be seen in figure %
-\ref{fig:NLMS-Long-Low-None-Long}, it's unclear why this occurs. % TODO: mention this in future directions
+Section \ref{sec:TVResults} looked at the behaviour %
+of these algorithms under a time varying scenario in %
+both training and decision directed operation. The %
+time varying results were broken down into %
+differeing, SNR's, coherence times, cyclic prefix lengths, %
+and decision direction or no decision direction. SNR and %
+coherence time were found to have a significant impact %
+on the performance of the adaptive filters.
 
-The decision directed performance of the NLMS in both low and high %
-SNR's is considerably worse than that of the LMS algorithm, this is %
-attributable to the fact that the NLMS algorithm takes significantly %
-larger steps than the LMS algorithm towards what it believes is %
-an optimal solution, so when an incorrect decision is made by the %
-decision slicer the filter coefficients may change significantly, %
-a property that makes this problem particularly worse is that unlike %
-the LMS algorithm's performance in figure \ref{fig:Medium-High-Directed-Long} 
-the NLMS filter coefficients may never recover even at high SNR's as %
-is clear in figure \ref{fig:NLMS-Short-High-Directed-Short}.
+In high SNR conditions, the LMS algorithm was unable %
+to converge to the optimal solution even after $1000$ %
+symbols, as can be seen in figures \ref{fig:LMS-Long-High-None-Long}, %
+\ref{fig:LMS-Medium-High-None-Long}, and %
+\ref{fig:LMS-Short-High-None}. The convergence to the %
+Wiener solution in this case worsened as coherence %
+time was shortened as well. On the other hand the NLMS algorithm %
+performed consistently much better in training at high SNR's %
+than the LMS algorithm, with both faster rates of convergence and %
+very little effect on performance from coherence time. In low %
+SNR conditions the LMS algorithm is capable of converging %
+to the optimal solution. The NLMS algorithm, even though it %
+still has a faster rate of convergence now over fits the solution, %
+as can also clearly be seen in the BER results of figures %
+\ref{fig:NLMS-BER-Long-None}, \ref{fig:NLMS-BER-Medium-None}, 
+and \ref{fig:NLMS-BER-Short-None}. This result %
+indicates that the LMS algorithm is only suitable for use in %
+lower SNR environments, where the mean square error %
+of the Wiener solution is high enough, whereas at high %
+SNR's the NLMS algorithm is the clear choice for training and %
+intiialisation. In addition at low SNR's the NLMS algorithm %
+has a tendency to overfit which may reduce the tracking %
+performance of the filters in decision directed operation.
+
+At high SNR's the decision directed performance of the LMS and %
+NLMS filters are comparable for long and medium length coherence %
+times. For short coherence times it's very clear that at high %
+SNR's the NLMS algorithm outperforms the LMS algorithm. It's visible from %
+figures \ref{fig:NLMS-Short-High-Directed-Long}, and
+\ref{fig:NLMS-Short-High-Directed-Short} that the NLMS algorithm %
+in decision directed operation is highly sensitive to sudden disturbances, %
+where the peaks in Wiener filter mean square error exist the %
+NLMS filter exhibits this staircase behaviour as it steps away %
+from the optimal solution, with no indication of recovery. This %
+stepping behaviour is also somewhat visible although much less %
+obvious in figure \ref{fig:NLMS-Medium-High-Directed-Long}. %
+In contrast to this at high SNR's and medium coherence times, %
+the LMS algorithm demonstrates some capacity to recover %
+back towards the optimal solution as is seen in figure %
+\ref{fig:Medium-High-Directed-Long}. At low SNR's the %
+LMS algorithm very clearly out performs the NLMS algorithm %
+as in all cases of coherence time, the NLMS algorithm almost %
+instantly diverges away from the optimal solution, towards %
+a mean square error of 1, while the LMS algorithm, even in the %
+worst case of short coherence time is able to track the %
+Wiener solution for at least $100$ symbols. It's clear then, that %
+the LMS algorithm is the clear choice for decision directed tracking %
+of the Wiener solution at lower SNR's, the NLMS algorithm probably %
+diverges away from the optimal solution so quickly for the same %
+reason as it exhibited the staircase behaviour in high SNR operation, in %
+the sense that it is very sensitive to incorrect decisions made by the %
+decision slicer. 
+
+Since the cyclic prefix samples of every OFDM symbol are dropped. %
+Increasing the cyclic prefix of the OFDM symbol may have the %
+effect of forcing the adaptive filters to adapt to more change %
+between symbols than they otherwise would. Overall the length %
+of the cylic prefix seems to have a much more %
+muted effect on the system performance than the effect of %
+coherence time and SNR (assuming of course that the cyclic %
+prefix is longer than the wireless filter length). It's clear however %
+from comparing the decision directed NLMS figures with a short %
+cyclic prefix that their performance, particularly at low SNR's is %
+significantly improved.
 
 The results from section \ref{sec:USRPResults} demonstrate that %
 the mean square error convergence on the software defined %
@@ -61,26 +95,32 @@ a wiener solution cannot be found and as was made clear in section %
 \ref{sec:TVResults} the LMS algorithm does not guarantee %
 convergence to the optimal solution under a time varying scenario, and %
 the NLMS algorithm has a tendency to overfit. Comparing figures %
-\ref{fig:NLMS-BER-USRP} with \ref{fig:NLMS-BER-Long-DD-TV}, it %
+\ref{fig:NLMS-BER-USRP} with \ref{fig:NLMS-BER-Long-DD-TV}, it is %
 clear that this overfitting behaviour is present in the radio implementation %
 as well.
 
-Overall the length of the cyclic prefix seemed to have minimal effect %
-on the system performance so long as it is longer than the %
-channel memory so that the circular convolution described in %
-chapter \ref{chap:OFDM} still applies.
-
 A good frequency domain adaptive receiver should require a short %
-number of training symbols to initialise itself to the Wiener solution %
-so that most of the symbols transmitted can be useful data. These %
-results indicate that the NLMS algorithms significantly faster convergence %
-time in training make it a better choice for initialisation. The NLMS algorithms %
-poor performance in decision directed operation make the standard LMS %
-algorithm a better choice for tracking the time-varying nature of the channel %
-without additional training symbols. Close attention should be paid to the %
-coherence time, coherence bandwidth, and SNR as these channel parameters %
-will greatly influence choices of OFDM FFT length, OFDM symbol time and %
-step size.
+number of training symbols to initialise itself to the Wiener solution so that %
+most of the symbols transmitted can carry data. These results indicate %
+that the NLMS algorithm performs significantly better in training convergence %
+in all cases with the caveat that the over fitting behaviour seen %
+at low SNR needs to be accounted for in some way. The NLMS filter %
+also performed better at tracking the time variation in decision directed %
+operation at high SNR's for medium to short time coherence, at long %
+time coherence the LMS and NLMS algorithms had very similar performance %
+under simulation. At low SNR the LMS algorithm is the clear choice %
+for decision directed tracking, since it is less influenced by incorrect %
+decisions from the decision slicer. It is clear, that even once OFDM %
+modulation parameters have been chosen to overcome the %
+frequency selectivity of the channel, the choice of adaptive %
+filter for good performance is not as simple as choosing the %
+NLMS filter, even though it has better performance in a %
+time-invariant environment for training. SNR, coherence time, %
+and even to some extent the cyclic prefix length must be %
+carefully considered and a combination of NLMS and LMS %
+filters may be needed depending on how long the continuous %
+signal stream will be and how much training data can %
+be afforded.
 
 \section{Future Directions}
 
