@@ -67,20 +67,22 @@ LMS}.
 	\label{fig:FrequencyLMS}
 \end{figure}
 \FloatBarrier
-\subsection{Bit Stream}
-The bit stream needs to be selected to model %
-a believable source of data. It can be shown %
-that without further information, data %
-in digital communications systems can be %
-modeled as a Bernoulli distribution. %TODO: Cite this
-My model simulates this using MATLAB's in-built %
-\texttt{randi} \cite{randi} function which generates %
-a random vector $\vec{X}$ where each %
-random variable $X$ can take on values from %
-a user defined set of integers and is %
-uniformly distributed, i.e. where each integer %
-has an equally likely chance of occuring. In %
-the special case of the Bernoulli distribution %
+\subsection{Information Source}
+The information source needs to be selected to %
+model a believable source of data. Selecting %
+values randomly with equal probability from %
+an alphabet of possible transmitted symbols %
+is a common way to generate this information %
+source \cite{Jer00}. For binary data, this %
+can be modelled as a Bernoulli distribution. %
+The MATLAB model for the computation %
+simulations use the in-built \texttt{randi} %
+\cite{randi} function which generates %
+a random vector $\mathbf{X}$ where %
+each random variable $X$ can take values %
+from a user defined set of integers and is %
+uniformly distributed. In the special %
+case of the Bernoulli distribution %
 the set of integers can be defined as $\{0,1\}$.
 
 \subsection{QPSK Modulation and Demodulation}
@@ -421,8 +423,9 @@ receiver architecture over a more traditional heterodyne %
 architecture as shown in the DUC (Direct Up Conversion) and %
 DDC (Direct Down Conversion) blocks in the diagram. The homodyne %
 receiver architecture offers a simpler hardware receiver design %
-which is in line with the software defined radio philosophy of %
-moving the signal processing to software.
+which is in line with the software defined radio principle of %
+simplifying electronics and making signal processing more %
+reconfigurable \cite{Dillinger03}.
 \begin{figure}[ht]
 	\includegraphics[width=\textwidth]{./Figures/System/%
 	USRP2943R.png}
@@ -526,7 +529,15 @@ described in chapter \ref{chap:AdaptiveFiltering} and %
 \end{figure}
 \subsection{AWGN}
 NI Labview does not provide a simple API for generating %
-complex, circularly symmetric, gaussian noise. Instead %
+complex, circularly symmetric, gaussian noise. Instead, complex %
+noise is generated directly from the definition of complex, circularly %
+symmetric random variables. Such a variable $z \sim \mathcal{CN}(0,1)$ %
+has independent and identically distributed (i.i.d) real and imaginary %
+components, each distributed as $\sim \mathcal{N}(0,1/2)$. A series 5
+of $n$ of these variables forms a standard circularly symmetric %
+gaussian random vector \cite{Tse05}.
+
+Instead, %
 complex noise is generated given the properties that %
 a complex, circularly symmetric random variable $z$ is %
 distributed as $\sim\mathcal{CN}(0,1)$ has independent %
@@ -558,6 +569,7 @@ imaginary component.
 \end{figure}
 
 \subsection{Multipath Channel Simulation}
+\label{sec:USRPMultipathChannelSimulation}
 Similarly Labview does not provide an API for rayleigh %
 fading channel models. The system model shown below %
 takes the time-varying multipath coefficients output %
@@ -576,5 +588,15 @@ This is performed before adding AWGN similarly to how the %
 time varying and time invariant models. The addition of %
 a real line of sight wireless channel in the radio introduces %
 unknown attenuation and rotation to the simulated channel, %
-preventing an analytical evaluation of the Wiener solution. %
-%TODO: add the USRP radio diagram
+this additional unknown introduces additional approximations %
+that need to be made to evaluate the Wiener solution that %
+were not needed in the time-varying MATLAB simulations, and %
+were not evaluated mostly due to a lack of time in this project.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{./Figures/%
+	System/USRP.png}
+	\caption{USRP radio link at 2.45GHz}
+	\label{fig:USRPChannel}
+\end{figure}

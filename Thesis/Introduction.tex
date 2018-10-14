@@ -78,7 +78,7 @@ all forms of electronic communication and is %
 caused by the natural decay in amplitude %
 that electromagnetic waves undergo as they %
 propagate through free space. Path loss %
-is proportional to $\frac{1}{d^2}$ where %
+is proportional to $1/d^2$ where %
 $d$ is the distance between the transmitter %
 and receiver \cite{Sklar01}.
 
@@ -109,7 +109,7 @@ where $B$ is the bandwidth of the %
 signal of interest.
 
 Fading is a stochastic impairment %
-that is unique to wireless %
+that is characteristic to wireless %
 channels and is caused by obstructions %
 in the surrounding environment, %
 relative movement between the %
@@ -172,7 +172,7 @@ the frequency selectivity of the channel. OFDM works by %
 separating the bandwidth of the signal of interest into %
 $N$ subcarriers each with a subband bandwidth of %
 $B_{\text{total}}/N$. A key advantage of these subcarriers %
-is that the bandwidths of each of the OFDM subcarreirs can %
+is that the bandwidths of each of the OFDM subcarriers can %
 be designed to be narrower than the coherence bandwidth %
 of the frequency selective wireless channel. As will be %
 developed in chapter \ref{chap:AdaptiveFiltering} each %
@@ -200,15 +200,16 @@ studied in this report will be the least mean square (LMS) %
 filter and the normalised least mean square (NLMS) filter. Both %
 filters are considered members of the class of filters known %
 as stochastic gradient filters. Stochastic gradient filters %
-minimise mean square error between the received symbol %
-and a desired output by finding the stationary point %
-of the paraboloid that defines the mean square error.
+minimise mean square error between the received signal %
+and the desired output. The mean square error is defined %
+on a paraboloid where the independent variables are %
+the filter coefficients. This class of filters therefore %
+finds the stationary point of this paraboloid.
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.4\textwidth]{./Figures/%
-Circular_Paraboloid_Quadric.png}
-	\caption{Circular parabaloid in three dimensions 
-	\cite{Paraboloid12}}
+	\includegraphics[width=0.7\textwidth]{./Figures/%
+3D-Paraboloid.png}
+	\caption{Circular parabaloid in three dimensions}
 	\label{fig:Paraboloid}
 \end{figure}
 A more formal definition of the method of gradient descent, %

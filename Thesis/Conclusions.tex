@@ -6,7 +6,7 @@ and their performance in the learning and decision directed %
 schemes measured. Several things can be concluded from %
 the results provided in chapter \ref{chap:Results}. Firstly, %
 the frequency domain adaptive filtering model described in %
-section \ref{sec:TIModel} performs as expected. The single %
+section \ref{sec:TIModel} performs as expected. The single coefficient %
 variant of the LMS and NLMS algorithms both converge to %
 the Wiener solution and exhibit the expected excess %
 mean square error increase with step size increase.
@@ -15,7 +15,7 @@ Section \ref{sec:TVResults} looked at the behaviour %
 of these algorithms under a time varying scenario in %
 both training and decision directed operation. The %
 time varying results were broken down into %
-differeing, SNR's, coherence times, cyclic prefix lengths, %
+differing SNR's, coherence times, cyclic prefix lengths, %
 and decision direction or no decision direction. SNR and %
 coherence time were found to have a significant impact %
 on the performance of the adaptive filters.
@@ -46,7 +46,7 @@ performance of the filters in decision directed operation.
 
 At high SNR's the decision directed performance of the LMS and %
 NLMS filters are comparable for long and medium length coherence %
-times. For short coherence times it's very clear that at high %
+times. For short coherence times it is very clear that at high %
 SNR's the NLMS algorithm outperforms the LMS algorithm. It's visible from %
 figures \ref{fig:NLMS-Short-High-Directed-Long}, and
 \ref{fig:NLMS-Short-High-Directed-Short} that the NLMS algorithm %
@@ -91,10 +91,11 @@ radio does converge in a way that is consistent with the MATLAB %
 simulations. It was not possible to examine the decision directed %
 performance of the radio implementation with any kind of rigour %
 as the unknown channel between the antennae meant that %
-a wiener solution cannot be found and as was made clear in section %
-\ref{sec:TVResults} the LMS algorithm does not guarantee %
+a Wiener solution was not evaluated due to the reasons explained in %
+section \ref{sec:USRPMultipathChannelSimulation}. This problem was %
+exacerbated by the fact that the LMS algorithm does not guarantee %
 convergence to the optimal solution under a time varying scenario, and %
-the NLMS algorithm has a tendency to overfit. Comparing figures %
+the NLMS algorithm has a tendency to overfit at low SNR's. Comparing figures %
 \ref{fig:NLMS-BER-USRP} with \ref{fig:NLMS-BER-Long-DD-TV}, it is %
 clear that this overfitting behaviour is present in the radio implementation %
 as well.
@@ -125,21 +126,31 @@ be afforded.
 \section{Future Directions}
 
 There are many improvements and areas of study left to %
-investigate in this system. Firstly, it is clear that faster %
-converging algorithms such as the NLMS are significantly %
-better for initialisation to the Wiener solution than slower %
-converging algorithms. References \cite{Qureshi77} and %
-\cite{Crozier91} suggest that some training sequences %
-may have properties that allow for fast convergence %
-to the Wiener solution, and so more intelligent choices of %
-training sequence is worth investigating. Other types of %
-adaptive filters may also be worth looking at such %
-as the recursive least square (RLS), given that %
-OFDM reduces the channel estimation problem to that %
-of a single filter coefficient, it may be computationally %
+investgate in this system. Firstly, a severe disadvantage %
+to this kind of filtering is that each time step during training %
+uses $N*\text{log}\left( M \right)$ bits of potential data, where %
+$N$ is the FFT length and M is the size of the QAM constellation, i.e. %
+if no training was required an additional $N*\text{log}\left( M \right)$ %
+bits of data would be sent. It is clear then, that %
+it is beneficial for the training sequence to be as short %
+as possible to maximise the amount of data throughput. %
+References \cite{Qureshi77} and \cite{Crozier91} suggest %
+that some training sequences may have properties that %
+allow for fast convergence to the Wiener solution. %
+An investigation can be conducted into intelligent %
+choices of training sequences that may offer %
+fast convergence and significantly improve the %
+data throughput of the system.
+
+Other types of filters exist, in particular the class %
+of recursive least square (RLS) filters have been %
+left unexplored in this study so far. Given that %
+OFDM reduces the channel estimation problem %
+to that of a single filter coefficient in the frequency %
+domain for each subcarrier, it may be computationally %
 tractable to look at more computationally complex filters %
-such as an affine projection filter or variants on the Kalman %
-filter. 
+such as affine projection filters or variants on the Kalman %
+filter.
 
 Reference \cite{Wei17} suggests that both time and frequency %
 coherence can be exploited for equalisation. Investigating %
@@ -173,4 +184,13 @@ may reduce decision directed performance to an impractical %
 level at similar $E_b/N_0$, so additional $E_b/N_0$ may be %
 required.
 
-% TODO: Develop future study directions for this.
+My experiments with the USRP never got around to approximating %
+the Wiener solution. Partially this was due to the learning curve of %
+working with the NI LabView environment, and partially this was %
+due to the fact that the unknowns introduced by the %
+radio wireless channel meant that not only would an approximation %
+of the expectation in equation \ref{eq:WienerAutocorrelation} as %
+was done in the time-varying MATLAB simulation, but also an approximation to the %
+expectation in \ref{eq:WienerCrossCorrelation}, a future improvement %
+to the radio simulation model would be to make this approximation and %
+more rigourously compare the radio model to the MATLAB simulation.
