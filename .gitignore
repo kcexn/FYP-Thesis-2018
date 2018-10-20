@@ -10,3 +10,4 @@
 *.fig
 *.bmp
 _minted*
+*.out
