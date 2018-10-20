@@ -21,6 +21,8 @@ TexLive is pretty good
 I don't know probably a few options but Texlive 
 is available for mac
 
+## Acknowledgements
+
 This is the final version. I appreciate everyone who has offered me 
 feedback up until this point, particularly those in and around the SMEE 
 lounge who have put in effort to try and parse this document. Thanks to my 
