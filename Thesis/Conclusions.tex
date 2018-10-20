@@ -35,19 +35,22 @@ to the optimal solution. The NLMS algorithm, even though it %
 still has a faster rate of convergence now over fits the solution, %
 as can also clearly be seen in the BER results of figures %
 \ref{fig:NLMS-BER-Long-None}, \ref{fig:NLMS-BER-Medium-None}, 
-and \ref{fig:NLMS-BER-Short-None}. This result %
-indicates that the LMS algorithm is only suitable for use in %
+and \ref{fig:NLMS-BER-Short-None}. This overfitting of the NLMS %
+algorithm may induce a cost to the mean square error in the decision %
+directed region as illustrated in figures \ref{fig:Combination-Long-Long} %
+to \ref{fig:Combination-Short-Short}. These results %
+indicate that the LMS algorithm is only suitable for use in %
 lower SNR environments, where the mean square error %
 of the Wiener solution is high enough, whereas at high %
 SNR's the NLMS algorithm is the clear choice for training and %
-intiialisation. In addition at low SNR's the NLMS algorithm %
+intialisation. In addition at low SNR's the NLMS algorithm %
 has a tendency to overfit which may reduce the tracking %
 performance of the filters in decision directed operation.
 
 At high SNR's the decision directed performance of the LMS and %
 NLMS filters are comparable for long and medium length coherence %
 times. For short coherence times it is very clear that at high %
-SNR's the NLMS algorithm outperforms the LMS algorithm. It's visible from %
+SNR's the NLMS algorithm outperforms the LMS algorithm. It is visible from %
 figures \ref{fig:NLMS-Short-High-Directed-Long}, and
 \ref{fig:NLMS-Short-High-Directed-Short} that the NLMS algorithm %
 in decision directed operation is highly sensitive to sudden disturbances, %

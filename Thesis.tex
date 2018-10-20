@@ -1,6 +1,6 @@
 \documentclass[a4paper]{report}
 \title{Frequency Domain Adaptive Receiver Design for OFDM Modulation}
-\author{Kevin Exton}
+\author{Kevin Exton \\Supervisor: Dr. Gayathri Kongara}
 \date{\today}
 \newcommand{\tabitem}{~~\llap{\textbullet}~~}
 \usepackage{amsmath}
@@ -16,12 +16,28 @@
 \usepackage{mathrsfs}
 \usepackage{courier}
 \usepackage{rotating}
+\usepackage{pdfpages}
 \usepackage[toc,page]{appendix}
 \usepackage[margin=1.1in]{geometry}
 \renewcommand{\bibname}{References}
 \begin{document}
 \maketitle
 \renewcommand{\abstractname}{Executive Summary}
+\newpage
+\includepdf{./Figures/Poster/KevinPoster2.png}
+\newpage
+\pagenumbering{gobble}
+\section*{Significant Contributions}
+Studied adaptive filter theory in order to design and prototype %
+a hardware implementation of a frequency domain adaptive equaliser %
+for OFDM modulation. The hardware prototype was developed on the %
+National Instruments universal software radio platform model 2943R.
+\begin{figure*}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{./Figures/%
+	SignificantContributions/Radio.jpg}
+	\caption*{USRP-2943R}
+\end{figure*}
 \begin{abstract}
 Real wireless channels we may wish to communicate over %
 are often frequency selective and time varying. The rate %
@@ -47,6 +63,7 @@ will track the changes in the channel state. A hardware implementation %
 has been developed on the National Instruments universal software %
 radio platform (USRP) to demonstrate the proof of concept.
 \end{abstract}
+\pagenumbering{arabic}
 \tableofcontents
 \include{./Thesis/Introduction}
 \include{./Thesis/OFDM}

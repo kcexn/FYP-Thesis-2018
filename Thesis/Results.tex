@@ -207,7 +207,10 @@ for choices of $\mu$ greater than $2$ the NLMS algorithm diverges.
 The time varying MATLAB simulation results covered in this section %
 vary four different parameters, coherence time, SNR, decision %
 direction and cyclic prefix length. Coherence time is varied as %
-0.17, 1.7 and 17 seconds. $E_b/N_0$ is varied as $12\text{dB}$ and %
+0.17, 1.7 and 17 seconds, with an OFDM symbol time of around %
+$3 \times 10^{-4}$ seconds, and an arbitrarily chosen OFDM symbol %
+bandwidth of $0.5 \times 10^{6}$ Hz. $E_b/N_0$ is varied as %
+$12\text{dB}$ and %
 $30\text{dB}$. Decision direction is simply varied as either %
 being decision directed or not decision directed, and the cyclic %
 prefix length is varied as 10 samples and 56 samples. The Wiener %
@@ -921,6 +924,81 @@ will be on the order of 1 second).
 	\label{fig:NLMS-BER-Short-None}
 	\end{minipage}
 \end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{./Figures/Results/%
+	Combinations/NLMS-LMS-LowSNR/LongCP/LongTimeCoherence/%
+	MeanSquareError.png}
+		\captionsetup{width=0.75\linewidth}
+		\caption{Mean square error of NLMS training for 200 symbols 
+	and LMS decision directed tracking at low SNR with long time coherence 
+	and a long cyclic prefix}
+		\label{fig:Combination-Long-Long}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{./Figures/Results/%
+	Combinations/NLMS-LMS-LowSNR/LongCP/MediumTimeCoherence/%
+	MeanSquareError.png}
+		\captionsetup{width=0.75\linewidth}
+		\caption{Mean square error of NLMS training for 200 symbols 
+	and LMS decision directed tracking at low SNR with a medium time coherence 
+	a long cyclic prefix}
+	\end{minipage}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{./Figures/Results/%
+	Combinations/NLMS-LMS-LowSNR/LongCP/ShortTimeCoherence/%
+	MeanSquareError.png}
+		\captionsetup{width=0.75\linewidth}
+		\caption{Mean square error of NLMS training for 200 symbols 
+	and LMS decision directed tracking at low SNR with short time coherence 
+	and a long cyclic prefix}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{./Figures/Results/%
+	Combinations/NLMS-LMS-LowSNR/ShortCP/LongTimeCoherence/%
+	MeanSquareError.png}
+		\captionsetup{width=0.75\linewidth}
+		\caption{Mean square error of NLMS training for 200 symbols 
+	and LMS decision directed tracking at low SNR with a long time coherence 
+	a short cyclic prefix}
+	\end{minipage}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{./Figures/Results/%
+	Combinations/NLMS-LMS-LowSNR/ShortCP/MediumTimeCoherence/%
+	MeanSquareError.png}
+		\captionsetup{width=0.75\linewidth}
+		\caption{Mean square error of NLMS training for 200 symbols 
+	and LMS decision directed tracking at low SNR with medium time coherence 
+	and a short cyclic prefix}
+	\end{minipage}
+	\begin{minipage}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{./Figures/Results/%
+	Combinations/NLMS-LMS-LowSNR/ShortCP/ShortTimeCoherence/%
+	MeanSquareError.png}
+		\captionsetup{width=0.75\linewidth}
+		\caption{Mean square error of NLMS training for 200 symbols 
+	and LMS decision directed tracking at low SNR with a short time coherence 
+	a short cyclic prefix}
+		\label{fig:Combination-Short-Short}
+	\end{minipage}
+\end{figure}
+
 
 \section{USRP Implementation Results}
 \label{sec:USRPResults}
