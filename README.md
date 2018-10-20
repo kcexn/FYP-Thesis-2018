@@ -1,6 +1,13 @@
 # This is my FYP Report for 2018
 You will need a LaTeX compiler to build this.
 
+I'm using the minted syntax highlighting package. Hence
+you will need to use the -shell-escape flag and have Pygments 
+installed to able to compile chapter 5.
+
+Minted documentation at:
+https://www.ctan.org/pkg/minted
+
 ## Windows
 
 I'd try MikTex

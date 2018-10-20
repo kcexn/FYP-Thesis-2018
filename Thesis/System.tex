@@ -76,7 +76,7 @@ is a common way to generate this information %
 source \cite{Jer00}. For binary data, this %
 can be modelled as a Bernoulli distribution. %
 The MATLAB model for the computation %
-simulations use the in-built \texttt{randi} %
+simulations use the in-built \mintinline{MATLAB}{randi} %
 \cite{randi} function which generates %
 a random vector $\mathbf{X}$ where %
 each random variable $X$ can take values %
@@ -137,14 +137,14 @@ desired will introduce only one bit error instead %
 of multiple \cite{Sklar01,Goldsmith05}.
 
 MATLAB's Communications System Toolbox offers %
-a system object name \texttt{comm.QPSKModulator} %
+a system object name \mintinline{MATLAB}{comm.QPSKModulator} %
 \cite{QPSKModulator} which %
 will perform the gray mapping of pairs of bits in a %
 bit stream to QPSK constellation points and perform %
 the energy normalisation.
 
-Paired with the \texttt{comm.QPSKModulator} MATLAB also %
-provides a \texttt{comm.QPSKDemodulator} \cite{QPSKDemodulator} %
+Paired with the \mintinline{MATLAB}{comm.QPSKModulator} MATLAB also %
+provides a \mintinline{MATLAB}{comm.QPSKDemodulator} \cite{QPSKDemodulator} %
 which performs %
 performs maximum likelihood detection and maps %
 the received QPSK constellation back to a bit %
@@ -155,7 +155,7 @@ stream.
 OFDM has been covered in some detail in chapter %
 \ref{chap:OFDM} so here I'll focus on the simulation %
 implementation. MATLAB's communication systems %
-toolbox provides an \texttt{comm.OFDMModulator} %
+toolbox provides an \mintinline{MATLAB}{comm.OFDMModulator} %
 \cite{OFDMModulator} which %
 takes in an input stream of symbols and performs %
 an IFFT followed by an IFFT shift to place the DC %
@@ -171,20 +171,22 @@ The power of additive white gaussian noise $\sigma_n^{2}$ %
 was defined relative to the transmit signal power, through %
 the following evaluation
 
-\texttt{%
-powerdB = 10*log10(var(OFDM\_Symbol));\\%
-snr = EbNo + 10*log10(BitsPerSymbol);\\%
-noiseVar = 10\textasciicircum(0.1*(powerdB-snr));}
+\begin{minted}{MATLAB}
+powerdB = 10*log10(var(OFDM_Symbol));
+snr = EbNo + 10*log10(BitsPerSymbol);
+noiseVar = 10\textasciicircum(0.1*(powerdB-snr));
+\end{minted}
 
-here \texttt{var(OFDM\_Symbol)} is being evaluated %
+here \mintinline{MATLAB}{var(OFDM_Symbol)} is being evaluated %
 as 
 \begin{align}
 	\frac{1}{N} %
-	\sum_{n=0}^{N-1} \lvert\lvert \texttt{OFDM\_Symbol}%
+	\sum_{n=0}^{N-1} \lvert\lvert %
+	\text{\mintinline{MATLAB}{OFDM_Symbol}}%
 	(n) \rvert\rvert^{2}
 \end{align}
 
-Where $N$ is the length of the FFT. \texttt{EbNo} is a %
+Where $N$ is the length of the FFT. \mintinline{MATLAB}{EbNo} is a %
 variable which defines the normalised bit energy %
 to noise power spectral density and is % TODO: Cite EbNo
 expressed as \cite{Sklar01}
@@ -211,7 +213,7 @@ In log units multiplication %
 is evaluated as addition as can be seen above.
 
 MATLAB's Commmunications System Toolbox system object %
-\texttt{comm.AWGNChannel} \cite{AWGNChannel} takes an %
+\mintinline{MATLAB}{comm.AWGNChannel} \cite{AWGNChannel} takes an %
 input stream of %
 symbols and generates complex gaussian noise with %
 zero mean and defined variance. This noise is then %
@@ -367,7 +369,7 @@ a scaling factor to ensure the average power of the coefficient %
 matches that of the power delay profile.
 
 MATLAB's Communications System Toolbox provides a system object %
-\texttt{comm.RayleighChannel} \cite{RayleighChannel}, %
+\mintinline{MATLAB}{comm.RayleighChannel} \cite{RayleighChannel}, %
 which implements the filtered %
 white gaussian noise method of simulation as described in 
 \cite{Iskander}. Rician distributions are implemented slightly %
@@ -384,7 +386,7 @@ Where $z_{k}$ is the filtered noise output of the doppler filter
 \cite{Iskander} immediately after the normalization step in figure %
 \ref{fig:ChannelFilterSimulation}. Rician fading channels are %
 are implemented in MATLAB following this methodology in %
-\texttt{comm.RicianChannel} \cite{RicianChannel}.
+\mintinline{MATLAB}{comm.RicianChannel} \cite{RicianChannel}.
 
 \subsection{Decision Directed Performance}
 
@@ -411,7 +413,7 @@ This region of operation introduces some delay to the system as %
 the decision slicer needs to map the received symbol onto the %
 nearest constellation point before the adaptive step can begin. %
 As discussed in section \ref{sec:TIModel} the decision slicer %
-being used here is MATLAB's \texttt{comm.QPSKDemodulator} %
+being used here is MATLAB's \mintinline{MATLAB}{comm.QPSKDemodulator} %
 from the Communications System Toolbox.
 
 \section{USRP Implementation of the Time Varying System Model}
@@ -573,8 +575,8 @@ imaginary component.
 Similarly Labview does not provide an API for rayleigh %
 fading channel models. The system model shown below %
 takes the time-varying multipath coefficients output %
-from MATLAB's \texttt{comm.RayleighChannel} and %
-\texttt{comm.RicianChannel} and performs the discrete time %
+from MATLAB's \mintinline{MATLAB}{comm.RayleighChannel} and %
+\mintinline{MATLAB}{comm.RicianChannel} and performs the discrete time %
 convolution.
 
 \begin{figure}[ht]
